@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            29.12.2017
+  updated:            03.01.2018
 */
 
 #include "le_moon.h"
@@ -661,7 +661,7 @@ void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
       sprintf(pErrorString, "%sMix_PlayChannel() failed!\n%s\n%s", pErrorInfo, SDL_GetError(), Mix_GetError());
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
     } break;
-		case LE_TEXT_EXIST:
+    case LE_TEXT_EXIST:
     {
       sprintf(pErrorString, "%sid for text already exists!", pErrorInfo);
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
@@ -671,12 +671,12 @@ void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
       sprintf(pErrorString, "%sid for text does not exist!", pErrorInfo);
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
     } break;
-		case LE_TTF_INIT:
+    case LE_TTF_INIT:
     {
       sprintf(pErrorString, "%sTTF_Init() failed!\n%s\n%s", pErrorInfo, SDL_GetError(), TTF_GetError());
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
     } break;
-		case LE_FONT_EXIST:
+    case LE_FONT_EXIST:
     {
       sprintf(pErrorString, "%sid for font already exists!", pErrorInfo);
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
@@ -686,11 +686,11 @@ void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
       sprintf(pErrorString, "%sid for font does not exist!", pErrorInfo);
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
     } break;
-		case LE_OPEN_FONT:
-		{
+    case LE_OPEN_FONT:
+    {
       sprintf(pErrorString, "%sTTF_OpenFont() failed!\n%s\n%s", pErrorInfo, SDL_GetError(), TTF_GetError());
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
-		} break;
+    } break;
     case LE_TEXT_NOSUBMIT:
     {
       sprintf(pErrorString, "%stextSubmit() has not been called yet!", pErrorInfo);
@@ -702,10 +702,10 @@ void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
     } break;
     case LE_RENDER_TEXT_BLENDED:
-		{
+    {
       sprintf(pErrorString, "%sTTF_RenderUTF8_Blended() failed!\n%s\n%s", pErrorInfo, SDL_GetError(), TTF_GetError());
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
-		} break;
+    } break;
     case LE_INVALID_ZINDEX:
     {
       sprintf(pErrorString, "%sz-index must not be 0!", pErrorInfo);
@@ -1374,7 +1374,7 @@ int LEMoon::modelDraw(LEModel * pModel)
   if(result)
   {
     #ifdef LE_DEBUG
-    this->printErrorDialog(result, "LEMoon::modelDraw()\n\n");
+      this->printErrorDialog(result, "LEMoon::modelDraw()\n\n");
     #endif
   }
 
