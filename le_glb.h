@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            30.12.2017
+  updated:            03.01.2018
 */
 
 #include <SDL.h>
@@ -84,9 +84,9 @@ typedef struct sLECollBox_d
 
 typedef struct sAudioQueue 
 {
-	const THEORAPLAY_AudioPacket * pAudio;
-	int offset;
-	struct sAudioQueue * pNext;
+  const THEORAPLAY_AudioPacket * pAudio;
+  int offset;
+  struct sAudioQueue * pNext;
 } AudioQueue;
 
 struct SourceRect
