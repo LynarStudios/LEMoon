@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            04.12.2017
+  updated:            03.01.2018
 */
 
 #ifndef H_LE_ERROR
@@ -45,12 +45,12 @@
 #define LE_LOAD_WAV                             35        // Mix_LoadWAV() failed
 #define LE_ALLOC_CHANNELS                       36        // Mix_AllocateChannels() failed
 #define LE_PLAY_CHANNEL                         37        // Mix_PlayChannel() failed
-#define LE_TEXT_NOEXIST												 	           38				    // id for text does not exist
-#define LE_TEXT_EXIST														             39				    // id for text already exists
-#define LE_TTF_INIT															              40				    // TTF_Init() failed
-#define LE_FONT_EXIST														             41				    // id for font already exists
-#define LE_FONT_NOEXIST													            42				    // id for font does not exist
-#define LE_OPEN_FONT														              43				    // TTF_OpenFont() failed
+#define LE_TEXT_NOEXIST												 	38		    // id for text does not exist
+#define LE_TEXT_EXIST														39		    // id for text already exists
+#define LE_TTF_INIT															40		    // TTF_Init() failed
+#define LE_FONT_EXIST														41	      // id for font already exists
+#define LE_FONT_NOEXIST													42	      // id for font does not exist
+#define LE_OPEN_FONT														43        // TTF_OpenFont() failed
 #define LE_TEXT_NOSUBMIT                        44        // textSubmit() has not been called yet
 #define LE_TEXT_RELATE_FONT                     45        // textRelateFont() has not been called yet
 #define LE_RENDER_TEXT_BLENDED                  46        // TTF_RenderUTF8_Blended() failed
