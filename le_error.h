@@ -1,7 +1,7 @@
 /*
   Author:             Patrick-Christopher Mattulat
   e-mail:             pmattulat@outlook.de
-  Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
+  Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
   updated:            03.01.2018
 */
