@@ -321,37 +321,37 @@ typedef struct sLESound
 
 typedef struct sLELetter
 {
-	 uint8_t letter;
-	 sLELetter * pLeft;
-	 sLELetter * pRight;
+  uint8_t letter;
+  sLELetter * pLeft;
+  sLELetter * pRight;
 } LELetter;
 
 typedef struct sLEFont
 {
-	 uint32_t id;
-	 TTF_Font * pFont;
-	 sLEFont * pLeft;
-	 sLEFont * pRight;
+  uint32_t id;
+  TTF_Font * pFont;
+  sLEFont * pLeft;
+  sLEFont * pRight;
 } LEFont;
 
 typedef struct sLEText
 {
-	 uint32_t id;
-	 LELetter * pCurrentCursorPosition;
-	 LELetter * pLetterHead;
-	 unsigned char * pText;																																			// der Fliesstext, um ihn auszugeben
-	 uint32_t length;
+  uint32_t id;
+  LELetter * pCurrentCursorPosition;
+  LELetter * pLetterHead;
+  unsigned char * pText;																																			// der Fliesstext, um ihn auszugeben
+  uint32_t length;
   uint32_t zindex;
   bool visible;
-	 Color color;
+  Color color;
   LEFont * pFont;
   SDL_Texture * pTexture;
   SDL_Rect posSize;
   double alpha;
   LinkedVec2 * pDirectionHead;                                                                // Liste mit Richtungsvektoren
   glm::vec2 position;                                                                         // genauere Position fuer Bewegungsberechnungen
-	 sLEText * pLeft;
-	 sLEText * pRight;
+  sLEText * pLeft;
+  sLEText * pRight;
 } LEText;
 
 typedef struct sLEFPS
@@ -415,8 +415,8 @@ typedef class LEMoon
     LEPoint * pPointHead;                                                                     // Liste mit Punkten
     Color backgroundColor;                                                                    // Hintergrundfarbe
     LESound * pSoundHead;                                                                     // Liste mit Sounds
-		  LEText * pTextHead;																																				                                   // Liste mit Texten
-		  LEFont * pFontHead;																																				                                   // Liste mit Fonts
+    LEText * pTextHead;																																				                                   // Liste mit Texten
+    LEFont * pFontHead;																																				                                   // Liste mit Fonts
     LELine * pLineHead;                                                                       // Liste mit Linien
     LEVideo * pVideoHead;                                                                     // Liste mit Videos
     FPS fps;                                                                                  // frames per second
@@ -470,16 +470,16 @@ typedef class LEMoon
 
     LESound * soundGet(uint32_t);                                                             // diese Funktion gibt eine Referenz auf einen Sound zurueck
 
-		  // text
+    // text
 
     int textDraw(LEText*);                                                                    // diese Funktion zeichnet einen Text
-		  LEText * textGet(uint32_t);																																                               // diese Funktion gibt eine Referenz auf einen Text zurueck
+    LEText * textGet(uint32_t);																																                               // diese Funktion gibt eine Referenz auf einen Text zurueck
     uint32_t textGetAmount();                                                                 // diese Funktion gibt die Anzahl aller Texte zurueck
     LinkedVec2 * textGetDirection(LEText*, uint32_t);                                         // diese Funktion gibt die Referenz auf eine Bewegungsrichtung zurueck
 
-		  // font
+    // font
 
-		  LEFont * fontGet(uint32_t);																																                               // diese Funktion gibt eine Referenz auf einen Font zurueck
+    LEFont * fontGet(uint32_t);																																                               // diese Funktion gibt eine Referenz auf einen Font zurueck
 
     // line
 
@@ -621,11 +621,11 @@ typedef class LEMoon
 		  // text
 
     int textAddDirection(uint32_t, uint32_t, glm::vec2);                                      // diese Funktion fuegt einem Text eine Bewegungsrichtung hinzu
-		  int textAddLetter(uint32_t, uint8_t);																											                          // diese Funktion fuegt einen Buchstaben an das Ende hinzu
+    int textAddLetter(uint32_t, uint8_t);																											                          // diese Funktion fuegt einen Buchstaben an das Ende hinzu
     int textAddString(uint32_t, const char*);                                                 // diese Funktion fuegt einen kompletten String dem Text hinzu
     int textClear(uint32_t);                                                                  // diese Funktion loescht den kompletten Text
-		  int textCreate(uint32_t);																																	                                // diese Funktion fuegt einen UTF8 Text hinzu
-		  int textDelete(uint32_t);																																	                                // diese Funktion loescht einen Text
+    int textCreate(uint32_t);																																	                                // diese Funktion fuegt einen UTF8 Text hinzu
+    int textDelete(uint32_t);																																	                                // diese Funktion loescht einen Text
     int textFade(uint32_t, double);                                                           // diese Funktion blendet einen Text ein oder aus
     double textGetAlpha(uint32_t);                                                            // diese Funktion gibt den Alpha Wert eines Textes zurueck
     SDL_Point textGetPosition(uint32_t);                                                      // diese Funktion gibt die Position des Textes zurueck
@@ -635,16 +635,16 @@ typedef class LEMoon
     int textPrepareForDrawing(uint32_t);                                                      // diese Funktion bereitet einen Text auf das Zeichnen vor, ein Text kann anschliessend gezeichnet werden
     int textRelateFont(uint32_t, uint32_t);                                                   // diese Funktion ordnet dem Text einen Font zu, muss vor textPrepareForDrawing() aufgerufen werden
     int textSetAlpha(uint32_t, uint8_t);                                                      // diese Funktion setzt den Alphawert eines Textes, muss nach textPrepareForDrawing() aufgerufen werden!
-		  int textSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);														             // diese Funktion setzt die Farbe eines Textes, muss vor textPrepareForDrawing() aufgerufen werden
+    int textSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);														             // diese Funktion setzt die Farbe eines Textes, muss vor textPrepareForDrawing() aufgerufen werden
     int textSetPosition(uint32_t, int, int);                                                  // diese Funktion setzt die Position eines Textes
     int textSetVisible(uint32_t, bool);                                                       // diese Funktion sagt aus, ob ein Text sichtbar ist, oder nicht
     int textSetZindex(uint32_t, uint32_t);                                                    // diese Funktion setzt den z-index fuer einen Text, 0 nicht erlaubt
-	 	 int textSubmit(uint32_t);																																	                                // diese Funktion erstellt aus allen Buchstaben einen Text
+    int textSubmit(uint32_t);																																	                                // diese Funktion erstellt aus allen Buchstaben einen Text
 
-		  // font
+    // font
 
-		  int fontCreateTTF(uint32_t, const char*, int);																						                      // diese Funktion fuegt einen Font hinzu
-		  int fontDelete(uint32_t);																																	                                // diese Funktion loescht einen Font
+    int fontCreateTTF(uint32_t, const char*, int);																						                      // diese Funktion fuegt einen Font hinzu
+    int fontDelete(uint32_t);																																	                                // diese Funktion loescht einen Font
     int fontSetStyle(uint32_t, int);                                                          // diese Funktion setzt den Stil des Fonts, TTF_STYLE_BOLD, TTF_STYLE_ITALIC, TTF_STYLE_UNDERLINE, TTF_STYLE_STRIKETHROUGH
 
     // line
