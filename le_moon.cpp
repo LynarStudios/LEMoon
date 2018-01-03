@@ -1609,7 +1609,7 @@ int LEMoon::textDraw(LEText * pText)
     if(SDL_RenderCopyEx(this->pRenderer, pText->pTexture, nullptr, &(pText->posSize), 0.0f, nullptr, SDL_FLIP_NONE))
     {
       #ifdef LE_DEBUG
-      this->printErrorDialog(LE_SDL_RENDER_COPY_EX, "LEMoon::textDraw()\n\n");
+        this->printErrorDialog(LE_SDL_RENDER_COPY_EX, "LEMoon::textDraw()\n\n");
       #endif
 
       result = LE_SDL_RENDER_COPY_EX;
@@ -1621,8 +1621,8 @@ int LEMoon::textDraw(LEText * pText)
 
 LEText * LEMoon::textGet(uint32_t id)
 {
-	LEText * pRet = nullptr;
-	LEText * pCurrent = nullptr;
+  LEText * pRet = nullptr;
+  LEText * pCurrent = nullptr;
 
   if(this->pTextHead != nullptr)
   {
@@ -1632,21 +1632,21 @@ LEText * LEMoon::textGet(uint32_t id)
     {
       pCurrent = this->pTextHead->pRight;
 
-	    while(pCurrent != this->pTextHead)
-	    {
-		    if(pCurrent->id == id)
-		    {
-		    	pRet = pCurrent;
+      while(pCurrent != this->pTextHead)
+      {
+        if(pCurrent->id == id)
+        {
+          pRet = pCurrent;
           this->memory.pLastText = pCurrent;
-		    	break;
-		    }
+          break;
+        }
 
-		    pCurrent = pCurrent->pRight;
-	    }
+        pCurrent = pCurrent->pRight;
+      }
     }
   }
 
-	return pRet;
+  return pRet;
 }
 
 uint32_t LEMoon::textGetAmount()
@@ -1700,8 +1700,8 @@ LinkedVec2 * LEMoon::textGetDirection(LEText * pText, uint32_t idDirection)
 
 LEFont * LEMoon::fontGet(uint32_t id)
 {
-	LEFont * pRet = nullptr;
-	LEFont * pCurrent = nullptr;
+  LEFont * pRet = nullptr;
+  LEFont * pCurrent = nullptr;
 
   if(this->pFontHead != nullptr)
   {
@@ -1711,21 +1711,21 @@ LEFont * LEMoon::fontGet(uint32_t id)
     {
       pCurrent = this->pFontHead->pRight;
 
-	    while(pCurrent != this->pFontHead)
-	    {
-		    if(pCurrent->id == id)
-		    {
-			    pRet = pCurrent;
+      while(pCurrent != this->pFontHead)
+      {
+        if(pCurrent->id == id)
+        {
+          pRet = pCurrent;
           this->memory.pLastFont = pCurrent;
-			    break;
-		    }
+          break;
+        }
 
-		    pCurrent = pCurrent->pRight;
-	    }
+        pCurrent = pCurrent->pRight;
+      }
     }
   }
 
-	return pRet;
+  return pRet;
 }
 
 //////////////////////////////////////////////////////////
@@ -1768,7 +1768,7 @@ int LEMoon::lineDraw(LELine * pLine)
 LELine * LEMoon::lineGet(uint32_t id)
 {
   LELine * pRet = nullptr;
-	LELine * pCurrent = nullptr;
+  LELine * pCurrent = nullptr;
 
   if(this->pLineHead != nullptr)
   {
@@ -1778,21 +1778,21 @@ LELine * LEMoon::lineGet(uint32_t id)
     {
       pCurrent = this->pLineHead->pRight;
 
-	    while(pCurrent != this->pLineHead)
-	    {
-		    if(pCurrent->id == id)
-		    {
-			    pRet = pCurrent;
+      while(pCurrent != this->pLineHead)
+      {
+        if(pCurrent->id == id)
+        {
+          pRet = pCurrent;
           this->memory.pLastLine = pCurrent;
-			    break;
-		    }
+          break;
+        }
 
-		    pCurrent = pCurrent->pRight;
-	    }
+        pCurrent = pCurrent->pRight;
+      }
     }
   }
 
-	return pRet;
+  return pRet;
 }
 
 //////////////////////////////////////////////////////////
@@ -1830,17 +1830,17 @@ static volatile AudioQueue * pAudioQueueTail = nullptr;
 
 static void SDLCALL audioCallback(void * pUserData, Uint8 * pStream, int len)
 {
-	Sint16 * pDst = (Sint16*) pStream;
+  Sint16 * pDst = (Sint16*) pStream;
 
   while(pAudioQueue != nullptr && (len > 0)) 
   {
     volatile AudioQueue * pItem = pAudioQueue;
-		AudioQueue * pNext = pItem->pNext;
-		const int channels = pItem->pAudio->channels;
+    AudioQueue * pNext = pItem->pNext;
+    const int channels = pItem->pAudio->channels;
 
-		const float * pSrc = pItem->pAudio->samples + (pItem->offset * channels);
-		int cpy = (pItem->pAudio->frames - pItem->offset) * channels;
-		int i = 0;
+    const float * pSrc = pItem->pAudio->samples + (pItem->offset * channels);
+    int cpy = (pItem->pAudio->frames - pItem->offset) * channels;
+    int i = 0;
 
     if(cpy > (len / (int)sizeof(Sint16)))
       {cpy = len / sizeof(Sint16);}
@@ -1895,7 +1895,7 @@ static void queueAudio(const THEORAPLAY_AudioPacket * pAudio)
   pItem->offset = 0;
   pItem->pNext = nullptr;
 
-	SDL_LockAudio();
+  SDL_LockAudio();
 
   if(pAudioQueueTail != nullptr)
     {pAudioQueueTail->pNext = pItem;}
@@ -1918,7 +1918,7 @@ static bool playFile(const char * pFileName, SDL_Renderer * pRenderer)
   Uint32 framems = 0;
   static uint32_t frame = 1;
 
-	pDecoder = THEORAPLAY_startDecodeFile(pFileName, 30, THEORAPLAY_VIDFMT_IYUV);
+  pDecoder = THEORAPLAY_startDecodeFile(pFileName, 30, THEORAPLAY_VIDFMT_IYUV);
 
   while(pAudio == nullptr || pVideo == nullptr) 
   {
@@ -1933,8 +1933,7 @@ static bool playFile(const char * pFileName, SDL_Renderer * pRenderer)
 
   framems = (pVideo->fps == 0.0f) ? 0 : ((Uint32)(1000.0f / pVideo->fps));
 
-	pTexture = SDL_CreateTexture(pRenderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, pVideo->width,
-	pVideo->height);
+  pTexture = SDL_CreateTexture(pRenderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, pVideo->width, pVideo->height);
 
   if(pTexture != nullptr)
   {
@@ -1969,7 +1968,7 @@ static bool playFile(const char * pFileName, SDL_Renderer * pRenderer)
         {
           const THEORAPLAY_VideoFrame * pLast = pVideo;
 
-				  while((pVideo = THEORAPLAY_getVideo(pDecoder)) != nullptr)
+          while((pVideo = THEORAPLAY_getVideo(pDecoder)) != nullptr)
           {
             THEORAPLAY_freeVideo(pLast);
             pLast = pVideo;
@@ -2010,7 +2009,6 @@ static bool playFile(const char * pFileName, SDL_Renderer * pRenderer)
       while((pAudio = THEORAPLAY_getAudio(pDecoder)) != nullptr)
         {queueAudio(pAudio);}
 
-
       if(frame < 10)
       {
         SDL_SetRenderDrawColor(pRenderer, 0x00, 0x00, 0x00, 0xff);
@@ -2034,7 +2032,7 @@ static bool playFile(const char * pFileName, SDL_Renderer * pRenderer)
 
       if(!quit)
         {SDL_Delay(100);}
-	  }
+    }
 */
     if(pTexture != nullptr)
       {SDL_DestroyTexture(pTexture);}
@@ -2093,7 +2091,7 @@ timestep(0.0f)
   this->mouse.mouseY = 0;
 
   #ifdef LE_DESKTOP_APP
-  this->clearKeyboard();
+    this->clearKeyboard();
   #endif
 
   this->mouse.leftButton = LE_INACTIVE;
@@ -2139,13 +2137,13 @@ LEMoon::~LEMoon()
 
   this->memoryClearSounds();
 
-	// loesche alle Texte
+  // loesche alle Texte
 
-	this->memoryClearTexts();
+  this->memoryClearTexts();
 
-	// loesche Fonts
+  // loesche Fonts
 
-	this->memoryClearFonts();
+  this->memoryClearFonts();
 
   // loesche Linien
 
@@ -2156,7 +2154,7 @@ LEMoon::~LEMoon()
   SDL_DestroyRenderer(this->pRenderer);
   SDL_DestroyWindow(this->pWindow);
   Mix_CloseAudio();
-	 TTF_Quit();
+  TTF_Quit();
   Mix_Quit();
   IMG_Quit();
   SDL_Quit();
@@ -2311,18 +2309,18 @@ int LEMoon::init(int numChannels, const char * pAppName)
     }
   }
 
-	// init TTF
+  // init TTF
 
   if(!result)
   {
-	  if(TTF_Init())
-	  {
-		  #ifdef LE_DEBUG
+    if(TTF_Init())
+    {
+      #ifdef LE_DEBUG
         this->printErrorDialog(LE_TTF_INIT, "LEMoon::init()\n\n");
       #endif
 
-		  result = LE_TTF_INIT;
-	  }
+      result = LE_TTF_INIT;
+    }
   }
 
   if(!result)
@@ -2752,7 +2750,7 @@ void LEMoon::endFrame()
 {
   this->timestep = (SDL_GetTicks() - this->timestamp) * 0.001f;
   #ifdef LE_DESKTOP_APP
-  this->freeKeyboardKeys();
+    this->freeKeyboardKeys();
   #endif
   this->freeMouse();
 }
@@ -4608,68 +4606,68 @@ void LEMoon::soundPause()
 
 int LEMoon::textCreate(uint32_t id)
 {
-	int result = LE_NO_ERROR;
-	LEText * pNew = this->textGet(id);
+  int result = LE_NO_ERROR;
+  LEText * pNew = this->textGet(id);
   #ifdef LE_DEBUG
-  char * pErrorString = new char[256 + 1];
+    char * pErrorString = new char[256 + 1];
   #endif
 
-	if(pNew == nullptr)
-	{
+  if(pNew == nullptr)
+  {
     if(this->pTextHead == nullptr)
     {
       this->pTextHead = new LEText;
-	    this->pTextHead->pLeft = this->pTextHead;
-	    this->pTextHead->pRight = this->pTextHead;
+      this->pTextHead->pLeft = this->pTextHead;
+      this->pTextHead->pRight = this->pTextHead;
       this->pTextHead->zindex = 0;
     }
 
-	  pNew = new LEText;
-		pNew->pRight = this->pTextHead;
-		pNew->pLeft = this->pTextHead->pLeft;
-		this->pTextHead->pLeft->pRight = pNew;
-		this->pTextHead->pLeft = pNew;
-		pNew->id = id;
-		pNew->pCurrentCursorPosition = nullptr;
-		pNew->pText = nullptr;
-		pNew->length = 0;
-		pNew->color = {255, 255, 255, 255};
+    pNew = new LEText;
+    pNew->pRight = this->pTextHead;
+    pNew->pLeft = this->pTextHead->pLeft;
+    this->pTextHead->pLeft->pRight = pNew;
+    this->pTextHead->pLeft = pNew;
+    pNew->id = id;
+    pNew->pCurrentCursorPosition = nullptr;
+    pNew->pText = nullptr;
+    pNew->length = 0;
+    pNew->color = {255, 255, 255, 255};
     pNew->zindex = 1;
     pNew->visible = LE_TRUE;
     pNew->pFont = nullptr;
     pNew->pTexture = nullptr;
     pNew->alpha = 255;
-		pNew->pLetterHead = nullptr;
+    pNew->pLetterHead = nullptr;
     pNew->pDirectionHead = nullptr;
     pNew->position = glm::vec2(0.0f, 0.0f);
-	}
-	else
-	{
-		#ifdef LE_DEBUG
+  }
+  else
+  {
+    #ifdef LE_DEBUG
       sprintf(pErrorString, "LEMoon::textCreate(%d)\n\n", id);
       this->printErrorDialog(LE_TEXT_EXIST, pErrorString);
       delete [] pErrorString;
     #endif
 
-		result = LE_TEXT_EXIST;
-	}
+    result = LE_TEXT_EXIST;
+  }
 
-	return result;
+  return result;
 }
 
 int LEMoon::textDelete(uint32_t id)
 {
-	 int result = LE_NO_ERROR;
+  int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
   LinkedVec2 * pCurrentDirection = nullptr;
   LinkedVec2 * pNextDirection = nullptr;
   LELetter * pCurrentLetter = nullptr;
   LELetter * pNextLetter = nullptr;
 
-	if(pText != nullptr)
-	{
-		pText->pLeft->pRight = pText->pRight;
-		pText->pRight->pLeft = pText->pLeft;
+  if(pText != nullptr)
+  {
+    pText->pLeft->pRight = pText->pRight;
+    pText->pRight->pLeft = pText->pLeft;
 
     // loesche Bewegungsrichtungen
 
@@ -4721,124 +4719,123 @@ int LEMoon::textDelete(uint32_t id)
       pText->pTexture = nullptr;
     }
 
-		delete pText;
+    delete pText;
 
     if(this->pTextHead->pLeft == this->pTextHead && this->pTextHead->pRight == this->pTextHead)
     {
       delete this->pTextHead;
       this->pTextHead = nullptr;
     }
-	}
-	else
-	{
-		#ifdef LE_DEBUG
+  }
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textDelete()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
-	}
+    result = LE_TEXT_NOEXIST;
+  }
 
-	return result;
+  return result;
 }
 
 int LEMoon::textAddLetter(uint32_t id, uint8_t letter)
 {
-	int result = LE_NO_ERROR;
-	LEText * pText = this->textGet(id);
-	LELetter * pLetter = nullptr;
+  int result = LE_NO_ERROR;
+  LEText * pText = this->textGet(id);
+  LELetter * pLetter = nullptr;
 
-	if(pText != nullptr)
-	{
+  if(pText != nullptr)
+  {
     if(pText->pLetterHead == nullptr)
     {
       pText->pLetterHead = new LELetter;
-		  pText->pLetterHead->pLeft = pText->pLetterHead;
-		  pText->pLetterHead->pRight = pText->pLetterHead;
+      pText->pLetterHead->pLeft = pText->pLetterHead;
+      pText->pLetterHead->pRight = pText->pLetterHead;
     }
 
-		pLetter = new LELetter;
-		pLetter->pRight = pText->pLetterHead;
-		pLetter->pLeft = pText->pLetterHead->pLeft;
-		pText->pLetterHead->pLeft->pRight = pLetter;
-		pText->pLetterHead->pLeft = pLetter;
-		pLetter->letter = letter;
-		pText->length += 1;
-	}
-	else
-	{
-		#ifdef LE_DEBUG
+    pLetter = new LELetter;
+    pLetter->pRight = pText->pLetterHead;
+    pLetter->pLeft = pText->pLetterHead->pLeft;
+    pText->pLetterHead->pLeft->pRight = pLetter;
+    pText->pLetterHead->pLeft = pLetter;
+    pLetter->letter = letter;
+    pText->length += 1;
+  }
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textAddLetter()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;	
-	}
+    result = LE_TEXT_NOEXIST;	
+  }
 
-	return result;
+  return result;
 }
 
 int LEMoon::textSubmit(uint32_t id)
 {
-	int result = LE_NO_ERROR;
-	LEText * pText = this->textGet(id);
-	uint32_t index = 0;
-	LELetter * pLetter = nullptr;
+  int result = LE_NO_ERROR;
+  LEText * pText = this->textGet(id);
+  uint32_t index = 0;
+  LELetter * pLetter = nullptr;
 
-	if(pText != nullptr)
-	{
-		// erstelle einen Textbuffer
+  if(pText != nullptr)
+  {
+    // erstelle einen Textbuffer
 
-		if(pText->pText != nullptr)
-		{
-			delete [] pText->pText;
-			pText->pText = nullptr;
-		}
+    if(pText->pText != nullptr)
+    {
+      delete [] pText->pText;
+      pText->pText = nullptr;
+    }
 
-		pText->pText = new unsigned char[pText->length + 1];
-		pLetter = pText->pLetterHead->pRight;
+    pText->pText = new unsigned char[pText->length + 1];
+    pLetter = pText->pLetterHead->pRight;
 
-		//fuelle das Textfeld
+    // fuelle das Textfeld
 
-		while(pLetter != pText->pLetterHead)
-		{
-			pText->pText[index] = (unsigned char) pLetter->letter;
+    while(pLetter != pText->pLetterHead)
+    {
+      pText->pText[index] = (unsigned char) pLetter->letter;
+      index++;
+      pLetter = pLetter->pRight;
+    }
 
-			index++;
-			pLetter = pLetter->pRight;
-		}
+    // null terminieren!
 
-		// null terminieren!
-
-		pText->pText[index] = '\0';
-	}
-	else
-	{
-		#ifdef LE_DEBUG
+    pText->pText[index] = '\0';
+  }
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSubmit()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;	
-	}
+    result = LE_TEXT_NOEXIST;	
+  }
 
-	return result;
+  return result;
 }
 
 int LEMoon::textSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-	int result = LE_NO_ERROR;
-	LEText * pText = this->textGet(id);
+  int result = LE_NO_ERROR;
+  LEText * pText = this->textGet(id);
 
-	if(pText != nullptr)
-		{pText->color = {r, g, b, a};}
-	else
-	{
-		#ifdef LE_DEBUG
+  if(pText != nullptr)
+    {pText->color = {r, g, b, a};}
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetColor()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;	
-	}
+    result = LE_TEXT_NOEXIST;	
+  }
 
-	return result;
+  return result;
 }
 
 int LEMoon::textSetVisible(uint32_t id, bool visible)
@@ -4846,16 +4843,16 @@ int LEMoon::textSetVisible(uint32_t id, bool visible)
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
 
-	if(pText != nullptr)
-		{pText->visible = visible;}
-	else
-	{
-		#ifdef LE_DEBUG
+  if(pText != nullptr)
+    {pText->visible = visible;}
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetVisible()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;	
-	}
+    result = LE_TEXT_NOEXIST;	
+  }
 
   return result;
 }
@@ -4869,14 +4866,14 @@ int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
   if(zindex == 0)
   {
     #ifdef LE_DEBUG
-    this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::textSetZindex()\n\n");
+      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::textSetZindex()\n\n");
     #endif
 
     result = LE_INVALID_ZINDEX;
   }
 
-	if(!result && pText != nullptr)
-	{
+  if(!result && pText != nullptr)
+  {
     // auskoppeln
 
     pText->pLeft->pRight = pText->pRight;
@@ -4903,14 +4900,14 @@ int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
       pCurrent = pCurrent->pRight;
     }
   }
-	else
-	{
-		#ifdef LE_DEBUG
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetZindex()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;	
-	}
+    result = LE_TEXT_NOEXIST;	
+  }
 
   return result;
 }
@@ -4931,7 +4928,7 @@ int LEMoon::textRelateFont(uint32_t id, uint32_t idFont)
         this->printErrorDialog(LE_FONT_NOEXIST, "LEMoon::textRelateFont()\n\n");
       #endif
 
-		  result = LE_FONT_NOEXIST;
+      result = LE_FONT_NOEXIST;
     }
   }
   else
@@ -4940,7 +4937,7 @@ int LEMoon::textRelateFont(uint32_t id, uint32_t idFont)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textRelateFont()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5018,7 +5015,7 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
           this->printErrorDialog(LE_TEXT_RELATE_FONT, "LEMoon::textPrepareForDrawing()\n\n");
         #endif
 
-		    result = LE_TEXT_RELATE_FONT;
+        result = LE_TEXT_RELATE_FONT;
       }
     }
     else
@@ -5027,7 +5024,7 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
         this->printErrorDialog(LE_TEXT_NOSUBMIT, "LEMoon::textPrepareForDrawing()\n\n");
       #endif
 
-		  result = LE_TEXT_NOSUBMIT;
+      result = LE_TEXT_NOSUBMIT;
     }
   }
   else
@@ -5036,7 +5033,7 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textPrepareForDrawing()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5060,7 +5057,7 @@ int LEMoon::textSetPosition(uint32_t id, int x, int y)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetPosition()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5080,17 +5077,17 @@ int LEMoon::textAddString(uint32_t id, const char * pString)
       if(pText->pLetterHead == nullptr)
       {
         pText->pLetterHead = new LELetter;
-		    pText->pLetterHead->pLeft = pText->pLetterHead;
-		    pText->pLetterHead->pRight = pText->pLetterHead;
+        pText->pLetterHead->pLeft = pText->pLetterHead;
+        pText->pLetterHead->pRight = pText->pLetterHead;
       }
 
       pLetter = new LELetter;
-		  pLetter->pRight = pText->pLetterHead;
-		  pLetter->pLeft = pText->pLetterHead->pLeft;
-		  pText->pLetterHead->pLeft->pRight = pLetter;
-		  pText->pLetterHead->pLeft = pLetter;
-		  pLetter->letter = pString[index];
-		  pText->length += 1;
+      pLetter->pRight = pText->pLetterHead;
+      pLetter->pLeft = pText->pLetterHead->pLeft;
+      pText->pLetterHead->pLeft->pRight = pLetter;
+      pText->pLetterHead->pLeft = pLetter;
+      pLetter->letter = pString[index];
+      pText->length += 1;
       index++;
     }
   }
@@ -5100,7 +5097,7 @@ int LEMoon::textAddString(uint32_t id, const char * pString)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textAddString()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5130,7 +5127,7 @@ int LEMoon::textSetAlpha(uint32_t id, uint8_t alpha)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetAlpha()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5166,7 +5163,7 @@ int LEMoon::textFade(uint32_t id, double alphaPerSecond)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textFade()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5209,7 +5206,7 @@ int LEMoon::textClear(uint32_t id)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textClear()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5266,7 +5263,7 @@ int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direct
         this->printErrorDialog(LE_DIRECTION_EXIST, "LEMoon::textAddDirection()\n\n");
       #endif
 
-		  result = LE_DIRECTION_EXIST;
+      result = LE_DIRECTION_EXIST;
     }
   }
   else
@@ -5275,7 +5272,7 @@ int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direct
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textAddDirection()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5304,7 +5301,7 @@ int LEMoon::textMoveDirection(uint32_t id, uint32_t idDirection)
         this->printErrorDialog(LE_DIRECTION_NOEXIST, "LEMoon::textMoveDirection()\n\n");
       #endif
 
-		  result = LE_DIRECTION_NOEXIST;
+      result = LE_DIRECTION_NOEXIST;
     }
   }
   else
@@ -5313,7 +5310,7 @@ int LEMoon::textMoveDirection(uint32_t id, uint32_t idDirection)
       this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textMoveDirection()\n\n");
     #endif
 
-		result = LE_TEXT_NOEXIST;
+    result = LE_TEXT_NOEXIST;
   }
 
   return result;
@@ -5378,100 +5375,100 @@ bool LEMoon::textGetVisible(uint32_t id)
 
 int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
 {
-	int result = LE_NO_ERROR;
-	LEFont * pNew = this->fontGet(id);
+  int result = LE_NO_ERROR;
+  LEFont * pNew = this->fontGet(id);
 
-	if(pNew == nullptr)
-	{
+  if(pNew == nullptr)
+  {
     if(this->pFontHead == nullptr)
     {
       this->pFontHead = new LEFont;
-	    this->pFontHead->pLeft = this->pFontHead;
-	    this->pFontHead->pRight = this->pFontHead;
+      this->pFontHead->pLeft = this->pFontHead;
+      this->pFontHead->pRight = this->pFontHead;
     }
 
-		pNew = new LEFont;
-		pNew->pLeft = this->pFontHead->pLeft;
-		pNew->pRight = this->pFontHead;
-		this->pFontHead->pLeft->pRight = pNew;
-		this->pFontHead->pLeft = pNew;
-		pNew->id = id;
-		pNew->pFont = TTF_OpenFont(pFile, fontSize);
+    pNew = new LEFont;
+    pNew->pLeft = this->pFontHead->pLeft;
+    pNew->pRight = this->pFontHead;
+    this->pFontHead->pLeft->pRight = pNew;
+    this->pFontHead->pLeft = pNew;
+    pNew->id = id;
+    pNew->pFont = TTF_OpenFont(pFile, fontSize);
 
-		if(pNew->pFont == nullptr)
-		{
-			#ifdef LE_DEBUG
-      	this->printErrorDialog(LE_OPEN_FONT, "LEMoon::fontCreateTTF()\n\n");
-    	#endif
+    if(pNew->pFont == nullptr)
+    {
+      #ifdef LE_DEBUG
+        this->printErrorDialog(LE_OPEN_FONT, "LEMoon::fontCreateTTF()\n\n");
+      #endif
 
-			result = LE_OPEN_FONT;
-		}
-	}
-	else
-	{
-		#ifdef LE_DEBUG
+      result = LE_OPEN_FONT;
+    }
+  }
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_FONT_EXIST, "LEMoon::fontCreateTTF()\n\n");
     #endif
 
-		result = LE_FONT_EXIST;
-	}
+    result = LE_FONT_EXIST;
+  }
 
-	return result;
+  return result;
 }
 
 int LEMoon::fontDelete(uint32_t id)
 {
-	int result = LE_NO_ERROR;
-	LEFont * pFont = this->fontGet(id);
+  int result = LE_NO_ERROR;
+  LEFont * pFont = this->fontGet(id);
 
-	if(pFont != nullptr)
-	{
-		pFont->pLeft->pRight = pFont->pRight;
-		pFont->pRight->pLeft = pFont->pLeft;
+  if(pFont != nullptr)
+  {
+    pFont->pLeft->pRight = pFont->pRight;
+    pFont->pRight->pLeft = pFont->pLeft;
 
-		if(pFont->pFont != nullptr)
-			{TTF_CloseFont(pFont->pFont);}
+    if(pFont->pFont != nullptr)
+      {TTF_CloseFont(pFont->pFont);}
 
-		delete pFont;
+    delete pFont;
 
     if(this->pFontHead->pLeft == this->pFontHead && this->pFontHead->pRight == this->pFontHead)
     {
       delete this->pFontHead;
       this->pFontHead = nullptr;
     }
-	}
-	else
-	{
-		#ifdef LE_DEBUG
+  }
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_FONT_NOEXIST, "LEMoon::fontDelete()\n\n");
     #endif
 
-		result = LE_FONT_NOEXIST;
-	}
+    result = LE_FONT_NOEXIST;
+  }
 
-	return result;
+  return result;
 }
 
 int LEMoon::fontSetStyle(uint32_t id, int style)
 {
   int result = LE_NO_ERROR;
-	LEFont * pFont = this->fontGet(id);
+  LEFont * pFont = this->fontGet(id);
 
-	if(pFont != nullptr)
-	{
-		if(pFont->pFont != nullptr)
-			{TTF_SetFontStyle(pFont->pFont, style);}
-	}
-	else
-	{
-		#ifdef LE_DEBUG
+  if(pFont != nullptr)
+  {
+    if(pFont->pFont != nullptr)
+      {TTF_SetFontStyle(pFont->pFont, style);}
+  }
+  else
+  {
+    #ifdef LE_DEBUG
       this->printErrorDialog(LE_FONT_NOEXIST, "LEMoon::fontSetStyle()\n\n");
     #endif
 
-		result = LE_FONT_NOEXIST;
-	}
+    result = LE_FONT_NOEXIST;
+  }
 
-	return result;
+  return result;
 }
 
 //////////////////////////////////////////////////////////
