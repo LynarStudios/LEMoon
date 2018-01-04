@@ -1,5 +1,4 @@
-
-Lynar Moon Engine:  A game engine based on SDL2 and its companion libraries
+Lynar Moon Engine:  A 2D game engine based on SDL2 and its companion libraries
 Written by Patrick-Christopher Mattulat
 
 This software is provided 'as-is', without any express or implied
