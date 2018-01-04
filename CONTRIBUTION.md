@@ -27,3 +27,5 @@ pmattulat@outlook.de .
    Valid prefix identifiers are "text", "model", "timeEvent", "point", "sound", "font", "line", "video"
    and "window". If you would like to introduce a new prefix feel free to do so.
 6. Please don't reorganize existing code without the authors permission.
+7. If you're not sure if you're doing it the right way just have a look at existing project code. It
+   should be clear by then.
