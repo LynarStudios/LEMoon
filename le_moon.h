@@ -415,8 +415,8 @@ typedef class LEMoon
     LEPoint * pPointHead;                                                                     // Liste mit Punkten
     Color backgroundColor;                                                                    // Hintergrundfarbe
     LESound * pSoundHead;                                                                     // Liste mit Sounds
-    LEText * pTextHead;																																				                                   // Liste mit Texten
-    LEFont * pFontHead;																																				                                   // Liste mit Fonts
+    LEText * pTextHead;                                                                       // Liste mit Texten
+    LEFont * pFontHead;                                                                       // Liste mit Fonts
     LELine * pLineHead;                                                                       // Liste mit Linien
     LEVideo * pVideoHead;                                                                     // Liste mit Videos
     FPS fps;                                                                                  // frames per second
@@ -440,7 +440,7 @@ typedef class LEMoon
     void clearMouse();                                                                        // diese Funktion setzt alle Maustasten auf 0
     int drawWithZindex();                                                                     // diese Funktion zeichnet Objekte (Models / Texte) anhand ihres Zindex
     void freeKeyboardKeys();                                                                  // diese Funktion setzt alle Keys auf inactive, die vorher auf released standen
-    void freeMouse();
+    void freeMouse();                                                                         // diese Funktion setzt alle Maus Events wieder zurueck
     void handleKeyboard();                                                                    // diese Funktion haelt alle keyboard events fest
     void handleMouse();                                                                       // diese Funktion haelt alle Mouse events fest
     void printErrorDialog(int, const char*);                                                  // diese Funktion gibt einen Fehler in einem Dialogfenster aus
@@ -473,7 +473,7 @@ typedef class LEMoon
     // text
 
     int textDraw(LEText*);                                                                    // diese Funktion zeichnet einen Text
-    LEText * textGet(uint32_t);																																                               // diese Funktion gibt eine Referenz auf einen Text zurueck
+    LEText * textGet(uint32_t);                                                               // diese Funktion gibt eine Referenz auf einen Text zurueck
     uint32_t textGetAmount();                                                                 // diese Funktion gibt die Anzahl aller Texte zurueck
     LinkedVec2 * textGetDirection(LEText*, uint32_t);                                         // diese Funktion gibt die Referenz auf eine Bewegungsrichtung zurueck
 
@@ -621,11 +621,11 @@ typedef class LEMoon
 		  // text
 
     int textAddDirection(uint32_t, uint32_t, glm::vec2);                                      // diese Funktion fuegt einem Text eine Bewegungsrichtung hinzu
-    int textAddLetter(uint32_t, uint8_t);																											                          // diese Funktion fuegt einen Buchstaben an das Ende hinzu
+    int textAddLetter(uint32_t, uint8_t);                                                     // diese Funktion fuegt einen Buchstaben an das Ende hinzu
     int textAddString(uint32_t, const char*);                                                 // diese Funktion fuegt einen kompletten String dem Text hinzu
     int textClear(uint32_t);                                                                  // diese Funktion loescht den kompletten Text
-    int textCreate(uint32_t);																																	                                // diese Funktion fuegt einen UTF8 Text hinzu
-    int textDelete(uint32_t);																																	                                // diese Funktion loescht einen Text
+    int textCreate(uint32_t);                                                                 // diese Funktion fuegt einen UTF8 Text hinzu
+    int textDelete(uint32_t);                                                                 // diese Funktion loescht einen Text
     int textFade(uint32_t, double);                                                           // diese Funktion blendet einen Text ein oder aus
     double textGetAlpha(uint32_t);                                                            // diese Funktion gibt den Alpha Wert eines Textes zurueck
     SDL_Point textGetPosition(uint32_t);                                                      // diese Funktion gibt die Position des Textes zurueck
@@ -635,16 +635,16 @@ typedef class LEMoon
     int textPrepareForDrawing(uint32_t);                                                      // diese Funktion bereitet einen Text auf das Zeichnen vor, ein Text kann anschliessend gezeichnet werden
     int textRelateFont(uint32_t, uint32_t);                                                   // diese Funktion ordnet dem Text einen Font zu, muss vor textPrepareForDrawing() aufgerufen werden
     int textSetAlpha(uint32_t, uint8_t);                                                      // diese Funktion setzt den Alphawert eines Textes, muss nach textPrepareForDrawing() aufgerufen werden!
-    int textSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);														             // diese Funktion setzt die Farbe eines Textes, muss vor textPrepareForDrawing() aufgerufen werden
+    int textSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                           // diese Funktion setzt die Farbe eines Textes, muss vor textPrepareForDrawing() aufgerufen werden
     int textSetPosition(uint32_t, int, int);                                                  // diese Funktion setzt die Position eines Textes
     int textSetVisible(uint32_t, bool);                                                       // diese Funktion sagt aus, ob ein Text sichtbar ist, oder nicht
     int textSetZindex(uint32_t, uint32_t);                                                    // diese Funktion setzt den z-index fuer einen Text, 0 nicht erlaubt
-    int textSubmit(uint32_t);																																	                                // diese Funktion erstellt aus allen Buchstaben einen Text
+    int textSubmit(uint32_t);                                                                 // diese Funktion erstellt aus allen Buchstaben einen Text
 
     // font
 
-    int fontCreateTTF(uint32_t, const char*, int);																						                      // diese Funktion fuegt einen Font hinzu
-    int fontDelete(uint32_t);																																	                                // diese Funktion loescht einen Font
+    int fontCreateTTF(uint32_t, const char*, int);                                            // diese Funktion fuegt einen Font hinzu
+    int fontDelete(uint32_t);                                                                 // diese Funktion loescht einen Font
     int fontSetStyle(uint32_t, int);                                                          // diese Funktion setzt den Stil des Fonts, TTF_STYLE_BOLD, TTF_STYLE_ITALIC, TTF_STYLE_UNDERLINE, TTF_STYLE_STRIKETHROUGH
 
     // line
