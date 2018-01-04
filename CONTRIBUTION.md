@@ -2,7 +2,7 @@
 
 If you would like to contribute to this project feel free to do so. 
 You can either participate in code improvements or bug fixes. To end up 
-your code version in a official version of this project you need to stick to the
+your code version in an official version of this project you need to stick to the
 projects code style.
 
 After you officially contributed your name will be mentioned in the specific
