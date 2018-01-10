@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            29.12.2017
+  updated:            10.01.2018
 */
 
 #ifndef H_LE_MOON
@@ -618,7 +618,7 @@ typedef class LEMoon
     int soundPlay(uint32_t, int);                                                             // diese Funktion spielt einen Sound ab
     void soundSetVolume(uint8_t);                                                             // diese Funktion setzt die Lautstaerke
 
-		  // text
+    // text
 
     int textAddDirection(uint32_t, uint32_t, glm::vec2);                                      // diese Funktion fuegt einem Text eine Bewegungsrichtung hinzu
     int textAddLetter(uint32_t, uint8_t);                                                     // diese Funktion fuegt einen Buchstaben an das Ende hinzu
