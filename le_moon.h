@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            10.01.2018
+  updated:            15.01.2018
 */
 
 #ifndef H_LE_MOON
@@ -524,8 +524,6 @@ typedef class LEMoon
     int pollEvent();                                                                          // diese Funktion prueft auf events
     void printErrorMessage(const char*, const char*);                                         // diese Funktion ermoeglicht dem Programmierer eine Fehlermeldung in einem Fenster auszugeben
     bool recentFPSAvailable();                                                                // diese Funktion sagt aus, ob aktuelle FPS verfuegbar sind, diese Funktion gibt nur einmal pro Sekunde LE_TRUE zurueck
-    double relativeSizeX(double);                                                             // diese Funktion gibt die relative Groesse einer Pixelgroesse in der X-Dimension in Prozent zurueck
-    double relativeSizeY(double);                                                             // diese Funktion gibt die relative Groesse einer Pixelgroesse in der Y-Dimension in Prozent zurueck
     void setBackgroundColor(uint8_t, uint8_t, uint8_t);                                       // diese Funktion setzt die Hintergrundfarbe der Anwendung
     int showCursor(bool);                                                                     // diese Funktion versteckt den Cursor (LE_FALSE) oder zeigt ihn (LE_TRUE)
 
