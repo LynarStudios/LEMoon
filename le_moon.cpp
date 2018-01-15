@@ -2875,7 +2875,7 @@ char * LEMoon::getPrefPath()
 }
 
 #ifdef LE_LINUX
-int LEMoon::mkpath(const char* dir, mode_t mode)
+void LEMoon::mkpath(const char * dir, mode_t mode)
 {
   char tmp[256];
   char * p = nullptr;
