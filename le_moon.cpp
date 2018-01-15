@@ -2829,16 +2829,6 @@ double LEMoon::pixelToPercentY(double pixel)
   return (pixel / this->displayMode.h) * 100.0f;
 }
 
-double LEMoon::relativeSizeX(double pixel)
-{
-  return this->percentToPixelX(this->pixelToPercentX(pixel));
-}
-
-double LEMoon::relativeSizeY(double pixel)
-{
-  return this->percentToPixelY(this->pixelToPercentY(pixel));
-}
-
 double LEMoon::getTimestep()
 {
   return this->timestep;
