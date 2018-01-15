@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            03.01.2018
+  updated:            15.01.2018
 */
 
 #include "le_moon.h"
