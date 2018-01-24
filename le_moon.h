@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            15.01.2018
+  updated:            24.01.2018
 */
 
 #ifndef H_LE_MOON
