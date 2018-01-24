@@ -562,9 +562,7 @@ typedef class LEMoon
     double modelGetSizeFactor(uint32_t);                                                      // diese Funktion gibt den Faktor der Modelgroesse zurueck
     SDL_Surface * modelGetSurface(uint32_t, uint32_t);                                        // diese Funktion gibt einen Zeiger auf ein erstelltes Surface zurueck
     double modelGetTextureAlpha(uint32_t, uint32_t);                                          // diese Funktion gibt den Alphawert einer Textur zurueck
-    bool modelGetTextureAnimationState(uint32_t, uint32_t);                                   // diese Funktion sagt aus, ob eine Texturanimation beendet wurde oder nicht true = beendet, false = nicht beendet
     int modelMoveDirection(uint32_t, uint32_t);                                               // diese Funktion bewegt ein Model in eine vorher angelegte Richtung
-    int modelResetTextureAnimation(uint32_t, uint32_t);                                       // diese Funktion setzt eine Texturanimation wieder zurueck
     int modelRotate(uint32_t, double);                                                        // diese Funktion rotiert ein Model um die angegebene Gradzahl pro Sekunde
     int modelRotateDir(uint32_t, uint32_t, double);                                           // diese Funktion rotiert eine Bewegungsrichtung um eine angegebene Gradzahl pro Sekunde
     int modelRotateOnce(uint32_t, double);                                                    // diese Funktion rotiert ein Model einmalig
