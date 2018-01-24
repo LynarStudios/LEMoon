@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            15.01.2018
+  updated:            24.01.2018
 */
 
 #include "le_moon.h"
@@ -3135,31 +3135,6 @@ int LEMoon::modelAnimateTextureRepeat(uint32_t id, uint32_t idTexture, int idSta
   return result;
 }
 
-int LEMoon::modelResetTextureAnimation(uint32_t id, uint32_t idTexture)
-{
-  int result = LE_NO_ERROR;
-  LEModel * pElem = this->modelGet(id);
-
-  if(pElem != nullptr)
-  {
-    result = pElem->pModel->mdlResetTextureAnimation(idTexture);
-
-    #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelResetTextureAnimation()\n\n");
-    #endif
-  }
-  else
-  {
-    #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelResetTextureAnimation()\n\n");
-    #endif
-
-    result = LE_MDL_NOEXIST;
-  }
-
-  return result;
-}
-
 int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
 {
   int result = LE_NO_ERROR;
@@ -3500,23 +3475,6 @@ double LEMoon::modelGetTextureAlpha(uint32_t id, uint32_t idTexture)
   }
 
   return alpha;
-}
-
-bool LEMoon::modelGetTextureAnimationState(uint32_t id, uint32_t idTexture)
-{
-  bool animationEnd = LE_FALSE;
-  LEModel * pElem = this->modelGet(id);
-
-  if(pElem != nullptr)
-    {animationEnd = pElem->pModel->mdlGetTextureAnimationState(idTexture);}
-  else
-  {
-    #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetTextureAnimationState()\n\n");
-    #endif
-  }
-
-  return animationEnd;
 }
 
 int LEMoon::modelSetSizeFactor(uint32_t id, double nsizeFactor)
