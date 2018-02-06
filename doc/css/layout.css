@@ -1,0 +1,316 @@
+@media screen and (min-width: 480px)
+{
+  html
+  {
+    width:                          100%;
+    height:                         100%;
+  }
+
+  body
+  {
+    width:                          100%;
+    height:                         100%;
+    background-color:               #000000;
+    color:                          #cccccc;
+    font-family:                    Arial;
+    font-size:                      100%;
+    background-image:               url(../images/background.jpg);
+    background-repeat:              no-repeat;
+    background-size:                100%;
+  }
+
+  .modalDialog > div 
+  {
+    width:                          30%;
+    position:                       relative;
+    margin:                         10% auto;
+    padding:                        13px 20px 13px 20px;
+    border-radius:                  10px;
+    background:                     #fff;
+    border:                         1px solid white;
+    background:                     -moz-linear-gradient(#282829, #000000);
+    background:                     -webkit-linear-gradient(#282829, #000000);
+    background:                     -o-linear-gradient(#282829, #000000);
+  }
+}
+
+@media screen and (max-width: 480px)
+{
+  html
+  {
+    width:                          100%;
+    height:                         100%;
+  }
+
+  body
+  {
+    width:                          100%;
+    height:                         100%;
+    background-color:               #000000;
+    color:                          #cccccc;
+    font-family:                    Arial;
+    font-size:                      100%;
+    background-image:               url(../images/background_small.jpg);
+    background-repeat:              no-repeat;
+    background-size:                auto;
+  }
+
+  .modalDialog > div 
+  {
+    width:                          65%;
+    font-size:                      0.7em;
+    position:                       relative;
+    margin:                         10% auto;
+    padding:                        13px 20px 13px 20px;
+    border-radius:                  10px;
+    background:                     #fff;
+    border:                         1px solid white;
+    background:                     -moz-linear-gradient(#282829, #000000);
+    background:                     -webkit-linear-gradient(#282829, #000000);
+    background:                     -o-linear-gradient(#282829, #000000);
+  }
+}
+
+.modalDialog 
+{
+  position:                         fixed;
+  font-family:                      Arial;
+  top:                              0;
+  right:                            0;
+  bottom:                           0;
+  left:                             0;
+  background:                       rgba(0, 0, 0, 0.4);
+  z-index:                          99999;
+  opacity:                          0;
+  -webkit-transition:               opacity 400ms ease-in;
+  -moz-transition:                  opacity 400ms ease-in;
+  transition:                       opacity 400ms ease-in;
+  pointer-events:                   none;
+}      
+
+.modalDialog:target 
+{
+  opacity:                          0.9;
+  pointer-events:                   auto;
+}   
+
+.close 
+{
+  background:                       #606061;
+  color:                            #ffffff;
+  line-height:                      25px;
+  position:                         absolute;
+  right:                            -12px;
+  text-align:                       center;
+  top:                              -10px;
+  width:                            24px;
+  text-decoration:                  none;
+  font-weight:                      bold;
+  -webkit-border-radius:            12px;
+  -moz-border-radius:               12px;
+  border-radius:                    12px;
+  -moz-box-shadow:                  1px 1px 3px #000;
+  -webkit-box-shadow:               1px 1px 3px #000;
+  box-shadow:                       1px 1px 3px #000;
+}
+
+.navButton
+{
+  display:                          block;
+  width:                            7em;
+  height:                           7em;
+  border:                           1px solid #cccccc;
+  border-radius:                    15px;
+  margin-top:                       1em;
+  margin-right:                     1em;
+  vertical-align:                   middle;
+}
+
+.navButton:hover
+{
+  border:                           1px solid #8a92ff;
+}
+
+.close:hover 
+{ 
+  background:                       #00d9ff; 
+}
+
+header
+{
+  width:                            100%;
+}
+
+footer
+{
+  width:                            100%;
+}
+
+img.center
+{
+  display:                          block;
+  margin-left:                      auto;
+  margin-right:                     auto;
+}
+
+a.button
+{
+  color:                            #cccccc;
+  text-decoration:                  none;
+  border-radius:                    15px;
+  border:                           1px solid #6d727d;
+  background:                       rgba(0, 0, 0, 0.4);
+  padding:                          0.5em;
+  text-align:                       center;
+}
+
+a.button:hover
+{
+  color:                            #830000;
+  border:                           1px solid #830000;
+}
+
+div#content
+{
+  display:                          block;
+  margin:                           auto auto;
+  width:                            90%;
+  height:                           55%;
+  border-radius:                    15px;
+  border:                           1px solid #6d727d;
+  background:                       rgba(0, 0, 0, 0.4);
+  overflow-y:                       auto;
+  padding:                          0.5em;
+}
+
+div#footer
+{
+  display:                          block;
+  margin:                           auto auto;
+  width:                            90%;
+  height:                           15%;
+  margin-top:                       0.5em;
+  padding:                          0.5em;
+}
+
+div#navigation
+{
+  width:                            100%;border:
+  margin-top:                       0px;
+  margin-left:                      0px;
+  float:                            left;
+}
+
+h1
+{
+  font-size:                        1.5em;
+}
+
+h2
+{
+  font-size:                        1.10em;
+}
+
+p
+{
+  padding:                          0px;
+  margin:                           0px 0px 0px 0px;
+}
+
+div.left
+{
+  float:                            left;
+  margin-top:                       0px;
+  margin-left:                      0px;
+}
+
+div.rightOfLeft
+{
+  margin-top:                       0px;
+  margin-right:                     0px;
+}
+
+p.center
+{
+  position:                         relative;
+  text-align:                       center;
+  color:                            white;
+  text-decoration:                  none;
+  font-weight:                      bold;
+  font-size:                        1em;
+  top:                              50%;
+  transform:                        translateY(-50%);
+}
+
+a.navLink
+{
+  color:                            #cccccc;
+  text-decoration:                  none;
+  font-weight:                      bold;
+  font-size:                        1em;
+  overflow:                         inherit;
+}
+
+a.navLink:hover
+{
+  color:                            #830000;
+}
+
+a.normalNavBlock
+{
+  display:                          table;
+  text-decoration:                  none;
+  color:                            #cccccc;
+}
+
+a.normalNavBlock:hover
+{
+  color:                            #830000;
+}
+
+a.normalNav
+{
+  text-decoration:                  none;
+  color:                            #cccccc;
+}
+
+a.normalNav:hover
+{
+  color:                            #830000;
+}
+
+b.datatype
+{
+  color:                            #830000;
+}
+
+b.constant
+{
+  color:                            #00b893;
+}
+
+b.file
+{
+  color:                            #cd9600;
+}
+
+b.cl
+{
+  color:                            #129d00;
+}
+
+b.identifier
+{
+  color:                            #6269c9;
+}
+
+a.underline
+{
+  text-decoration:                  underline;
+  color:                            #cccccc;
+}
+
+a.underline:hover
+{
+  color:                            #830000;
+}

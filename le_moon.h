@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            24.01.2018
+  updated:            02.02.2018
 */
 
 #ifndef H_LE_MOON
@@ -20,7 +20,7 @@
 #include <string.h>
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
-#include "theoraplay.h"
+//#include "theoraplay.h"
 #include "le_error.h"
 #include "le_glb.h"
 #include "le_model.h"
@@ -305,6 +305,7 @@ typedef struct sLEPoint
   double currentAlpha;
   double currentDegree;
   bool visible;
+  uint32_t zindex;
   LinkedVec2 * pDirectionHead;
   sLEPoint * pLeft;
   sLEPoint * pRight;
@@ -463,6 +464,7 @@ typedef class LEMoon
 
     // point
 
+    int pointDraw(LEPoint*);                                                                  // diese Funktion malt einen Punkt
     LEPoint * pointGet(uint32_t);                                                             // diese Funktion gibt eine Referenz auf einen Punkt zurueck
     LinkedVec2 * pointGetDirection(LEPoint*, uint32_t);                                       // diese Funktion gibt eine Referenz auf eine Bewegungsrichtung zurueck
 
@@ -498,6 +500,8 @@ typedef class LEMoon
     // general
 
     void beginFrame();                                                                        // diese Funktion sollte am Anfang eines Frames in einem main loop erfolgen
+    double convertResHeight(double, double);                                                  // diese Funktion gibt die relative Y-Pixelgroesse eines Wertes anhand einer Ausgangsbildschirmaufloesung zurueck
+    double convertResWidth(double, double);                                                   // diese Funktion gibt die relative X-Pixelgroesse eines Wertes anhand einer Ausgangsbildschirmaufloesung zurueck
     void delay(uint32_t);                                                                     // diese Funktion verzoegert die Anwendung um die angegebene Anzahl an Millisekunden
     int drawFrame();                                                                          // diese Funktion zeichnet ein Frame, sie sollte nach lemoonBeginFrame() und vor lemoonEndFrame() aufgerufen werden
     void endFrame();                                                                          // diese Funktion sollte am Ende eines Frames aufgerufen werden
@@ -509,7 +513,10 @@ typedef class LEMoon
     int getScreenWidth();                                                                     // diese Funktion gibt die Breite der Bildschirmaufloesung zurueck
     uint32_t getTimestamp();                                                                  // diese Funktion gibt den aktuellen Zeitstempel zurueck
     double getTimestep();                                                                     // diese Funktion gibt die Dauer des letzten Frames zurueck
-    int init(int, const char*);                                                               // diese Funktion initialisiert die Engine
+    int init(const char*);                                                                    // diese Funktion initialisiert die Engine
+    int initImage();                                                                          // diese Funktion initialisiert den Bilderteil der Engine
+    int initSound(int);                                                                       // diese Funktion initialisiert den Soundteil der Engine
+    int initTTF();                                                                            // diese Funktion initialisiert den TTF - Teil der Engine
     bool keyEvent(uint32_t, SDL_Keycode);                                                     // diese Funktion prueft, ob ein SDL_Keycode (https://wiki.libsdl.org/SDL_Keycode) gedrueckt oder losgelassen wird
     void messageBox(const char*, const char*);                                                // diese Funktion ruft eine Dialogbox auf mit einem gewaehlten Titel und einem gewaehlten Text
     #ifdef LE_LINUX
@@ -562,6 +569,8 @@ typedef class LEMoon
     double modelGetSizeFactor(uint32_t);                                                      // diese Funktion gibt den Faktor der Modelgroesse zurueck
     SDL_Surface * modelGetSurface(uint32_t, uint32_t);                                        // diese Funktion gibt einen Zeiger auf ein erstelltes Surface zurueck
     double modelGetTextureAlpha(uint32_t, uint32_t);                                          // diese Funktion gibt den Alphawert einer Textur zurueck
+    bool modelGetVisible(uint32_t);                                                           // diese Funktion gibt visible zurueck
+    uint32_t modelGetZindex(uint32_t);                                                        // diese Funktion gibt den Z-index des Models zurueck
     int modelMoveDirection(uint32_t, uint32_t);                                               // diese Funktion bewegt ein Model in eine vorher angelegte Richtung
     int modelRotate(uint32_t, double);                                                        // diese Funktion rotiert ein Model um die angegebene Gradzahl pro Sekunde
     int modelRotateDir(uint32_t, uint32_t, double);                                           // diese Funktion rotiert eine Bewegungsrichtung um eine angegebene Gradzahl pro Sekunde
@@ -577,6 +586,7 @@ typedef class LEMoon
     int modelSetTextureZindex(uint32_t, uint32_t, uint32_t);                                  // diese Funktion setzt den zindex einer Textur innerhalb eines Models
     int modelSetVisible(uint32_t, bool);                                                      // diese Funktion setzt ein Model auf sichtbar oder unsichtbar
     int modelSetZindex(uint32_t, uint32_t);                                                   // diese Funktion setzt den zindex eines Models, 0 nicht erlaubt
+    bool modelTextureExists(uint32_t, uint32_t);                                              // diese Funktion prueft, ob eine Modeltextur ID existiert
 
     // time
 
@@ -601,6 +611,7 @@ typedef class LEMoon
     int pointSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                          // diese Funktion legt die Farbe eines Punktes fest
     int pointSetPosition(uint32_t, int, int);                                                 // diese Funktion setzt die Position eines Punktes
     int pointSetVisible(uint32_t, bool);                                                      // diese Funktion macht einen Punkt sichtbar oder unsichtbar
+    int pointSetZindex(uint32_t, uint32_t);                                                   // diese Funktion setzt den Z-index eines Punktes
 
     // sound
 

@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            24.01.2018
+  updated:            05.02.2018
 */
 
 #include "le_moon.h"
@@ -340,8 +340,9 @@ int LEMoon::drawWithZindex()
   LEModel * pModel = nullptr;
   LEText * pText = nullptr;
   LELine * pLine = nullptr;
+  LEPoint * pPoint = nullptr;
   uint32_t zindex = 1;
-  const uint32_t AMOUNT_OBJECTS = 3;
+  const uint32_t AMOUNT_OBJECTS = 4;
   uint32_t fakeZindex = 0;
 
   // inizialize
@@ -364,14 +365,20 @@ int LEMoon::drawWithZindex()
     zindex = mathMin(zindex, pLine->zindex);
   }
 
-  uint32_t zindexArray[AMOUNT_OBJECTS]; // 0 = Model, 1 = Texts, 2 = Lines
+  if(this->pPointHead != nullptr)
+  {
+    pPoint = this->pPointHead->pRight;
+    zindex = mathMin(zindex, pPoint->zindex);
+  }
+
+  uint32_t zindexArray[AMOUNT_OBJECTS]; // 0 = Model, 1 = Texts, 2 = Lines, 3 = Point
 
   for(uint32_t i = 0 ; i < AMOUNT_OBJECTS ; i++)
     {zindexArray[i] = 0;}
 
   // draw
 
-  while(pModel != this->pModelHead || pText != this->pTextHead || pLine != this->pLineHead)
+  while(pModel != this->pModelHead || pText != this->pTextHead || pLine != this->pLineHead || pPoint != this->pPointHead)
   {
     // models
 
@@ -427,13 +434,31 @@ int LEMoon::drawWithZindex()
     if(result)
       {break;}
 
-    // text, models and lines still available?
+    // points
+
+    while(pPoint != this->pPointHead && pPoint->zindex <= zindex)
+    {
+      result = this->pointDraw(pPoint);
+
+      if(result)
+        {break;}
+      else
+      {
+        if(pPoint != this->pPointHead)
+          {pPoint = pPoint->pRight;}
+      }
+    }
+
+    if(result)
+      {break;}
+
+    // text, models, points and lines still available?
 
     for(uint32_t i = 0 ; i < AMOUNT_OBJECTS ; i++)
       {zindexArray[i] = 0;}
 
-    if(pText != this->pTextHead && pModel != this->pModelHead && pLine != this->pLineHead)
-      {zindex = mathMin(mathMin(pModel->zindex, pText->zindex), pLine->zindex);}
+    if(pText != this->pTextHead && pModel != this->pModelHead && pLine != this->pLineHead && pPoint != this->pPointHead)
+      {zindex = mathMin(mathMin(mathMin(pModel->zindex, pText->zindex), pLine->zindex), pPoint->zindex);}
     else
     {
       // zindex auslesen und setzen
@@ -446,6 +471,9 @@ int LEMoon::drawWithZindex()
 
       if(pLine != this->pLineHead)
         {zindexArray[2] = pLine->zindex;}
+
+      if(pPoint != this->pPointHead)
+        {zindexArray[3] = pPoint->zindex;}
 
       // tote zindex anpassen
 
@@ -759,6 +787,11 @@ void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
     case LE_SDL_HINT:
     {
       sprintf(pErrorString, "%sSDL_SetHint() failed!\n%s", pErrorInfo, SDL_GetError());
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
+    } break;
+    case LE_INIT_SUBSYSTEM:
+    {
+      sprintf(pErrorString, "%sSDL_InitSubSystem() failed!\n%s", pErrorInfo, SDL_GetError());
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
     } break;
   };
@@ -1504,6 +1537,57 @@ LETimeEvent * LEMoon::timeEventGet(uint32_t id)
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 
+int LEMoon::pointDraw(LEPoint * pPoint)
+{
+  int result = LE_NO_ERROR;
+
+  // draw points
+
+  if(pPoint->visible)
+  {
+    // choose right color
+
+    if(SDL_SetRenderDrawColor(this->pRenderer, pPoint->color.r, pPoint->color.g, pPoint->color.b, pPoint->color.a))
+    {
+      #ifdef LE_DEBUG
+        this->printErrorDialog(LE_SDL_DRAW_COLOR, "LEMoon::pointDraw()\n\n");
+      #endif
+
+      result = LE_SDL_DRAW_COLOR;
+    }
+
+    // blend mode
+
+    if(!result)
+    {
+      if(SDL_SetRenderDrawBlendMode(this->pRenderer, SDL_BLENDMODE_BLEND))
+      {
+        #ifdef LE_DEBUG
+          this->printErrorDialog(LE_DRAW_BLEND_MODE, "LEMoon::pointDraw()\n\n");
+        #endif
+      
+        result = LE_DRAW_BLEND_MODE;
+      }
+    }
+
+    // draw point
+
+    if(!result)
+    {
+      if(SDL_RenderDrawPoint(this->pRenderer, pPoint->pointBuffer.x, pPoint->pointBuffer.y))
+      {
+        #ifdef LE_DEBUG
+          this->printErrorDialog(LE_DRAW_POINT, "LEMoon::pointDraw()\n\n");
+        #endif
+      
+        result = LE_DRAW_POINT;
+      }
+    }
+  }
+
+  return result;
+}
+
 LEPoint * LEMoon::pointGet(uint32_t id)
 {
   LEPoint * pRet = nullptr;
@@ -2170,16 +2254,15 @@ bool LEMoon::engineInitialized()
   return this->initialized;
 }
 
-int LEMoon::init(int numChannels, const char * pAppName)
+int LEMoon::init(const char * pAppName)
 {
   int result = LE_NO_ERROR;
-  int mixFlags = 0;
   char * pString = new char [512 + 1];
   char * pBasePath = nullptr;
 
   // initialize SDL
 
-  if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS))
+  if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO | SDL_INIT_EVENTS))
   {
     #ifdef LE_DEBUG
       this->printErrorDialog(LE_SDL_INIT, "LEMoon::init()\n\n");
@@ -2253,32 +2336,56 @@ int LEMoon::init(int numChannels, const char * pAppName)
     }
   }
 
-  // load image library
-
   if(!result)
   {
-    if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
-    {
-      #ifdef LE_DEBUG
-        this->printErrorDialog(LE_SDL_IMG_INIT, "LEMoon::init()\n\n");
-      #endif
+    printf("Lynar Engine Moon 1.0.0 (author: Patrick-Christopher Mattulat)\n");
+    this->initialized = LE_TRUE;
+  }
 
-      result = LE_SDL_IMG_INIT;
-    }
+  delete [] pString;
+  pString = nullptr;
+  return result;
+}
+
+int LEMoon::initImage()
+{
+  int result = LE_NO_ERROR;
+
+  // load image library
+
+  if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+  {
+    #ifdef LE_DEBUG
+      this->printErrorDialog(LE_SDL_IMG_INIT, "LEMoon::initImage()\n\n");
+    #endif
+
+    result = LE_SDL_IMG_INIT;
+  }
+
+  return result;
+}
+
+int LEMoon::initSound(int numChannels)
+{
+  int result = LE_NO_ERROR;
+  int mixFlags = 0;
+
+  if(SDL_InitSubSystem(SDL_INIT_AUDIO))
+  {
+    #ifdef LE_DEBUG
+      this->printErrorDialog(LE_INIT_SUBSYSTEM, "LEMoon::initSound()\n\n");
+    #endif
   }
 
   // Sounds
 
-  if(!result)
+  if((Mix_Init(mixFlags) & mixFlags) != mixFlags)
   {
-    if((Mix_Init(mixFlags) & mixFlags) != mixFlags)
-    {
-      #ifdef LE_DEBUG
-        this->printErrorDialog(LE_MIXER_INIT, "LEMoon::init()\n\n");
-      #endif
+    #ifdef LE_DEBUG
+      this->printErrorDialog(LE_MIXER_INIT, "LEMoon::initSound()\n\n");
+    #endif
 
-      result = LE_MIXER_INIT;
-    }
+    result = LE_MIXER_INIT;
   }
 
   // open Audio Channel Stereo
@@ -2288,7 +2395,7 @@ int LEMoon::init(int numChannels, const char * pAppName)
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024))
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_OPEN_AUDIO, "LEMoon::init()\n\n");
+        this->printErrorDialog(LE_OPEN_AUDIO, "LEMoon::initSound()\n\n");
       #endif
 
       result = LE_OPEN_AUDIO;
@@ -2302,35 +2409,31 @@ int LEMoon::init(int numChannels, const char * pAppName)
     if(Mix_AllocateChannels(numChannels) != numChannels)
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_ALLOC_CHANNELS, "LEMoon::init()\n\n");
+        this->printErrorDialog(LE_ALLOC_CHANNELS, "LEMoon::initSound()\n\n");
       #endif
 
       result = LE_ALLOC_CHANNELS;
     }
   }
 
+  return result;
+}
+
+int LEMoon::initTTF()
+{
+  int result = LE_NO_ERROR;
+
   // init TTF
 
-  if(!result)
+  if(TTF_Init())
   {
-    if(TTF_Init())
-    {
-      #ifdef LE_DEBUG
-        this->printErrorDialog(LE_TTF_INIT, "LEMoon::init()\n\n");
-      #endif
+    #ifdef LE_DEBUG
+      this->printErrorDialog(LE_TTF_INIT, "LEMoon::initTTF()\n\n");
+    #endif
 
-      result = LE_TTF_INIT;
-    }
+    result = LE_TTF_INIT;
   }
 
-  if(!result)
-  {
-    printf("Lynar Engine Moon 1.0.0 (author: Patrick-Christopher Mattulat)\n");
-    this->initialized = LE_TRUE;
-  }
-
-  delete [] pString;
-  pString = nullptr;
   return result;
 }
 
@@ -2677,58 +2780,7 @@ int LEMoon::drawFrame()
     }
   }
 
-  // draw points
-
-  if(!result && this->pPointHead != nullptr)
-  {
-    pPoint = this->pPointHead->pRight;
-
-    while(pPoint != this->pPointHead)
-    {
-      if(pPoint->visible)
-      {
-        // choose right color
-
-        if(SDL_SetRenderDrawColor(this->pRenderer, pPoint->color.r, pPoint->color.g, pPoint->color.b, pPoint->color.a))
-        {
-          #ifdef LE_DEBUG
-            this->printErrorDialog(LE_SDL_DRAW_COLOR, "LEMoon::drawFrame()\n\n");
-          #endif
-
-          result = LE_SDL_DRAW_COLOR;
-          break;
-        }
-
-        // blend mode
-
-        if(SDL_SetRenderDrawBlendMode(this->pRenderer, SDL_BLENDMODE_BLEND))
-        {
-          #ifdef LE_DEBUG
-            this->printErrorDialog(LE_DRAW_BLEND_MODE, "LEMoon::drawFrame()\n\n");
-          #endif
-
-          result = LE_DRAW_BLEND_MODE;
-          break;
-        }
-
-        // draw point
-
-        if(SDL_RenderDrawPoint(this->pRenderer, pPoint->pointBuffer.x, pPoint->pointBuffer.y))
-        {
-          #ifdef LE_DEBUG
-            this->printErrorDialog(LE_DRAW_POINT, "LEMoon::drawFrame()\n\n");
-          #endif
-
-          result = LE_DRAW_POINT;
-          break;
-        }
-      }
-
-      pPoint = pPoint->pRight;
-    }
-  }
-
-  // draw Models, Texts and Lines, depending on zindex 
+  // draw Models, Texts, Points and Lines, depending on zindex 
 
   if(!result)
     {result = this->drawWithZindex();}
@@ -2837,6 +2889,16 @@ double LEMoon::getTimestep()
 Color LEMoon::getBackgroundColor()
 {
   return this->backgroundColor;
+}
+
+double LEMoon::convertResWidth(double pixel, double originalWidth)
+{
+  return (pixel / originalWidth) * this->displayMode.w;
+}
+
+double LEMoon::convertResHeight(double pixel, double originalHeight)
+{
+  return (pixel / originalHeight) * this->displayMode.h;
 }
 
 bool LEMoon::recentFPSAvailable()
@@ -3140,46 +3202,50 @@ int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
   LEModel * pCurrent = nullptr;
+  bool moreThanOneElement = this->pModelHead->pLeft->id != this->pModelHead->pRight->id;
 
   if(zindex == 0)
   {
     #ifdef LE_DEBUG
-    this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::modelSetZindex()\n\n");
+      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::modelSetZindex()\n\n");
     #endif
 
     result = LE_INVALID_ZINDEX;
   }
 
-  if(!result && pElem != nullptr)
+  if(moreThanOneElement)
   {
-    pElem->zindex = zindex;
-
-    // exclude from list
-
-    pElem->pLeft->pRight = pElem->pRight;
-    pElem->pRight->pLeft = pElem->pLeft;
-
-    // search right place for zindex
-
-    pCurrent = this->pModelHead->pRight;
-
-    while(pElem->zindex > pCurrent->zindex && pCurrent != this->pModelHead)
-      {pCurrent = pCurrent->pRight;}
-
-    // include at right postion
-
-    pElem->pLeft = pCurrent->pLeft;
-    pElem->pRight = pCurrent;
-    pCurrent->pLeft->pRight = pElem;
-    pCurrent->pLeft = pElem;
-  }
-  else
-  {
-    #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetZindex()\n\n");
-    #endif
-
-    result = LE_MDL_NOEXIST;
+    if(!result && pElem != nullptr)
+    {
+      pElem->zindex = zindex;
+    
+      // exclude from list
+    
+      pElem->pLeft->pRight = pElem->pRight;
+      pElem->pRight->pLeft = pElem->pLeft;
+    
+      // search right place for zindex
+    
+      pCurrent = this->pModelHead->pRight;
+    
+      while(pElem->zindex > pCurrent->zindex && pCurrent != this->pModelHead)
+        {pCurrent = pCurrent->pRight;}
+    
+      // include at right postion
+    
+      pElem->pLeft = pCurrent->pLeft;
+      pElem->pRight = pCurrent;
+      pCurrent->pLeft->pRight = pElem;
+      pCurrent->pLeft = pElem;
+    }
+    else
+    {
+      #ifdef LE_DEBUG
+        this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetZindex()\n\n");
+      #endif
+    
+      result = LE_MDL_NOEXIST;
+    }
   }
 
   return result;
@@ -3646,7 +3712,7 @@ int LEMoon::modelChangeDirection(uint32_t id, uint32_t idDirection, glm::vec2 di
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetDirection()\n\n");
+      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelChangeDirection()\n\n");
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3837,6 +3903,39 @@ uint32_t LEMoon::modelGetAmountOfTextureSourceRectangles(uint32_t id, uint32_t i
   }
 
   return amount;
+}
+
+uint32_t LEMoon::modelGetZindex(uint32_t id)
+{
+  uint32_t zindex = 0;
+  LEModel * pModel = this->modelGet(id);
+
+  if(pModel != nullptr)
+    {zindex = pModel->zindex;}
+
+  return zindex;
+}
+
+bool LEMoon::modelTextureExists(uint32_t id, uint32_t idTexture)
+{
+  bool textureExist = LE_FALSE;
+  LEModel * pModel = this->modelGet(id);
+
+  if(pModel != nullptr)
+    {textureExist = pModel->pModel->mdlTextureExist(idTexture);}
+
+  return textureExist;
+}
+
+bool LEMoon::modelGetVisible(uint32_t id)
+{
+  bool visible = LE_FALSE;
+  LEModel * pModel = this->modelGet(id);
+
+  if(pModel != nullptr)
+    {visible = pModel->visible;}
+
+  return visible;
 }
 
 //////////////////////////////////////////////////////////
@@ -4043,6 +4142,7 @@ int LEMoon::pointCreate(uint32_t id)
     pPoint->posY = 0.0f;
     pPoint->point = {0, 0};
     pPoint->pointBuffer = {0, 0};
+    pPoint->zindex = 1;
   }
   else
   {
@@ -4355,6 +4455,60 @@ SDL_Point LEMoon::pointGetPosition(uint32_t id)
   return position;
 }
 
+int LEMoon::pointSetZindex(uint32_t id, uint32_t zindex)
+{
+  int result = LE_NO_ERROR;
+  LEPoint * pElem = this->pointGet(id);
+  LEPoint * pCurrent = nullptr;
+  bool moreThanOneElement = this->pPointHead->pLeft->id != this->pPointHead->pRight->id;
+
+  if(zindex == 0)
+  {
+    #ifdef LE_DEBUG
+      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::modelSetZindex()\n\n");
+    #endif
+
+    result = LE_INVALID_ZINDEX;
+  }
+
+  if(moreThanOneElement)
+  {
+    if(!result && pElem != nullptr)
+    {
+      pElem->zindex = zindex;
+    
+      // exclude from list
+    
+      pElem->pLeft->pRight = pElem->pRight;
+      pElem->pRight->pLeft = pElem->pLeft;
+    
+      // search right place for zindex
+    
+      pCurrent = this->pPointHead->pRight;
+    
+      while(pElem->zindex > pCurrent->zindex && pCurrent != this->pPointHead)
+        {pCurrent = pCurrent->pRight;}
+    
+      // include at right postion
+    
+      pElem->pLeft = pCurrent->pLeft;
+      pElem->pRight = pCurrent;
+      pCurrent->pLeft->pRight = pElem;
+      pCurrent->pLeft = pElem;
+    }
+    else
+    {
+      #ifdef LE_DEBUG
+        this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointSetZindex()\n\n");
+      #endif
+    
+      result = LE_POINT_NOEXIST;
+    }
+  }
+
+  return result;
+}
+
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // public sound
@@ -4433,6 +4587,9 @@ int LEMoon::soundLoadWAV(uint32_t id, const char * pFile)
 {
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
+  #ifdef LE_DEBUG
+    char * pErrorString = new char[256 + 1];
+  #endif
 
   if(pSound != nullptr)
   {
@@ -4443,7 +4600,9 @@ int LEMoon::soundLoadWAV(uint32_t id, const char * pFile)
       if(pSound->pSample == nullptr)
       {
         #ifdef LE_DEBUG
-          this->printErrorDialog(LE_LOAD_WAV, "LEMoon::soundLoadWAV()\n\n");
+          sprintf(pErrorString, "LEMoon::soundLoadWAV()\n\nPath: %s\n\n", pFile);
+          this->printErrorDialog(LE_LOAD_WAV, pErrorString);
+          delete [] pErrorString;
         #endif
 
         result = LE_LOAD_WAV; 
@@ -4568,6 +4727,7 @@ int LEMoon::textCreate(uint32_t id)
       this->pTextHead->pLeft = this->pTextHead;
       this->pTextHead->pRight = this->pTextHead;
       this->pTextHead->zindex = 0;
+      this->pTextHead->id = 1989;
     }
 
     pNew = new LEText;
@@ -4810,6 +4970,7 @@ int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
   LEText * pCurrent = nullptr;
+  bool moreThanOneElement = this->pTextHead->pLeft->id != this->pTextHead->pRight->id;
 
   if(zindex == 0)
   {
@@ -4820,41 +4981,44 @@ int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
     result = LE_INVALID_ZINDEX;
   }
 
-  if(!result && pText != nullptr)
+  if(moreThanOneElement)
   {
-    // auskoppeln
-
-    pText->pLeft->pRight = pText->pRight;
-    pText->pRight->pLeft = pText->pLeft;
-    pText->zindex = zindex;
-
-    // neu einordnen
-
-    pCurrent = this->pTextHead->pRight;
-
-    while(pCurrent != this->pTextHead)
+    if(!result && pText != nullptr)
     {
-      if(pText->zindex >= pCurrent->zindex)
+      // auskoppeln
+    
+      pText->pLeft->pRight = pText->pRight;
+      pText->pRight->pLeft = pText->pLeft;
+      pText->zindex = zindex;
+    
+      // neu einordnen
+    
+      pCurrent = this->pTextHead->pRight;
+    
+      while(pCurrent != this->pTextHead)
       {
-        // dahinter einfuegen
-
-        pText->pLeft = pCurrent;
-        pText->pRight = pCurrent->pRight;
-        pCurrent->pRight->pLeft = pText;
-        pCurrent->pRight = pText;
-        break;
+        if(pText->zindex >= pCurrent->zindex)
+        {
+          // dahinter einfuegen
+    
+          pText->pLeft = pCurrent;
+          pText->pRight = pCurrent->pRight;
+          pCurrent->pRight->pLeft = pText;
+          pCurrent->pRight = pText;
+          break;
+        }
+    
+        pCurrent = pCurrent->pRight;
       }
-
-      pCurrent = pCurrent->pRight;
     }
-  }
-  else
-  {
-    #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetZindex()\n\n");
-    #endif
-
-    result = LE_TEXT_NOEXIST;	
+    else
+    {
+      #ifdef LE_DEBUG
+        this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetZindex()\n\n");
+      #endif
+    
+      result = LE_TEXT_NOEXIST;	
+    }
   }
 
   return result;
@@ -5238,8 +5402,8 @@ int LEMoon::textMoveDirection(uint32_t id, uint32_t idDirection)
 
     if(pDirection != nullptr)
     {
-      pText->position.x += pDirection->data.x * this->timestep;
-      pText->position.y += pDirection->data.y * this->timestep;
+      pText->position.x += (float)(pDirection->data.x * this->timestep);
+      pText->position.y += (float)(pDirection->data.y * this->timestep);
       pText->posSize.x = (int) pText->position.x;
       pText->posSize.y = (int) pText->position.y;
     }
@@ -5557,37 +5721,50 @@ int LEMoon::lineSetZindex(uint32_t id, uint32_t zindex)
   int result = LE_NO_ERROR;
   LELine * pLine = this->lineGet(id);
   LELine * pCurrent = nullptr;
+  bool moreThanOneElement = this->pLineHead->pLeft->id != this->pLineHead->pRight->id;
 
-  if(pLine != nullptr)
+  if(zindex == 0)
   {
-    pLine->zindex = zindex;
-
-    // exclude from list
-
-    pLine->pLeft->pRight = pLine->pRight;
-    pLine->pRight->pLeft = pLine->pLeft;
-
-    // search right place for zindex
-
-    pCurrent = this->pLineHead->pRight;
-
-    while(pLine->zindex > pCurrent->zindex && pCurrent != this->pLineHead)
-      {pCurrent = pCurrent->pRight;}
-
-    // include at right postion
-
-    pLine->pLeft = pCurrent->pLeft;
-    pLine->pRight = pCurrent;
-    pCurrent->pLeft->pRight = pLine;
-    pCurrent->pLeft = pLine;
-  }
-  else
-  {
-    result = LE_LINE_NOEXIST;
-
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::lineSetZindex()\n\n");
+      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::lineSetZindex()\n\n");
     #endif
+
+    result = LE_INVALID_ZINDEX;
+  }
+
+  if(moreThanOneElement)
+  {
+    if(!result && pLine != nullptr)
+    {
+      pLine->zindex = zindex;
+    
+      // exclude from list
+    
+      pLine->pLeft->pRight = pLine->pRight;
+      pLine->pRight->pLeft = pLine->pLeft;
+    
+      // search right place for zindex
+    
+      pCurrent = this->pLineHead->pRight;
+    
+      while(pLine->zindex > pCurrent->zindex && pCurrent != this->pLineHead)
+        {pCurrent = pCurrent->pRight;}
+    
+      // include at right postion
+    
+      pLine->pLeft = pCurrent->pLeft;
+      pLine->pRight = pCurrent;
+      pCurrent->pLeft->pRight = pLine;
+      pCurrent->pLeft = pLine;
+    }
+    else
+    {
+      result = LE_LINE_NOEXIST;
+    
+      #ifdef LE_DEBUG
+        this->printErrorDialog(result, "LEMoon::lineSetZindex()\n\n");
+      #endif
+    }
   }
 
   return result;

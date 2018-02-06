@@ -3,17 +3,17 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            03.01.2018
+  updated:            28.01.2018
 */
 
 #include <SDL.h>
-#include "theoraplay.h"
+//#include "theoraplay.h"
 #include "glm/glm.hpp"
 
 #ifndef H_LE_GLB
 #define H_LE_GLB
 
-//#define LE_DEBUG                100
+#define LE_DEBUG                100
 //#define LE_DESKTOP_APP          101                   // auskommentieren, falls DESKTOP Funktionen, wie Tastatur, nicht benoetigt werden
 //#define LE_ANDROID              102
 #define LE_WINDOWS              103
@@ -82,12 +82,14 @@ typedef struct sLECollBox_d
   Point_d center;
 } LECollBox_d;
 
+#ifdef LE_THEORA
 typedef struct sAudioQueue 
 {
   const THEORAPLAY_AudioPacket * pAudio;
   int offset;
   struct sAudioQueue * pNext;
 } AudioQueue;
+#endif
 
 struct SourceRect
 {
