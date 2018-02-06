@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Lynar Moon Engine Documentation</title>
+  <!-- Info -->
+  <meta name="author" content="Patrick-Christopher Mattulat">
+  <meta name="description" content="Lynar Moon Engine is a 2D game engine based on SDL2 and its companion libraries.">
+  <meta name="keywords" content="2d, game engine, engine, game, games, lynar, moon, lynar moon, le, lynar moon engine, sdl2, sdl, simple directmedia layer">
+  <meta name="date" content="2018-02-06T11:14:00+02:00">
+  <!-- Robots -->
+  <meta name="robots" content="index, follow">
+  <!-- Settings -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- layout -->
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/contentOrganizer.js"></script>
+  <script>
+    $(window).on
+    (
+      'popstate',
+      function(event)
+        {loadSite();}
+    );
+  </script>
+</head>
+<body onload="loadSite()">
+  <header style="margin-bottom: 1em;">
+
+    <!-- LE Moon Logo -->
+
+    <picture>
+      <source class="center" srcset="images/LEmoon_small.png" media="(max-width: 480px)" title="Lynar Moon Engine">
+      <source class="center" srcset="images/LEmoon.png" media="(min-width: 480px)" title="Lynar Moon Engine">
+      <img class="center" src="images/LEmoon_small.png" alt="loading: Lynar Moon Engine logo" title="Lynar Moon Engine">
+    </picture>
+  </header>
+
+  <!-- content box -->
+
+  <div id="content"></div>
+  <footer>
+    <div id="footer">
+      <div id="navigation">
+        <nav>
+          <a class="button" href="#impressum">Impressum</a>
+          <a class="button" href="#links">Links</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <div id="impressum" class="modalDialog">
+    <div>
+      <a href="#close" title="Close" class="close">X</a>
+      <h2>Impressum</h2>
+      <div class="left" style="width: 42%">
+        owner:
+      </div>
+      <div class="rightOfLeft">
+        Patrick-Christopher Mattulat
+      </div>
+      <div class="left" style="width: 42%">
+        address:
+      </div>
+      <div class="rightOfLeft">
+        Lynarstr. 40, 13585 Berlin
+      </div>
+      <div class="left" style="width: 42%">
+        country:
+      </div>
+      <div class="rightOfLeft">
+        Germany
+      </div>
+      <div class="left" style="width: 42%">
+        e-mail:
+      </div>
+      <div class="rightOfLeft">
+        pmattulat@outlook.de
+      </div>
+    </div>
+  </div>
+
+  <div id="navDiv" style="display: none;">
+    <h1>Welcome</h1>
+    Welcome to the <b class="identifier">Lynar Moon Engine</b> website. It's an open source game engine for 2D game development based on <b class="identifier">SDL2</b>. You can find a detailed documentation below. If you spotted any errors you can either contribute on <b class="identifier">gitHub</b> or send a message to the webmaster of this page.
+    <h2 style=" font-size: 1.5em;">Documentation v1.1</h2>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#font">Font</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#general">General</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#line">Line</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#model">Model</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#point">Point</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#sound">Sound</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#text">Text</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#timeevent">Time Event</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#video">Video</a></p></div>
+    <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#window">Window</a></p></div>
+    <div style="position: relative; top: 1em; clear: both;">
+      <h2 style=" font-size: 1.5em;">gitHub</h2>
+      You can find and download the <b class="identifier">Lynar Moon Engine</b> from <b class="identifier">gitHub</b>: &raquo; <a href="#" class="normalNav" onclick="javascript: newTab('https://github.com/LynarStudios/LEMoon');">LEMoon gitHub Repository</a>
+    </div>
+  </div>
+
+  <div id="linksDiv" style="display: none;">
+    <h1>Links</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    Visit some of our partners or supporters!
+    <br>
+    <br>
+    <ul>
+      <li><a class="underline" href="#links" onclick="newTab('http://www.pmattulat.de');">Dipl.-Ing. Peter Mattulat</a> is an appraiser for computer technology located in Berlin, Germany!</li>
+      <li><a class="underline" href="#links" onclick="newTab('http://www.fonts-lab.com');">fonts-lab.com</a> is a website offering free TrueTypeFonts!</li>
+    </ul>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    font
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="fontDiv" style="display: none;">
+    <h1>Font (3)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#fCreate">fontCreateTTF()</a>
+    <a class="normalNavBlock" href="#fDelete">fontDelete()</a>
+    <a class="normalNavBlock" href="#fSetStyle">fontSetStyle()</a>
+  </div>
+
+  <div id="fCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> fontCreateTTF(<b class="datatype">uint32_t</b> id, <b class="datatype">const char *</b> pFile, <b class="datatype">int</b> fontSize)</h1>
+    <h2>Description</h2>
+    <p>This function loads a TrueTypeFont(TTF) for your application, which can be used for text displaying.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the font you'd like to load. It's an unique integer value, which would indicate this font during the runtime of your application. It's chosen by you.</li>
+      <li><b class="identifier">pFile</b>: This is the exact path of your <b class="file">.TTF</b> file.</li>
+      <li><b class="identifier">fontSize</b>: This is the font size of your font you'd like to load into your application in pixels.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#font" class="normalNav">Font</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="fDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> fontDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function deletes a specific font that has been created before and frees its memory.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the font you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#font" class="normalNav">Font</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="fSetStyleDiv" style="display: none;">
+    <h1><b class="datatype">int</b> fontSetStyle(<b class="datatype">uint32_t</b> id, <b class="datatype">int</b> style)</h1>
+    <h2>Description</h2>
+    <p>This function sets the style of a font that has been created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the font.</li>
+      <li><b class="identifier">style</b>: This is the font style, which can be one of the following flags: <b class="constant">TTF_STYLE_BOLD</b>, <b class="constant">TTF_STYLE_ITALIC</b>, <b class="constant">TTF_STYLE_UNDERLINE</b>, <b class="constant">TTF_STYLE_STRIKETHROUGH</b> or <b class="constant">TTF_STYLE_NORMAL</b> (this is the default style)</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#font" class="normalNav">Font</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    general
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="generalDiv" style="display: none;">
+    <h1>General (32)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#gBeginFrame">beginFrame()</a>
+    <a class="normalNavBlock" href="#gConvertResHeight">NEW: convertResHeight()</a>
+    <a class="normalNavBlock" href="#gConvertResWidth">NEW: convertResWidth()</a>
+    <a class="normalNavBlock" href="#gDelay">delay()</a>
+    <a class="normalNavBlock" href="#gDrawFrame">drawFrame()</a>
+    <a class="normalNavBlock" href="#gEndFrame">endFrame()</a>
+    <a class="normalNavBlock" href="#gEngineInitialized">engineInitialized()</a>
+    <a class="normalNavBlock" href="#gGetBackgroundColor">getBackgroundColor()</a>
+    <a class="normalNavBlock" href="#gGetFPS">getFPS()</a>
+    <a class="normalNavBlock" href="#gGetPrefPath">getPrefPath()</a>
+    <a class="normalNavBlock" href="#gGetScreenHeight">getScreenHeight()</a>
+    <a class="normalNavBlock" href="#gGetScreenWidth">getScreenWidth()</a>
+    <a class="normalNavBlock" href="#gGetTimestamp">getTimestamp()</a>
+    <a class="normalNavBlock" href="#gGetTimestep">getTimestep()</a>
+    <a class="normalNavBlock" href="#gInit">NEW: init()</a>
+    <a class="normalNavBlock" href="#gInitImage">NEW: initImage()</a>
+    <a class="normalNavBlock" href="#gInitSound">NEW: initSound()</a>
+    <a class="normalNavBlock" href="#gInitTTF">NEW: initTTF()</a>
+    <a class="normalNavBlock" href="#gKeyEvent">keyEvent()</a>
+    <a class="normalNavBlock" href="#gMessageBox">messageBox()</a>
+    <a class="normalNavBlock" href="#gMkpath">mkpath()</a>
+    <a class="normalNavBlock" href="#gMouseEvent">mouseEvent()</a>
+    <a class="normalNavBlock" href="#gMouseGetPosition">mouseGetPosition()</a>
+    <a class="normalNavBlock" href="#gPercentToPixelX">percentToPixelX()</a>
+    <a class="normalNavBlock" href="#gPercentToPixelY">percentToPixelY()</a>
+    <a class="normalNavBlock" href="#gPixelToPercentX">pixelToPercentX()</a>
+    <a class="normalNavBlock" href="#gPixelToPercentY">pixelToPercentY()</a>
+    <a class="normalNavBlock" href="#gPollEvent">pollEvent()</a>
+    <a class="normalNavBlock" href="#gPrintErrorMessage">printErrorMessage()</a>
+    <a class="normalNavBlock" href="#gRecentFPSAvailable">recentFPSAvailable()</a>
+    <a class="normalNavBlock" href="#gSetBackgroundColor">setBackgroundColor()</a>
+    <a class="normalNavBlock" href="#gShowCursor">showCursor()</a>
+  </div>
+
+  <div id="gBeginFrameDiv" style="display: none;">
+    <h1><b class="datatype">void</b> beginFrame()</h1>
+    <h2>Description</h2>
+    <p>This function should be called at the beginning of the main loop. It handles different events and calculates processor time plus frames per seconds.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gConvertResHeightDiv" style="display: none;">
+    <h1><b class="datatype">double</b> convertResHeight(<b class="datatype">double</b> pixel, <b class="datatype">double</b> originalHeight)</h1>
+    <h2>Description</h2>
+    <p>This function will calculate a new height based on an original screen resolutions height and the actual screen resolutions height. This is a good way to convert pixels for different screen resolutions.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pixel</b>: This is the pixel value you'd like to convert.</li>
+      <li><b class="identifier">originalHeight</b>: This is the original screen resolutions height.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return a new pixel value as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gConvertResWidthDiv" style="display: none;">
+    <h1><b class="datatype">double</b> convertResWidth(<b class="datatype">double</b> pixel, <b class="datatype">double</b> originalWidth)</h1>
+    <h2>Description</h2>
+    <p>This function will calculate a new width based on an original screen resolutions width and the actual screen resolutions width. This is a good way to convert pixels for different screen resolutions.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pixel</b>: This is the pixel value you'd like to convert.</li>
+      <li><b class="identifier">originalWidth</b>: This is the original screen resolutions width.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return a new pixel value as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gDelayDiv" style="display: none;">
+    <h1><b class="datatype">void</b> delay(<b class="datatype">uint32_t</b> waitTime)</h1>
+    <h2>Description</h2>
+    <p>This function will delay your whole application for a specific amount of milliseconds.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">waitTime</b>: This is the specific amount of milliseconds.</li>
+    </ul>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gDrawFrameDiv" style="display: none;">
+    <h1><b class="datatype">int</b> drawFrame()</h1>
+    <h2>Description</h2>
+    <p>This function will draw all objects (everything) which are visible and whose textures are set to active.</p>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gEndFrameDiv" style="display: none;">
+    <h1><b class="datatype">void</b> endFrame()</h1>
+    <h2>Description</h2>
+    <p>This function should be called at the end of the main loop. It updates some specific events and calculates the current frame duration.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gEngineInitializedDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> engineInitialized()</h1>
+    <h2>Description</h2>
+    <p>This function will find out if the <b class="identifier">Lynar Moon Engine</b> has been initialized or not.</p>
+    <h2>return value</h2>
+    <p>This function returns <b class="datatype">true</b> in case the <b class="identifier">Lynar Moon Engine</b> has been initialized or <b class="datatype">false</b> in case an error occured.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gGetBackgroundColorDiv" style="display: none;">
+    <h1><b class="datatype">Color</b> getBackgroundColor()</h1>
+    <h2>Description</h2>
+    <p>This function will return the current background color of your application.</p>
+    <h2>return value</h2>
+    <p>This function returns a <b class="datatype">Color</b> struct which contains the current background color.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gGetFPSDiv" style="display: none;">
+    <h1><b class="datatype">uint16_t</b> getFPS()</h1>
+    <h2>Description</h2>
+    <p>This function will return the current frames per seconds (FPS).</p>
+    <h2>return value</h2>
+    <p>This function returns the FPS as <b class="datatype">uint16_t</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gGetPrefPathDiv" style="display: none;">
+    <h1><b class="datatype">char *</b> getPrefPath()</h1>
+    <h2>Description</h2>
+    <p>This function will return the preferred system directory where you can safe and create specific application files.</p>
+    <h2>return value</h2>
+    <p>This function returns the preferred path.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gGetScreenHeightDiv" style="display: none;">
+    <h1><b class="datatype">int</b> getScreenHeight()</h1>
+    <h2>Description</h2>
+    <p>This function will return the height of your screen resolution in pixels.</p>
+    <h2>return value</h2>
+    <p>This function returns the height as <b class="datatype">int</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gGetScreenWidthDiv" style="display: none;">
+    <h1><b class="datatype">int</b> getScreenWidth()</h1>
+    <h2>Description</h2>
+    <p>This function will return the width of your screen resolution in pixels.</p>
+    <h2>return value</h2>
+    <p>This function returns the width as <b class="datatype">int</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gGetTimestampDiv" style="display: none;">
+    <h1><b class="datatype">uint32_t</b> getTimestamp()</h1>
+    <h2>Description</h2>
+    <p>This function will return the amount of milliseconds since your application has been startet. You need to call <b class="identifier">beginFrame()</b> to keep it updated.</p>
+    <h2>return value</h2>
+    <p>This function returns the amount of milliseconds as <b class="datatype">uint32_t</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gGetTimestepDiv" style="display: none;">
+    <h1><b class="datatype">double</b> getTimestep()</h1>
+    <h2>Description</h2>
+    <p>This function will return the last frames duration in milliseconds devided by 1000. Use this factor for any physical calculation, which is not handled by the engine to make sure that your calculation will include processor speed.</p>
+    <h2>return value</h2>
+    <p>This function returns the timestep factor as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gInitDiv" style="display: none;">
+    <h1><b class="datatype">int</b> init(<b class="datatype">const char *</b> pAppName)</h1>
+    <h2>Description</h2>
+    <p>This function will initialize the <b class="identifier">Lynar Moon Engine</b>. Call this function before any other function.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pAppName</b>: This is your application name.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gInitImageDiv" style="display: none;">
+    <h1><b class="datatype">int</b> initImage()</h1>
+    <h2>Description</h2>
+    <p>This function will initialize the image library of the <b class="identifier">Lynar Moon Engine</b>. Call this function to be able to use images.</p>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gInitSoundDiv" style="display: none;">
+    <h1><b class="datatype">int</b> initSound(<b class="datatype">int</b> numChannels)</h1>
+    <h2>Description</h2>
+    <p>This function will initialize the sound library of the <b class="identifier">Lynar Moon Engine</b>. You will be able to use the <b class="cl">LEMoon::sound</b> class then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">numChannels</b>: This is the amount of channels you'd like to set. This will define the amount of sounds you'll be able to play in your application.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gInitTTFDiv" style="display: none;">
+    <h1><b class="datatype">int</b> initTTF()</h1>
+    <h2>Description</h2>
+    <p>This function will initialize the TrueTypeFont library of the <b class="identifier">Lynar Moon Engine</b>. You will be able to use the <b class="cl">LEMoon::font</b> class then.</p>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gKeyEventDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> keyEvent(<b class="datatype">uint32_t</b> state, <b class="datatype">SDL_Keycode</b> key)</h1>
+    <h2>Description</h2>
+    <p>This function will find out if a specific keyboard key was pressed or released.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">state</b>: This flag can be either <b class="constant">SDL_KEYDOWN</b> or <b class="constant">SDL_KEYUP</b>.</li>
+      <li><b class="identifier">key</b>: This is the specific key. You can find the specific key flags on this page: &raquo; <a href="#gKeyEvent" class="normalNav" onclick="javascript: newTab('https://wiki.libsdl.org/SDL_Keycode');">SDL keys</a></li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns <b class="identifier">true</b> if the specific key was pressed or released or <b class="identifier">false</b> in case it wasn't.</p>
+    <h2>Note</h2>
+    <p>Not all keys do work yet. This ability will be available in future versions of the engine.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gMessageBoxDiv" style="display: none;">
+    <h1><b class="datatype">void</b> messageBox(<b class="datatype">const char *</b> pTitle, <b class="datatype">const char *</b> pText)</h1>
+    <h2>Description</h2>
+    <p>This function will display a message box with a title and a text.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pTitle</b>: This is the title of your message box and will be displayed as headline.</li>
+      <li><b class="identifier">pText</b>: This is the the message which will be displayed underneath the title.</li>
+    </ul>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gMkpathDiv" style="display: none;">
+    <h1><b class="datatype">void</b> mkpath(<b class="datatype">const char *</b> dir, <b class="datatype">mode_t</b> mode)</h1>
+    <h2>Description</h2>
+    <p>This function will create a directory on Linux distributions only.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">dir</b>: This the specific path of the directory you'd like to create.</li>
+      <li><b class="identifier">mode</b>: This is the mode you'd like to create the directory with.</li>
+    </ul>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gMouseEventDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> mouseEvent(<b class="datatype">uint32_t</b> state, <b class="datatype">uint8_t</b> button)</h1>
+    <h2>Description</h2>
+    <p>This function will find out if a specific mouse key was pressed or released.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">state</b>: This flag can be either <b class="constant">SDL_MOUSEBUTTONDOWN</b> or <b class="constant">SDL_MOUSEBUTTONUP</b>.</li>
+      <li><b class="identifier">button</b>: This is the specific mouse key. This can be either <b class="constant">SDL_BUTTON_LEFT</b> or <b class="constant">SDL_BUTTON_RIGHT</b>.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns <b class="identifier">true</b> if the specific key was pressed or released or <b class="identifier">false</b> in case it wasn't.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gMouseGetPositionDiv" style="display: none;">
+    <h1><b class="datatype">SDL_Point</b> mouseGetPosition()</h1>
+    <h2>Description</h2>
+    <p>This function will return the current mouse position.</p>
+    <h2>return value</h2>
+    <p>This function returns a <b class="datatype">SDL_Point</b> struct which contains the mouse position.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gPercentToPixelXDiv" style="display: none;">
+    <h1><b class="datatype">double</b> percentToPixelX(<b class="datatype">double</b> percent)</h1>
+    <h2>Description</h2>
+    <p>This function will convert percent to pixels based on your screen resolutions width.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">percent</b>: This is the percentage of your screen resolutions width, which would result in an amount of pixels.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns the number of pixels as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gPercentToPixelYDiv" style="display: none;">
+    <h1><b class="datatype">double</b> percentToPixelY(<b class="datatype">double</b> percent)</h1>
+    <h2>Description</h2>
+    <p>This function will convert percent to pixels based on your screen resolutions height.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">percent</b>: This is the percentage of your screen resolutions height, which would result in an amount of pixels.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns the number of pixels as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gPixelToPercentXDiv" style="display: none;">
+    <h1><b class="datatype">double</b> pixelToPercentX(<b class="datatype">double</b> pixel)</h1>
+    <h2>Description</h2>
+    <p>This function will convert pixels to percent based on your screen resolutions width.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pixel</b>: This is the amount of pixels you'd like to convert into a percentage based on your screen resolutions width.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns the percent as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gPixelToPercentYDiv" style="display: none;">
+    <h1><b class="datatype">double</b> pixelToPercentY(<b class="datatype">double</b> pixel)</h1>
+    <h2>Description</h2>
+    <p>This function will convert pixels to percent based on your screen resolutions height.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pixel</b>: This is the amount of pixels you'd like to convert into a percentage based on your screen resolutions height.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns the percent as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gPollEventDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pollEvent()</h1>
+    <h2>Description</h2>
+    <p>This function will poll for any events which might occur in your application.</p>
+    <h2>return value</h2>
+    <p>This function returns 1 if there is a pending event or 0 if there are none available.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gPrintErrorMessageDiv" style="display: none;">
+    <h1><b class="datatype">void</b> printErrorMessage(<b class="datatype">const char *</b> pTitle, <b class="datatype">const char *</b> pMessage)</h1>
+    <h2>Description</h2>
+    <p>This function will display an error message box with a title and a text.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pTitle</b>: This is the title of your error message box and will be displayed as headline.</li>
+      <li><b class="identifier">pMessage</b>: This is the the error message which will be displayed underneath the title.</li>
+    </ul>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gRecentFPSAvailableDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> recentFPSAvailable()</h1>
+    <h2>Description</h2>
+    <p>This function will return <b class="identifier">true</b> once per second. You could use this function to query the frames per seconds with the <b class="identifier">getFPS()</b> function every second.</p>
+    <h2>return value</h2>
+    <p>This function will return <b class="identifier">true</b> if there are recent FPS available.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gSetBackgroundColorDiv" style="display: none;">
+    <h1><b class="datatype">void</b> setBackgroundColor(<b class="datatype">uint8_t</b> r, <b class="datatype">uint8_t</b> g, <b class="datatype">uint8_t</b> b)</h1>
+    <h2>Description</h2>
+    <p>This function will set the background color of your application.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">r</b>: This is the red color channel of the background color you'd like to set.</li>
+      <li><b class="identifier">g</b>: This is the green color channel of the background color you'd like to set.</li>
+      <li><b class="identifier">b</b>: This is the blue color channel of the background color you'd like to set.</li>
+    </ul>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="gShowCursorDiv" style="display: none;">
+    <h1><b class="datatype">int</b> showCursor(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>This function will make the system cursor visible or invisible.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> to make the cursor visible or set it to <b class="constant">LE_FALSE</b> to make it invisible.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#general" class="normalNav">General</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    line
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="lineDiv" style="display: none;">
+    <h1>Line (6)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#lCreate">lineCreate()</a>
+    <a class="normalNavBlock" href="#lDelete">lineDelete()</a>
+    <a class="normalNavBlock" href="#lSet">lineSet()</a>
+    <a class="normalNavBlock" href="#lSetColor">lineSetColor()</a>
+    <a class="normalNavBlock" href="#lSetVisible">lineSetVisible()</a>
+    <a class="normalNavBlock" href="#lSetZindex">lineSetZindex()</a>
+  </div>
+
+  <div id="lCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> lineCreate(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will create a line.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the line you'd like to create. It's an unique integer value, which would indicate this line during the runtime of your application. It's chosen by you.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="lDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> lineDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a line.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the line you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="lSetDiv" style="display: none;">
+    <h1><b class="datatype">int</b> lineSet(<b class="datatype">uint32_t</b> id, <b class="datatype">int</b> x1, <b class="datatype">int</b> y1, <b class="datatype">int</b> x2, <b class="datatype">int</b> y2)</h1>
+    <h2>Description</h2>
+    <p>This function will set the coordinates of the line you created.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the line you created before.</li>
+      <li><b class="identifier">x1</b>: This is the x position of the first point of your line.</li>
+      <li><b class="identifier">y1</b>: This is the y position of the first point of your line.</li>
+      <li><b class="identifier">x2</b>: This is the x position of the second point of your line.</li>
+      <li><b class="identifier">y2</b>: This is the y position of the second point of your line.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="lSetColorDiv" style="display: none;">
+    <h1><b class="datatype">int</b> lineSetColor(<b class="datatype">uint32_t</b> id, <b class="datatype">uint8_t</b> r, <b class="datatype">uint8_t</b> g, <b class="datatype">uint8_t</b> b, <b class="datatype">uint8_t</b> a)</h1>
+    <h2>Description</h2>
+    <p>This function will set the color of the line you created.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the line you created before.</li>
+      <li><b class="identifier">r</b>: This is the red channel of the color you'd like to set.</li>
+      <li><b class="identifier">g</b>: This is the green channel of the color you'd like to set.</li>
+      <li><b class="identifier">b</b>: This is the blue channel of the color you'd like to set.</li>
+      <li><b class="identifier">a</b>: This is the alpha channel of the color you'd like to set.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="lSetVisibleDiv" style="display: none;">
+    <h1><b class="datatype">int</b> lineSetVisible(<b class="datatype">uint32_t</b> id, <b class="datatype">bool</b> visible)</h1>
+    <h2>Description</h2>
+    <p>This function will make the line visible or invisible. Invisible lines won't be drawn.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the line you created before.</li>
+      <li><b class="identifier">visible</b>: Set this parameter to <b class="identifier">true</b> to make it visible or <b class="identifier">false</b> to make it invisible.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="lSetZindexDiv" style="display: none;">
+    <h1><b class="datatype">int</b> lineSetZindex(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> zindex)</h1>
+    <h2>Description</h2>
+    <p>This function will set the z-index of the line you created before. The z-index will define in which order objects will be drawn. An object with a low z-index will always be drawn first.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the line you created before.</li>
+      <li><b class="identifier">zindex</b>: This is the z-index of the line. This value must be larger than 0!</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    model
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="modelDiv" style="display: none;">
+    <h1>Model (44)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#mAddCollisionRect">modelAddCollisionRect()</a>
+    <a class="normalNavBlock" href="#mAddDirection">modelAddDirection()</a>
+    <a class="normalNavBlock" href="#mAddTextureSourceRect">modelAddTextureSourceRect()</a>
+    <a class="normalNavBlock" href="#mChangeDirection">modelChangeDirection()</a>
+    <a class="normalNavBlock" href="#mCheckCollision">modelCheckCollision()</a>
+    <a class="normalNavBlock" href="#mCheckFrameBoxCollision">modelCheckFrameBoxCollision()</a>
+    <a class="normalNavBlock" href="#mClearClones">modelClearClones()</a>
+    <a class="normalNavBlock" href="#mCreate">modelCreate()</a>
+    <a class="normalNavBlock" href="#mCreateClone">modelCreateClone()</a>
+    <a class="normalNavBlock" href="#mCreateSurface">modelCreateSurface()</a>
+    <a class="normalNavBlock" href="#mCreateTexture">modelCreateTexture()</a>
+    <a class="normalNavBlock" href="#mDelete">modelDelete()</a>
+    <a class="normalNavBlock" href="#mDeleteSurface">modelDeleteSurface()</a>
+    <a class="normalNavBlock" href="#mFadeTexture">modelFadeTexture()</a>
+    <a class="normalNavBlock" href="#mFocusTextureSourceRect">modelFocusTextureSourceRect()</a>
+    <a class="normalNavBlock" href="#mGetAmountOfCollisionBoxes">modelGetAmountOfCollisionBoxes()</a>
+    <a class="normalNavBlock" href="#mGetAmountOfTextureSourceRectangles">modelGetAmountOfTextureSourceRectangles()</a>
+    <a class="normalNavBlock" href="#mGetCollisionBox">modelGetCollisionBox()</a>
+    <a class="normalNavBlock" href="#mGetDirection">modelGetDirection()</a>
+    <a class="normalNavBlock" href="#mGetFrameBox">modelGetFrameBox()</a>
+    <a class="normalNavBlock" href="#mGetPixelRGBA">modelGetPixelRGBA()</a>
+    <a class="normalNavBlock" href="#mGetPositionD">modelGetPositionD()</a>
+    <a class="normalNavBlock" href="#mGetPosition">modelGetPosition()</a>
+    <a class="normalNavBlock" href="#mGetSize">modelGetSize()</a>
+    <a class="normalNavBlock" href="#mGetSizeFactor">modelGetSizeFactor()</a>
+    <a class="normalNavBlock" href="#mGetSurface">modelGetSurface()</a>
+    <a class="normalNavBlock" href="#mGetTextureAlpha">modelGetTextureAlpha()</a>
+    <a class="normalNavBlock" href="#mGetVisible">NEW: modelGetVisible()</a>
+    <a class="normalNavBlock" href="#mGetZindex">NEW: modelGetZindex()</a>
+    <a class="normalNavBlock" href="#mMoveDirection">modelMoveDirection()</a>
+    <a class="normalNavBlock" href="#mRotate">modelRotate()</a>
+    <a class="normalNavBlock" href="#mRotateDir">modelRotateDir()</a>
+    <a class="normalNavBlock" href="#mRotateOnce">modelRotateOnce()</a>
+    <a class="normalNavBlock" href="#mSetClonePosition">modelSetClonePosition()</a>
+    <a class="normalNavBlock" href="#mSetCloneVisible">modelSetCloneVisible()</a>
+    <a class="normalNavBlock" href="#mSetPosition">modelSetPosition()</a>
+    <a class="normalNavBlock" href="#mSetSize">modelSetSize()</a>
+    <a class="normalNavBlock" href="#mSetSizeFactor">modelSetSizeFactor()</a>
+    <a class="normalNavBlock" href="#mSetTextureActive">modelSetTextureActive()</a>
+    <a class="normalNavBlock" href="#mSetTextureAlpha">modelSetTextureAlpha()</a>
+    <a class="normalNavBlock" href="#mSetTextureZindex">modelSetTextureZindex()</a>
+    <a class="normalNavBlock" href="#mSetVisible">modelSetVisible()</a>
+    <a class="normalNavBlock" href="#mSetZindex">modelSetZindex()</a>
+    <a class="normalNavBlock" href="#mTextureExists">NEW: modelTextureExists()</a>
+  </div>
+
+  <div id="mAddCollisionRectDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelAddCollisionRect(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idCollRect, <b class="datatype">SDL_Rect</b> collRect)</h1>
+    <h2>Description</h2>
+    <p>This function will add a collision rectangle for the model you created before. This rectangle can be used for collision detection then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model you created before.</li>
+      <li><b class="identifier">idCollRect</b>: This is the specific ID for the collision rectangle you'd like to add. It's an unique integer value, which would indicate this collision rectangle for your model during the runtime of your application. It's chosen by you.</li>
+      <li><b class="identifier">collRect</b>: This is the actual collision rectangle. It describes an area, which can be used for collision detection.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mAddDirectionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelAddDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection, <b class="datatype">glm::vec2</b> direction)</h1>
+    <h2>Description</h2>
+    <p>This function will add a direction for the model you created before. You'll be able to move this model then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model you created before.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID for the direction you'd like to add. It's an unique integer value, which would indicate this direction for your model during the runtime of your application. It's chosen by you.</li>
+      <li><b class="identifier">direction</b>: This is the actual direction. The model can be moved by this direction per second then.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mAddTextureSourceRectDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelAddTextureSourceRect(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">uint32_t</b> idSrcRect, <b class="datatype">int</b> x, <b class="datatype">int</b> y, <b class="datatype">int</b> w, <b class="datatype">int</b> h)</h1>
+    <h2>Description</h2>
+    <p>This function will add a texture area for the model you created before. You will be able to display this texture area only.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model you created before.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the texture you created before.</li>
+      <li><b class="identifier">idSrcRect</b>: This is the specific ID for the texture area you'd like to add. It's an unique integer value, which would indicate this texture area for your model during the runtime of your application. It's chosen by you.</li>
+      <li><b class="identifier">x</b>: This is the x-position of your texture area inside your texture.</li>
+      <li><b class="identifier">y</b>: This is the y-position of your texture area inside your texture.</li>
+      <li><b class="identifier">w</b>: This is the width of your texture area.</li>
+      <li><b class="identifier">h</b>: This is the height of your texture area.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mChangeDirectionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelChangeDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection, <b class="datatype">glm::vec2</b> dir)</h1>
+    <h2>Description</h2>
+    <p>This function will change an existing direction.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model you created before.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID of the direction you created before.</li>
+      <li><b class="identifier">dir</b>: This is the new direction. The model will be moved by this direction per second.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mCheckCollisionDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> modelCheckCollision(<b class="datatype">uint32_t</b> idModel, <b class="datatype">uint32_t</b> idForeignModel)</h1>
+    <h2>Description</h2>
+    <p>This function will check two models and find out if there is an collision. Both models should have at least one collision rectangle, which you created with <b class="identifier">modelAddCollisionRect()</b>.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">idModel</b>: This is the specific ID of the first model.</li>
+      <li><b class="identifier">idForeignModel</b>: This is the specific ID of the second model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return <b class="constant">LE_TRUE</b> if there is a collision or <b class="constant">LE_FALSE</b> if there is no collision.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mCheckFrameBoxCollisionDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> modelCheckFrameBoxCollision(<b class="datatype">uint32_t</b> idModel, <b class="datatype">uint32_t</b> idForeignModel)</h1>
+    <h2>Description</h2>
+    <p>This function will check two models and find out if there is an collision depending on their sizes.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">idModel</b>: This is the specific ID of the first model.</li>
+      <li><b class="identifier">idForeignModel</b>: This is the specific ID of the second model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return <b class="constant">LE_TRUE</b> if there is a collision or <b class="constant">LE_FALSE</b> if there is no collision.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mClearClonesDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelClearClones(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete all clones of a model, which have been created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelCreate(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will create a model for your application.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model you'd like to create. It's an unique integer value, which would indicate this model during the runtime of your application. It's chosen by you.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mCreateCloneDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelCreateClone(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idClone)</h1>
+    <h2>Description</h2>
+    <p>This function will create a clone of the model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idClone</b>: This is the specific ID of the model clone you'd like to create. It's an unique integer value, which would indicate this clone during the runtime of your application. It's chosen by you.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mCreateSurfaceDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelCreateSurface(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">const char *</b> pFile)</h1>
+    <h2>Description</h2>
+    <p>This function will create a surface for an existing model texture. You can use this surface then to recieve pixel data.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the model texture you created before.</li>
+      <li><b class="identifier">pFile</b>: This is the path of the texture graphic. This should be the same graphic you're using for your texture already.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mCreateTextureDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelCreateTexture(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">const char *</b> pFile)</h1>
+    <h2>Description</h2>
+    <p>This function will create a texture for the model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the model texture you'd like to create. It's an unique integer value, which would indicate this texture for your model during the runtime of your application.</li>
+      <li><b class="identifier">pFile</b>: This is the path of the texture graphic.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mDeleteSurfaceDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelDeleteSurface(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a texture surface you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">id</b>: This is the specific ID of the model texture containing the surface.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mFadeTextureDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelFadeTexture(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">double</b> alphaPerSecond)</h1>
+    <h2>Description</h2>
+    <p>This function will fade a model texture you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the model texture.</li>
+      <li><b class="identifier">alphaPerSecond</b>: This is the alpha channel value. The model texture will fade by this value per second. A negative value would fade the texture out and a positive value would fade the texture in.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mFocusTextureSourceRectDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelFocusTextureSourceRect(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">uint32_t</b> idSrcRect)</h1>
+    <h2>Description</h2>
+    <p>This function will focus a texture area you created before. Only this specific area of the texture will be rendered.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the model texture.</li>
+      <li><b class="identifier">idSrcRect</b>: This is the specific ID of the texture area you created before.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetAmountOfCollisionBoxesDiv" style="display: none;">
+    <h1><b class="datatype">uint32_t</b> modelGetAmountOfCollisionBoxes(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the amount of collision rectangles you set up before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the amount of collision rectangles as <b class="datatype">uint32_t</b> type.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetAmountOfTextureSourceRectanglesDiv" style="display: none;">
+    <h1><b class="datatype">uint32_t</b> modelGetAmountOfTextureSourceRectangles(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture)</h1>
+    <h2>Description</h2>
+    <p>This function will return the amount of texture areas of a model texture you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the model texture containing the texture areas.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the amount of texture areas as <b class="datatype">uint32_t</b> type.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetCollisionBoxDiv" style="display: none;">
+    <h1><b class="datatype">LECollBox_d</b> modelGetCollisionBox(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idCollRect)</h1>
+    <h2>Description</h2>
+    <p>This function will return a collision rectangle you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idCollRect</b>: This is the specific ID of the collision rectangle.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the collision rectangle as <b class="datatype">LECollBox_d</b> struct.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetDirectionDiv" style="display: none;">
+    <h1><b class="datatype">glm::vec2</b> modelGetDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection)</h1>
+    <h2>Description</h2>
+    <p>This function will return a direction you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID of the direction you created before.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the collision rectangle as <b class="datatype">glm::vec2</b> struct.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetFrameBoxDiv" style="display: none;">
+    <h1><b class="datatype">LECollBox_d</b> modelGetFrameBox(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the main collision rectangle. This rectangle is covering the whole model.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the main collision rectangle as <b class="datatype">LECollBox_d</b> struct.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetPixelRGBADiv" style="display: none;">
+    <h1><b class="datatype">Color</b> modelGetPixelRGBA(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">uint32_t</b> x, <b class="datatype">uint32_t</b> y)</h1>
+    <h2>Description</h2>
+    <p>This function will return a pixel of a texture. This will only work if you created a surface for your texture using <b class="identifier">modelCreateSurface()</b>.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the texture.</li>
+      <li><b class="identifier">x</b>: This is the x-position inside your texture.</li>
+      <li><b class="identifier">y</b>: This is the y-position inside your texture.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the pixel data as <b class="datatype">Color</b> struct.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetPositionDDiv" style="display: none;">
+    <h1><b class="datatype">glm::vec2</b> modelGetPositionD(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the exact position of a model. This value is more precise and is used by the engine for movement calculation.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the position as <b class="datatype">glm::vec2</b> struct.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetPositionDiv" style="display: none;">
+    <h1><b class="datatype">SDL_Point</b> modelGetPosition(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the position of a model.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the position as <b class="datatype">SDL_Point</b> struct.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetSizeDiv" style="display: none;">
+    <h1><b class="datatype">SDL_Point</b> modelGetSize(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the size of a model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the size as <b class="datatype">SDL_Point</b> struct. <b class="identifier">x</b> contains the width of the model and <b class="identifier">y</b> contains the height of the model.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetSizeFactorDiv" style="display: none;">
+    <h1><b class="datatype">double</b> modelGetSizeFactor(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the size factor of the model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the size factor as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetSurfaceDiv" style="display: none;">
+    <h1><b class="datatype">SDL_Surface *</b> modelGetSurface(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture)</h1>
+    <h2>Description</h2>
+    <p>This function will return a texture surface you created before. Note that this function is currently unsafe!</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the texture.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the surface as <b class="datatype">SDL_Surface</b> pointer.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetTextureAlphaDiv" style="display: none;">
+    <h1><b class="datatype">double</b> modelGetTextureAlpha(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture)</h1>
+    <h2>Description</h2>
+    <p>This function will return the exact value of a textures alpha channel. This value is more precise and is used by the engine for blending operations.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the texture.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the alpha value as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mMoveDirectionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelMoveDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection)</h1>
+    <h2>Description</h2>
+    <p>This function will move a model into a direction you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID of the direction you created before.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mRotateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelRotate(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> ndegree)</h1>
+    <h2>Description</h2>
+    <p>This function will rotate a model by a specific amount of degrees per second.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">ndegree</b>: This is the amount of degree per second.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mRotateDirDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelRotateDir(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection, <b class="datatype">double</b> degree)</h1>
+    <h2>Description</h2>
+    <p>This function will rotate a direction of a model by a specific amount of degrees per second.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID of the direction you created before.</li>
+      <li><b class="identifier">degree</b>: This is the amount of degrees per second.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mRotateOnceDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelRotateOnce(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> ndegree)</h1>
+    <h2>Description</h2>
+    <p>This function will rotate a model by a specific amount of degree once. This function is not made for being called at frequent intervals in a game loop. Consider using <b class="identifier">modelRotate()</b> instead.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">ndegree</b>: This is the amount of degrees.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetClonePositionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetClonePosition(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idClone, <b class="datatype">glm::vec2</b> position)</h1>
+    <h2>Description</h2>
+    <p>This function will set the position of a clone you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idClone</b>: This is the specific ID of the model clone you created before.</li>
+      <li><b class="identifier">position</b>: This is the position of the clone you'd like to set.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetCloneVisibleDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetCloneVisible(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idClone, <b class="datatype">bool</b> visible)</h1>
+    <h2>Description</h2>
+    <p>This function will set a model clone you created before visible or invisible.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idClone</b>: This is the specific ID of the model clone you created before.</li>
+      <li><b class="identifier">visible</b>: Set this flag to <b class="constant">LE_TRUE</b> to make it visible or <b class="constant">LE_FALSE</b> to make it invisible.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetVisibleDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetVisible(<b class="datatype">uint32_t</b> id, <b class="datatype">bool</b> visible)</h1>
+    <h2>Description</h2>
+    <p>This function will set a model visible or invisible. Only visible models will be rendered.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">visible</b>: Set this flag to <b class="constant">LE_TRUE</b> to make it visible or <b class="constant">LE_FALSE</b> to make it invisible.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetZindexDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetZindex(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> zindex)</h1>
+    <h2>Description</h2>
+    <p>This function will set the z-index of a model you created before. The z-index will define in which order objects will be drawn. An object with a low z-index will always be drawn first.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">zindex</b>: This is the z-index of the model. This value must be larger than 0!</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetTextureZindexDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetTextureZindex(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">uint32_t</b> zindex)</h1>
+    <h2>Description</h2>
+    <p>This function will set the z-index of a model texture you created before. The z-index will define in which order textures of a model will be drawn. A texture with a low z-index will always be drawn first.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the texture.</li>
+      <li><b class="identifier">zindex</b>: This is the z-index of the texture.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetTextureAlphaDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetTextureAlpha(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">uint8_t</b> alpha)</h1>
+    <h2>Description</h2>
+    <p>This function will set the alpha channel value of a model texture you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the texture.</li>
+      <li><b class="identifier">alpha</b>: This is the alpha value you'd like to set for the texture.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetTextureActiveDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetTextureActive(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture, <b class="datatype">bool</b> active)</h1>
+    <h2>Description</h2>
+    <p>This function will set a model texture active or inactive. Only active textures will be rendered.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the specific ID of the texture.</li>
+      <li><b class="identifier">active</b>: Set this flag to <b class="constant">LE_TRUE</b> to set the texture active or <b class="constant">LE_FALSE</b> to set the texture inactive.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetSizeFactorDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetSizeFactor(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> nsizeFactor)</h1>
+    <h2>Description</h2>
+    <p>This function will set the size factor of a model. This factor is being multiplied by the actual size of a model, which would result into a new model size.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">nsizeFactor</b>: This is the size factor.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetSizeDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetSize(<b class="datatype">uint32_t</b> id, <b class="datatype">int</b> w, <b class="datatype">int</b> h)</h1>
+    <h2>Description</h2>
+    <p>This function will set the size of a model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">w</b>: This is the width you'd like to set for your model in pixels.</li>
+      <li><b class="identifier">h</b>: This is the height you'd like to set for your model in pixels.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <hr style="color: white;">
+    <h2 style="font-size: 1.5em;"><b class="datatype">double</b> modelSetSize(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> percent)</h1>
+    <h2>Description</h2>
+    <p>This function will set the size of a model you created before by giving a percentage of the original model size.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">percent</b>: This is the percentage of the original model size, which would change the model size.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return a new resulting model size factor as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mSetPositionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> modelSetPosition(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> x, <b class="datatype">double</b> y)</h1>
+    <h2>Description</h2>
+    <p>This function will set the position of a model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">x</b>: This is the x coordinate of the model position.</li>
+      <li><b class="identifier">y</b>: This is the y coordinate of the model position.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mTextureExistsDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> modelTextureExists(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idTexture)</h1>
+    <h2>Description</h2>
+    <p>This function will find out if a model texture does exist.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+      <li><b class="identifier">idTexture</b>: This is the id of the model texture you're trying to find.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return <b class="constant">LE_TRUE</b> if the texture does exist or <b class="constant">LE_FALSE</b> if the texture does not exist.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetZindexDiv" style="display: none;">
+    <h1><b class="datatype">uint32_t</b> modelGetZindex(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the z-index of a model you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the z-index as <b class="datatype">uint32_t</b> type.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="mGetVisibleDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> modelGetVisible(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will find out if a model is visible or invisible.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the model.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return <b class="constant">LE_TRUE</b> if the model is visible or <b class="constant">LE_FALSE</b> if the model is invisible.</p>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    point
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="pointDiv" style="display: none;">
+    <h1>Point (12)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#pAddDirection">pointAddDirection()</a>
+    <a class="normalNavBlock" href="#pCreate">pointCreate()</a>
+    <a class="normalNavBlock" href="#pDelete">pointDelete()</a>
+    <a class="normalNavBlock" href="#pFade">pointFade()</a>
+    <a class="normalNavBlock" href="#pGetColor">pointGetColor()</a>
+    <a class="normalNavBlock" href="#pGetPosition">pointGetPosition()</a>
+    <a class="normalNavBlock" href="#pMoveDirection">pointMoveDirection()</a>
+    <a class="normalNavBlock" href="#pRotate">pointRotate()</a>
+    <a class="normalNavBlock" href="#pSetColor">pointSetColor()</a>
+    <a class="normalNavBlock" href="#pSetPosition">pointSetPosition()</a>
+    <a class="normalNavBlock" href="#pSetVisible">pointSetVisible()</a>
+    <a class="normalNavBlock" href="#pSetZindex">NEW: pointSetZindex()</a>
+  </div>
+
+  <div id="pAddDirectionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointAddDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection, <b class="datatype">glm::vec2</b> direction)</h1>
+    <h2>Description</h2>
+    <p>This function will add a direction for the point you created before. You'll be able to move this point then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point you created before.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID for the direction you'd like to add. It's an unique integer value, which would indicate this direction for your point during the runtime of your application. It's chosen by you.</li>
+      <li><b class="identifier">direction</b>: This is the actual direction. The point can be moved by this direction per second then.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointCreate(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will create a point.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID for the point you'd like to create. It's an unique integer value, which would indicate this point during the runtime of your application. It's chosen by you.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a point you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pFadeDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointFade(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> alphaPerSecond)</h1>
+    <h2>Description</h2>
+    <p>This function will fade a point you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+      <li><b class="identifier">alphaPerSecond</b>: This is the alpha channel value. The point will fade by this value per second. A negative value would fade the point out and a positive value would fade the point in.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pGetColorDiv" style="display: none;">
+    <h1><b class="datatype">Color</b> pointGetColor(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the color of a point.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the color as <b class="datatype">Color</b> struct.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pGetPositionDiv" style="display: none;">
+    <h1><b class="datatype">SDL_Point</b> pointGetPosition(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the position of a point.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the position as <b class="datatype">SDL_Point</b> struct.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pMoveDirectionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointMoveDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection)</h1>
+    <h2>Description</h2>
+    <p>This function will move a point into a specific direction.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID of the direction you created before.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pRotateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointRotate(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> degreePerSecond, <b class="datatype">SDL_Point</b> rotationPoint)</h1>
+    <h2>Description</h2>
+    <p>This function will rotate a point around a specific point.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+      <li><b class="identifier">degreePerSecond</b>: This is the amount of degree you'd like to rotate your point per second. A positive value would rotate the point to the right and a negative value would rotate the point to the left.</li>
+      <li><b class="identifier">rotationPoint</b>: This is the actual rotation point.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pSetColorDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointSetColor(<b class="datatype">uint32_t</b> id, <b class="datatype">uint8_t</b> r, <b class="datatype">uint8_t</b> g, <b class="datatype">uint8_t</b> b, <b class="datatype">uint8_t</b> a)</h1>
+    <h2>Description</h2>
+    <p>This function will set the color of the point you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+      <li><b class="identifier">r</b>: This is the red value of the color you'd like to set.</li>
+      <li><b class="identifier">g</b>: This is the green value of the color you'd like to set.</li>
+      <li><b class="identifier">b</b>: This is the blue value of the color you'd like to set.</li>
+      <li><b class="identifier">a</b>: This is the alpha value of the color you'd like to set.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pSetPositionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointSetPosition(<b class="datatype">uint32_t</b> id, <b class="datatype">int</b> x, <b class="datatype">int</b> y)</h1>
+    <h2>Description</h2>
+    <p>This function will set the position of the point you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+      <li><b class="identifier">x</b>: This is the x-position.</li>
+      <li><b class="identifier">y</b>: This is the y-position.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pSetVisibleDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointSetVisible(<b class="datatype">uint32_t</b> id, <b class="datatype">bool</b> visible)</h1>
+    <h2>Description</h2>
+    <p>This function will set a point visible. Only visible points will be rendered in your application.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+      <li><b class="identifier">visible</b>: Set this flag to <b class="constant">LE_TRUE</b> to make this point visible or <b class="constant">LE_FALSE</b> to make it invisible.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="pSetZindexDiv" style="display: none;">
+    <h1><b class="datatype">int</b> pointSetZindex(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> zindex)</h1>
+    <h2>Description</h2>
+    <p>This function will set the z-index of a point you created before. The z-index will define in which order objects will be drawn. An object with a low z-index will always be drawn first.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the point.</li>
+      <li><b class="identifier">zindex</b>: This is the z-index of the point. This value must be larger than 0!</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    sound
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="soundDiv" style="display: none;">
+    <h1>Sound (9)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#sCreate">soundCreate()</a>
+    <a class="normalNavBlock" href="#sDelete">soundDelete()</a>
+    <a class="normalNavBlock" href="#sFadeIn">soundFadeIn()</a>
+    <a class="normalNavBlock" href="#sFadeOut">soundFadeOut()</a>
+    <a class="normalNavBlock" href="#sLoadWAV">soundLoadWAV()</a>
+    <a class="normalNavBlock" href="#sLock">soundLock()</a>
+    <a class="normalNavBlock" href="#sPause">soundPause()</a>
+    <a class="normalNavBlock" href="#sPlay">soundPlay()</a>
+    <a class="normalNavBlock" href="#sSetVolume">soundSetVolume()</a>
+  </div>
+
+  <div id="sCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> soundCreate(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will create a sound, which can be played in your application then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID for the sound you'd like to create. It's an unique integer value, which would indicate this sound during the runtime of your application. It's chosen by you.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> soundDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a sound and frees its memory.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the sound you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sFadeInDiv" style="display: none;">
+    <h1><b class="datatype">int</b> soundFadeIn(<b class="datatype">uint32_t</b> id, <b class="datatype">int</b> ms)</h1>
+    <h2>Description</h2>
+    <p>This function will fade in a sound you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the sound.</li>
+      <li><b class="identifier">ms</b>: This is the duration of the fading in milliseconds.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sFadeOutDiv" style="display: none;">
+    <h1><b class="datatype">void</b> soundFadeOut(<b class="datatype">int</b> ms)</h1>
+    <h2>Description</h2>
+    <p>This function will fade out all sounds.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">ms</b>: This is the duration of the fading in milliseconds.</li>
+    </ul>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sLoadWAVDiv" style="display: none;">
+    <h1><b class="datatype">int</b> soundLoadWAV(<b class="datatype">uint32_t</b> id, <b class="datatype">const char *</b> pFile)</h1>
+    <h2>Description</h2>
+    <p>This function will load a <b class="file">.WAV</b> or <b class="file">.OGG</b> file for a sound you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the sound.</li>
+      <li><b class="identifier">pFile</b>: This is the exact path of the file you'd like to load.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sLockDiv" style="display: none;">
+    <h1><b class="datatype">int</b> soundLock(<b class="datatype">uint32_t</b> id, <b class="datatype">bool</b> lock)</h1>
+    <h2>Description</h2>
+    <p>This function will lock a sound after you started playing it. This is a secure way to avoid multiple play calls in an iteration. Multiple function calls of <b class="identifier">soundPlay()</b> wouldn't matter then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the sound.</li>
+      <li><b class="identifier">lock</b>: Set this flag to <b class="constant">LE_TRUE</b> to lock this sound or <b class="constant">LE_FALSE</b> to unlock the sound. After you've unlocked a sound you'll be able to start playing it again.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sPauseDiv" style="display: none;">
+    <h1><b class="datatype">void</b> soundPause()</h1>
+    <h2>Description</h2>
+    <p>This function will stop all sounds, which are currently playing.</p>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sPlayDiv" style="display: none;">
+    <h1><b class="datatype">int</b> soundPlay(<b class="datatype">uint32_t</b> id, <b class="datatype">int</b> loops)</h1>
+    <h2>Description</h2>
+    <p>This function will play a sound you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the sound.</li>
+      <li><b class="identifier">loops</b>: This is the number of loops, which would indicate how often you'd like to play the sound in repetition. The sound will be played <i>loops + 1</i> times.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="sSetVolumeDiv" style="display: none;">
+    <h1><b class="datatype">void</b> soundSetVolume(<b class="datatype">uint8_t</b> volume)</h1>
+    <h2>Description</h2>
+    <p>This function will set the volume of all sounds.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">volume</b>: This is the master volume. This can be a value from 0 to 128 (<b class="constant">MIX_MAX_VOLUME</b>).</li>
+    </ul>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    text
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="textDiv" style="display: none;">
+    <h1>Text (20)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#tAddDirection">textAddDirection()</a>
+    <a class="normalNavBlock" href="#tAddLetter">textAddLetter()</a>
+    <a class="normalNavBlock" href="#tAddString">textAddString()</a>
+    <a class="normalNavBlock" href="#tClear">textClear()</a>
+    <a class="normalNavBlock" href="#tCreate">textCreate()</a>
+    <a class="normalNavBlock" href="#tDelete">textDelete()</a>
+    <a class="normalNavBlock" href="#tFade">textFade()</a>
+    <a class="normalNavBlock" href="#tGetAlpha">textGetAlpha()</a>
+    <a class="normalNavBlock" href="#tGetPosition">textGetPosition()</a>
+    <a class="normalNavBlock" href="#tGetSize">textGetSize()</a>
+    <a class="normalNavBlock" href="#tGetVisible">textGetVisible()</a>
+    <a class="normalNavBlock" href="#tMoveDirection">textMoveDirection()</a>
+    <a class="normalNavBlock" href="#tPrepareForDrawing">textPrepareForDrawing()</a>
+    <a class="normalNavBlock" href="#tRelateFont">textRelateFont()</a>
+    <a class="normalNavBlock" href="#tSetAlpha">textSetAlpha()</a>
+    <a class="normalNavBlock" href="#tSetColor">textSetColor()</a>
+    <a class="normalNavBlock" href="#tSetPosition">textSetPosition()</a>
+    <a class="normalNavBlock" href="#tSetVisible">textSetVisible()</a>
+    <a class="normalNavBlock" href="#tSetZindex">textSetZindex()</a>
+    <a class="normalNavBlock" href="#tSubmit">textSubmit()</a>
+  </div>
+
+  <div id="tAddDirectionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textAddDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection, <b class="datatype">glm::vec2</b> direction)</h1>
+    <h2>Description</h2>
+    <p>This function will add a direction for the text you created before. You'll be able to move this text then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text you created before.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID for the direction you'd like to add. It's an unique integer value, which would indicate this direction for your text during the runtime of your application. It's chosen by you.</li>
+      <li><b class="identifier">direction</b>: This is the actual direction. The text can be moved by this direction per second then.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tAddLetterDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textAddLetter(<b class="datatype">uint32_t</b> id, <b class="datatype">uint8_t</b> letter)</h1>
+    <h2>Description</h2>
+    <p>This function will add a letter to the end of the actual string of the text object you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text you created before.</li>
+      <li><b class="identifier">letter</b>: This is the letter you'd like to add to the text objects string.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tAddStringDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textAddString(<b class="datatype">uint32_t</b> id, <b class="datatype">const char *</b> pString)</h1>
+    <h2>Description</h2>
+    <p>This function will add a string to the end of the actual string of the text object you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text you created before.</li>
+      <li><b class="identifier">pString</b>: This is the string you'd like to add to the text objects string.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tClearDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textClear(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete the complete string of the text object you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text you created before.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textCreate(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will create a text, which can be displayed in your application then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text you'd like to create. It's an unique integer value, which would indicate the text during the runtime of your application. It's chosen by you.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a text you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tFadeDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textFade(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> alphaPerSecond)</h1>
+    <h2>Description</h2>
+    <p>This function will fade a text you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">alphaPerSecond</b>: This is the alpha channel value. The text will fade by this value per second. A negative value would fade the text out and a positive value would fade the text in.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tGetAlphaDiv" style="display: none;">
+    <h1><b class="datatype">double</b> textGetAlpha(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the value of the alpha channel of a text.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the alpha value as <b class="datatype">double</b> type.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tGetPositionDiv" style="display: none;">
+    <h1><b class="datatype">SDL_Point</b> textGetPosition(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the position of the text you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the position as <b class="datatype">SDL_Point</b> struct.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tGetSizeDiv" style="display: none;">
+    <h1><b class="datatype">SDL_Point</b> textGetSize(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the size of the text you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the size as <b class="datatype">SDL_Point</b> struct.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tGetVisibleDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> textGetVisible(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will find out if a text is visible or not.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return <b class="identifier">true</b> if the text is visible or <b class="identifier">false</b> if the text is invisible.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tMoveDirectionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textMoveDirection(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idDirection)</h1>
+    <h2>Description</h2>
+    <p>This function will move a text into a specific direction.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">idDirection</b>: This is the specific ID of the direction you created before.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tPrepareForDrawingDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textPrepareForDrawing(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will prepare a text for rendering process. It will create a texture using the right font, text color and the actual string. You only have to call this function once as long as the text doesn't change.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tRelateFontDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textRelateFont(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> idFont)</h1>
+    <h2>Description</h2>
+    <p>This function will relate a text to a specific font. This is necessary for rendering process, so that the engine knows which font it should use for your text.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">idFont</b>: This is the specific ID of the font you created before.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tSetAlphaDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textSetAlpha(<b class="datatype">uint32_t</b> id, <b class="datatype">uint8_t</b> alpha)</h1>
+    <h2>Description</h2>
+    <p>This function will set the alpha value of the text you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">alpha</b>: This is the actual alpha value.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tSetColorDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textSetColor(<b class="datatype">uint32_t</b> id, <b class="datatype">uint8_t</b> r, <b class="datatype">uint8_t</b> g, <b class="datatype">uint8_t</b> b, <b class="datatype">uint8_t</b> a)</h1>
+    <h2>Description</h2>
+    <p>This function will set the color of the text you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">r</b>: This is the red value of the color you'd like to set.</li>
+      <li><b class="identifier">g</b>: This is the green value of the color you'd like to set.</li>
+      <li><b class="identifier">b</b>: This is the blue value of the color you'd like to set.</li>
+      <li><b class="identifier">a</b>: This is the alpha value of the color you'd like to set.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tSetPositionDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textSetPosition(<b class="datatype">uint32_t</b> id, <b class="datatype">int</b> x,  <b class="datatype">int</b> y)</h1>
+    <h2>Description</h2>
+    <p>This function will set the position of the text you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">x</b>: This is the x-position of the text.</li>
+      <li><b class="identifier">y</b>: This is the y-position of the text.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tSetVisibleDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textSetVisible(<b class="datatype">uint32_t</b> id, <b class="datatype">bool</b> visible)</h1>
+    <h2>Description</h2>
+    <p>This function will set a text visible. Only visible texts will be rendered in your application.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">visible</b>: Set this flag to <b class="constant">LE_TRUE</b> to make this text visible or <b class="constant">LE_FALSE</b> to make it invisible.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tSetZindexDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textSetZindex(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> zindex)</h1>
+    <h2>Description</h2>
+    <p>This function will set the z-index of a text you created before. The z-index will define in which order objects will be drawn. An object with a low z-index will always be drawn first.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+      <li><b class="identifier">zindex</b>: This is the z-index of the text. This value must be larger than 0!</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="tSubmitDiv" style="display: none;">
+    <h1><b class="datatype">int</b> textSubmit(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will create the final string of the text you created before. You must have called <b class="identifier">textAddLetter()</b> or <b class="identifier">textAddString()</b> before. After submitting your text you can prepare your text for rendering process using <b class="identifier">textPrepareForDrawing()</b>.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the text.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    time event
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="timeEventDiv" style="display: none;">
+    <h1>Time Event (7)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#teCreate">timeEventCreate()</a>
+    <a class="normalNavBlock" href="#teDelete">timeEventDelete()</a>
+    <a class="normalNavBlock" href="#teGetStamp">timeEventGetStamp()</a>
+    <a class="normalNavBlock" href="#teReached">timeEventReached()</a>
+    <a class="normalNavBlock" href="#teReset">timeEventReset()</a>
+    <a class="normalNavBlock" href="#teUpdate">timeEventUpdate()</a>
+    <a class="normalNavBlock" href="#teUpdateValidALL">timeEventUpdateValidALL()</a>
+  </div>
+
+  <div id="teCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> timeEventCreate(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> ntimestamp)</h1>
+    <h2>Description</h2>
+    <p>This function will create a time event. Time events can be used to execute code at specific time.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the time event you'd like to create.</li>
+      <li><b class="identifier">ntimestamp</b>: This is the actual timestamp where the time event will take place. Use <b class="identifier">getTimestamp()</b> function to get the current timestamp. Then add the amount of milliseconds which would result in a specific future time.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="teDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> timeEventDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a time event you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the time event you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="teGetStampDiv" style="display: none;">
+    <h1><b class="datatype">uint32_t</b> timeEventGetStamp(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will return the timestamp of when the time event will take place.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the time event.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return the timestamp in milliseconds.</p>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="teReachedDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> timeEventReached(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will find out if a time event has been reached.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the time event.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return <b class="identifier">true</b> if the time event has been reached or <b class="identifier">false</b> if the event would still take place in the future.</p>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="teResetDiv" style="display: none;">
+    <h1><b class="datatype">int</b> timeEventReset(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> ntimestamp)</h1>
+    <h2>Description</h2>
+    <p>This function will reset the time event you created before. You'll be able to reuse it then.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the time event.</li>
+      <li><b class="identifier">ntimestamp</b>: This is the actual timestamp where the time event will take place in milliseconds.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="teUpdateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> timeEventUpdate(<b class="datatype">uint32_t</b> id, <b class="datatype">uint32_t</b> milliseconds)</h1>
+    <h2>Description</h2>
+    <p>This function will delay an outstanding time event by a specific amount of milliseconds.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the time event.</li>
+      <li><b class="identifier">milliseconds</b>: This is the amount of milliseconds you'd like to add to the outstanding time event.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="teUpdateValidALLDiv" style="display: none;">
+    <h1><b class="datatype">void</b> timeEventUpdateValidALL(<b class="datatype">uint32_t</b> milliseconds)</h1>
+    <h2>Description</h2>
+    <p>This function will delay all outstanding time events by a specific amount of milliseconds.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">milliseconds</b>: This is the amount of milliseconds you'd like to add to the outstanding time events.</li>
+    </ul>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    video
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="videoDiv" style="display: none;">
+    <h1>Video (3)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#vCreate">videoCreate()</a>
+    <a class="normalNavBlock" href="#vDelete">videoDelete()</a>
+    <a class="normalNavBlock" href="#vPlay">videoPlay()</a>
+  </div>
+
+  <div id="vCreateDiv" style="display: none;">
+    <h1><b class="datatype">int</b> videoCreate(<b class="datatype">uint32_t</b> id, <b class="datatype">const char *</b> pFile)</h1>
+    <h2>Description</h2>
+    <p>This function will load a video for your application. Make sure that <b class="constant">LE_THEORA</b> in <b class="file">le_glb.h</b> is enabled.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the video you'd like to load. It's an unique integer value, which would indicate this video during the runtime of your application. It's chosen by you.</li>
+      <li><b class="identifier">pFile</b>: This is the path of your <b class="file">.OGV</b> file.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#video" class="normalNav">Video</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="vDeleteDiv" style="display: none;">
+    <h1><b class="datatype">int</b> videoDelete(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will delete a video you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the video you'd like to delete.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <br>
+    &laquo; <a href="#video" class="normalNav">Video</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="vPlayDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> videoPlay(<b class="datatype">uint32_t</b> id)</h1>
+    <h2>Description</h2>
+    <p>This function will play the video you created before.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">id</b>: This is the specific ID of the video you'd like to play.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return <b class="identifier">true</b> when the video has finished playing.</p>
+    <br>
+    &laquo; <a href="#video" class="normalNav">Video</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <!--
+    /////////////////////////////////////
+    /////////////////////////////////////
+    window
+    /////////////////////////////////////
+    /////////////////////////////////////
+  -->
+
+  <div id="windowDiv" style="display: none;">
+    <h1>Window (1)</h1>
+    &laquo; <a href="#index" class="normalNav">index</a>
+    <br>
+    <br>
+    <a class="normalNavBlock" href="#wFocused">windowFocused()</a>
+  </div>
+
+  <div id="wFocusedDiv" style="display: none;">
+    <h1><b class="datatype">bool</b> windowFocused()</h1>
+    <h2>Description</h2>
+    <p>This function will find out if the window is focused or not.</p>
+    <h2>return value</h2>
+    <p>This function will return <b class="constant">LE_TRUE</b> if the window is focused or <b class="constant">LE_FALSE</b> if it's not focused.</p>
+    <br>
+    &laquo; <a href="#window" class="normalNav">Window</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+</body>
+</html>
