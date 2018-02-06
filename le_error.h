@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            03.01.2018
+  updated:            29.01.2018
 */
 
 #ifndef H_LE_ERROR
@@ -65,5 +65,6 @@
 #define LE_VIDEO_EXIST                          55        // id for video already exists
 #define LE_VIDEO_NOEXIST                        56        // id for video does not exist
 #define LE_SDL_HINT                             57        // SDL_SetHint() failed
+#define LE_INIT_SUBSYSTEM                       58        // SDL_InitSubSystem failed
 
 #endif

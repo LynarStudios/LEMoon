@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04, g++ Compiler
   date:               29.05.2017
-  updated:            11.12.2017
+  updated:            01.02.2018
 */
 
 #include "le_model.h"
@@ -458,7 +458,7 @@ int LEMdl::mdlCreateTexture(uint32_t idTexture, const char * pFile, SDL_Renderer
 int LEMdl::mdlDrawActiveTexture(SDL_Renderer * pRenderer)
 {
   int result = LE_NO_ERROR;
-  Texture * pElem = this->pTextureHead->pRight;
+  Texture * pElem = nullptr;
   SDL_Rect * pSourceRect = nullptr;
   SDL_Rect posSizeBuffer;
   posSizeBuffer.w = this->rectPosSize.w * this->sizeFactor;
@@ -467,62 +467,67 @@ int LEMdl::mdlDrawActiveTexture(SDL_Renderer * pRenderer)
   posSizeBuffer.y = this->rectPosSize.y;
   Clone * pClone = nullptr;
 
-  // draw original
-
-  while(pElem != this->pTextureHead)
-  {
-    if(pElem->active && pElem->pTexture != nullptr && pElem->alpha > 0.0f)
-    {
-      if(pElem->pSourceRect != nullptr)
-        {pSourceRect = &(pElem->pSourceRect->srcRect);}
-
-      if(SDL_RenderCopyEx(pRenderer, pElem->pTexture, pSourceRect, &posSizeBuffer, this->currentDegree, nullptr, SDL_FLIP_NONE))
-      {
-        result = LE_SDL_RENDER_COPY_EX;
-        break;
-      }
-    }
-
-    pElem = pElem->pRight;
-  }
-
-  // draw clones
-
-  if(this->pCloneHead != nullptr)
+  if(this->pTextureHead != nullptr)
   {
     pElem = this->pTextureHead->pRight;
 
+    // draw original
+    
     while(pElem != this->pTextureHead)
     {
       if(pElem->active && pElem->pTexture != nullptr && pElem->alpha > 0.0f)
       {
-        pClone = this->pCloneHead->pRight;
-
-        while(pClone != this->pCloneHead)
+        if(pElem->pSourceRect != nullptr)
+          {pSourceRect = &(pElem->pSourceRect->srcRect);}
+    
+        if(SDL_RenderCopyEx(pRenderer, pElem->pTexture, pSourceRect, &posSizeBuffer, this->currentDegree, nullptr, SDL_FLIP_NONE))
         {
-          posSizeBuffer.x = pClone->position.x;
-          posSizeBuffer.y = pClone->position.y;
-
-          if(pElem->pSourceRect != nullptr)
-            {pSourceRect = &(pElem->pSourceRect->srcRect);}
-
-          if(pClone->visible)
-          {
-            if(SDL_RenderCopyEx(pRenderer, pElem->pTexture, pSourceRect, &posSizeBuffer, this->currentDegree, nullptr, SDL_FLIP_NONE))
-            {
-              result = LE_SDL_RENDER_COPY_EX;
-              break;
-            }
-          }
-
-          pClone = pClone->pRight;
+          result = LE_SDL_RENDER_COPY_EX;
+          break;
         }
-
-        if(result)
-          {break;}
       }
-
+    
       pElem = pElem->pRight;
+    }
+    
+    // draw clones
+    
+    if(this->pCloneHead != nullptr)
+    {
+      pElem = this->pTextureHead->pRight;
+    
+      while(pElem != this->pTextureHead)
+      {
+        if(pElem->active && pElem->pTexture != nullptr && pElem->alpha > 0.0f)
+        {
+          pClone = this->pCloneHead->pRight;
+    
+          while(pClone != this->pCloneHead)
+          {
+            posSizeBuffer.x = pClone->position.x;
+            posSizeBuffer.y = pClone->position.y;
+    
+            if(pElem->pSourceRect != nullptr)
+              {pSourceRect = &(pElem->pSourceRect->srcRect);}
+    
+            if(pClone->visible)
+            {
+              if(SDL_RenderCopyEx(pRenderer, pElem->pTexture, pSourceRect, &posSizeBuffer, this->currentDegree, nullptr, SDL_FLIP_NONE))
+              {
+                result = LE_SDL_RENDER_COPY_EX;
+                break;
+              }
+            }
+    
+            pClone = pClone->pRight;
+          }
+    
+          if(result)
+            {break;}
+        }
+    
+        pElem = pElem->pRight;
+      }
     }
   }
 
@@ -1350,4 +1355,15 @@ uint32_t LEMdl::mdlGetAmountOfTextureSourceRectangles(uint32_t idTexture)
   }
 
   return amount;
+}
+
+bool LEMdl::mdlTextureExist(uint32_t idTexture)
+{
+  bool textureExist = LE_FALSE;
+  Texture * pTexture = this->textureGet(idTexture);
+
+  if(pTexture != nullptr)
+    {textureExist = LE_TRUE;}
+
+  return textureExist;
 }

@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04, g++ Compiler
   date:               29.05.2017
-  updated:            11.12.2017
+  updated:            01.02.2018
 */
 
 #ifndef H_LE_MODEL
@@ -132,6 +132,7 @@ class LEMdl
     int mdlSetTextureActive(uint32_t, bool);                                        // diese Funktion legt fest, ob eine Textur sichtbar ist oder nicht
     int mdlSetTextureAlpha(uint32_t, uint8_t);                                      // diese Funktion setzt den Alphawert einer Textur
     int mdlSetTextureZindex(uint32_t, uint32_t);                                    // diese Funktion setzt einen zindex fuer eine Textur
+    bool mdlTextureExist(uint32_t);                                                 // diese Funktion prueft, ob eine Textur existiert
 };
 
 #endif
