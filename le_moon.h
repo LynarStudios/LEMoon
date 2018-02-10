@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            02.02.2018
+  updated:            10.02.2018
 */
 
 #ifndef H_LE_MOON
@@ -520,7 +520,7 @@ typedef class LEMoon
     bool keyEvent(uint32_t, SDL_Keycode);                                                     // diese Funktion prueft, ob ein SDL_Keycode (https://wiki.libsdl.org/SDL_Keycode) gedrueckt oder losgelassen wird
     void messageBox(const char*, const char*);                                                // diese Funktion ruft eine Dialogbox auf mit einem gewaehlten Titel und einem gewaehlten Text
     #ifdef LE_LINUX
-    int mkpath(const char*, mode_t);                                                          // diese Funktion erstellt einen Pfad unter Linux
+    void mkpath(const char*, mode_t);                                                         // diese Funktion erstellt einen Pfad unter Linux
     #endif
     bool mouseEvent(uint32_t, uint8_t);                                                       // diese Funktion prueft, ob ein Mousebutton gedrueckt oder losgelassen wurde
     SDL_Point mouseGetPosition();                                                             // diese Funktion gibt die Mausposition zurueck
