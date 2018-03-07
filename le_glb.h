@@ -3,10 +3,12 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            28.01.2018
+  updated:            07.03.2018
 */
 
 #include <SDL.h>
+#include <mutex>
+using namespace std;
 //#include "theoraplay.h"
 #include "glm/glm.hpp"
 
@@ -14,7 +16,6 @@
 #define H_LE_GLB
 
 #define LE_DEBUG                100
-//#define LE_DESKTOP_APP          101                   // auskommentieren, falls DESKTOP Funktionen, wie Tastatur, nicht benoetigt werden
 //#define LE_ANDROID              102
 #define LE_WINDOWS              103
 //#define LE_LINUX                104
@@ -28,6 +29,7 @@
 #define LE_RELEASED             2
 //#define LE_THEORA               1
 //#define COMPILE_WINDOWS
+#define LE_MUTEX                100
 
 typedef struct sColor
 {
@@ -97,6 +99,13 @@ struct SourceRect
   SourceRect * pRight;
   uint32_t id;
   SDL_Rect srcRect;
+};
+
+struct LEMutex
+{
+  mutex mtxGet;
+  mutex mtxDel;
+  mutex mtxAdd;
 };
 
 #endif

@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            10.02.2018
+  updated:            06.08.2018
 */
 
 #ifndef H_LE_MOON
@@ -68,8 +68,8 @@ typedef struct sLEKeyboard
   uint8_t keyACSearch;
   uint8_t keyACStop;
   uint8_t keyAgain;
-  uint8_t keyAltErase; // all done
-
+  uint8_t keyAltErase;
+  uint8_t keyApostrophe;
   uint8_t keyApplication;
   uint8_t keyAudioMute;
   uint8_t keyAudioNext;
@@ -80,7 +80,6 @@ typedef struct sLEKeyboard
   uint8_t keyBackslash;
   uint8_t keyBackspace;
   uint8_t keyBrightnessDown;
-
   uint8_t keyBrightnessUp;
   uint8_t keyC;
   uint8_t keyCalculator;
@@ -88,10 +87,10 @@ typedef struct sLEKeyboard
   uint8_t keyCapsLock;
   uint8_t keyClear;
   uint8_t keyClearAgain;
+  uint8_t keyComma;
   uint8_t keyComputer;
   uint8_t keyCopy;
   uint8_t keyCrSel;
-
   uint8_t keyCurrencySubUnit;
   uint8_t keyCurrencyUnit;
   uint8_t keyCut;
@@ -99,13 +98,12 @@ typedef struct sLEKeyboard
   uint8_t keyDecimalSeparator;
   uint8_t keyDelete;
   uint8_t keyDisplaySwitch;
-  uint8_t keyDown; // done
-  uint8_t keyE;
+  uint8_t keyDown;
+  uint8_t keyE; 
   uint8_t keyEject;
-
   uint8_t keyEnd;
   uint8_t keyEquals;
-  uint8_t keyEscape;  // done
+  uint8_t keyEscape;
   uint8_t keyExecute;
   uint8_t keyExSel;
   uint8_t keyF;
@@ -113,7 +111,6 @@ typedef struct sLEKeyboard
   uint8_t keyF2;
   uint8_t keyF3;
   uint8_t keyF4;
-
   uint8_t keyF5;
   uint8_t keyF6;
   uint8_t keyF7;
@@ -124,7 +121,6 @@ typedef struct sLEKeyboard
   uint8_t keyF12;
   uint8_t keyF13;
   uint8_t keyF14;
-
   uint8_t keyF15;
   uint8_t keyF16;
   uint8_t keyF17;
@@ -135,7 +131,6 @@ typedef struct sLEKeyboard
   uint8_t keyF22;
   uint8_t keyF23;
   uint8_t keyF24;
-
   uint8_t keyFind;
   uint8_t keyG;
   uint8_t keyBackquote;
@@ -146,7 +141,6 @@ typedef struct sLEKeyboard
   uint8_t keyInsert;
   uint8_t keyJ;
   uint8_t keyK;
-
   uint8_t keyKBDillumDown;
   uint8_t keyKBDillumToggle;
   uint8_t keyKBDillumUp;
@@ -156,8 +150,7 @@ typedef struct sLEKeyboard
   uint8_t keyKeypad1;
   uint8_t keyKeypad2;
   uint8_t keyKeypad3;
-  uint8_t keyKeypad4;
-
+  uint8_t keyKeypad4; 
   uint8_t keyKeypad5;
   uint8_t keyKeypad6;
   uint8_t keyKeypad7;
@@ -168,7 +161,6 @@ typedef struct sLEKeyboard
   uint8_t keyKeypadAt;
   uint8_t keyKeypadB;
   uint8_t keyKeypadBackspace;
-
   uint8_t keyKeypadBinary;
   uint8_t keyKeypadC;
   uint8_t keyKeypadClear;
@@ -179,7 +171,6 @@ typedef struct sLEKeyboard
   uint8_t keyKeypadDoubleAnd;
   uint8_t keyKeypadDoubleOr;
   uint8_t keyKeypadDecimal;
-
   uint8_t keyKeypadDivide;
   uint8_t keyKeypadE;
   uint8_t keyKeypadEnter;
@@ -190,7 +181,6 @@ typedef struct sLEKeyboard
   uint8_t keyKeypadGreater;
   uint8_t keyKeypadHash;
   uint8_t keyKeypadHexadecimal;
-
   uint8_t keyKeypadLeftBrace;
   uint8_t keyKeypadLeftParen;
   uint8_t keyKeypadLess;
@@ -201,7 +191,6 @@ typedef struct sLEKeyboard
   uint8_t keyKeypadMemRecall;
   uint8_t keyKeypadMemStore;
   uint8_t keyKeypadMemSubtract;
-
   uint8_t keyKeypadMinus;
   uint8_t keyKeypadMultiply;
   uint8_t keyKeypadOctal;
@@ -212,7 +201,6 @@ typedef struct sLEKeyboard
   uint8_t keyKeypadPower;
   uint8_t keyKeypadRightBrace;
   uint8_t keyKeypadRightParen;
-
   uint8_t keyKeypadSpace;
   uint8_t keyKeypadTab;
   uint8_t keyKeypadVerticalBar;
@@ -220,10 +208,9 @@ typedef struct sLEKeyboard
   uint8_t keyL;
   uint8_t keyLeftAlt;
   uint8_t keyLeftCtrl;
-  uint8_t keyLeft;  // done
+  uint8_t keyLeft;
   uint8_t keyLeftBracket;
   uint8_t keyLeftGUI;
-
   uint8_t keyLeftShift;
   uint8_t keyM;
   uint8_t keyMail;
@@ -234,10 +221,10 @@ typedef struct sLEKeyboard
   uint8_t keyMute;
   uint8_t keyN;
   uint8_t keyNumLock;
-
   uint8_t keyO;
   uint8_t keyOper;
   uint8_t keyOut;
+  uint8_t keyP;
   uint8_t keyPageDown;
   uint8_t keyPageUp;
   uint8_t keyPaste;
@@ -245,18 +232,16 @@ typedef struct sLEKeyboard
   uint8_t keyPeriod;
   uint8_t keyPower;
   uint8_t keyPrintScreen;
-
   uint8_t keyPrior;
   uint8_t keyQ;
   uint8_t keyR;
   uint8_t keyRightAlt;
   uint8_t keyRightCtrl;
-  uint8_t keyReturn; // done
+  uint8_t keyReturn;
   uint8_t keyReturn2;
   uint8_t keyRightGUI;
-  uint8_t keyRight; //done
+  uint8_t keyRight;
   uint8_t keyRightBracket;
-
   uint8_t keyRightShift;
   uint8_t keyS;
   uint8_t keyScrollLock;
@@ -265,20 +250,18 @@ typedef struct sLEKeyboard
   uint8_t keySeparator;
   uint8_t keySlash;
   uint8_t keySleep;
-  uint8_t keySpace; // done
+  uint8_t keySpace;
   uint8_t keyStop;
-
   uint8_t keySysReq;
   uint8_t keyT;
   uint8_t keyTab;
   uint8_t keyThousandsSeparator;
   uint8_t keyU;
   uint8_t keyUndo;
-  uint8_t keyUp; // done
+  uint8_t keyUp;
   uint8_t keyV;
   uint8_t keyVolumeDown;
   uint8_t keyVolumeUp;
-
   uint8_t keyW;
   uint8_t keyWWW;
   uint8_t keyX;
@@ -425,6 +408,17 @@ typedef class LEMoon
     LEWindow window;                                                                          // diese Struktur speichert verschiedene Zustaende des Fenster
     char * prefPath;                                                                          // der Pfad wo Dateien geschrieben werden koennen
 
+    // threading
+
+    LEMutex mtxFont;
+    LEMutex mtxLine;
+    LEMutex mtxModel;
+    LEMutex mtxPoint;
+    LEMutex mtxSound;
+    LEMutex mtxText;
+    LEMutex mtxTimeEvent;
+    LEMutex mtxVideo;
+
     // memory
 
     void memoryClearFonts();                                                                  // diese Funktion loescht alle Fonts im Destruktor der Engine
@@ -440,6 +434,7 @@ typedef class LEMoon
     void clearKeyboard();                                                                     // diese Funktion setzt alle Tasten auf 0
     void clearMouse();                                                                        // diese Funktion setzt alle Maustasten auf 0
     int drawWithZindex();                                                                     // diese Funktion zeichnet Objekte (Models / Texte) anhand ihres Zindex
+    void freeKey(uint8_t&);                                                                   // diese Funktion setzt eine Keyboard Taste zurueck
     void freeKeyboardKeys();                                                                  // diese Funktion setzt alle Keys auf inactive, die vorher auf released standen
     void freeMouse();                                                                         // diese Funktion setzt alle Maus Events wieder zurueck
     void handleKeyboard();                                                                    // diese Funktion haelt alle keyboard events fest
@@ -543,8 +538,6 @@ typedef class LEMoon
     int modelAddCollisionRect(uint32_t, uint32_t, SDL_Rect);                                  // diese Funktion fuegt eine Kollisionsbereich in Form eines Rechteckes hinzu
     int modelAddDirection(uint32_t, uint32_t, glm::vec2);                                     // diese Funktion legt eine Bewegungsrichtung fuer ein Model an
     int modelAddTextureSourceRect(uint32_t, uint32_t, uint32_t, int, int, int, int);          // diese Funktion fuegt einen Texturbereich hinzu aus welchem ausschliesslich gezeichnet werden soll
-    int modelAnimateTexture(uint32_t, uint32_t, int, int, uint32_t);                          // DEPRECATED: diese Funktion animiert eine Textur, indem es Texturbereiche nacheinander anzeigt, Parameter 3: id des Texturbereiches, oder LE_CURRENT_SRCRECT, Parameter 4: Anzahl von Texturbereichschritten ab "Parameter 3", positiv fuer vorwaerts, negativ fuer rueckwaerts
-    int modelAnimateTextureRepeat(uint32_t, uint32_t, int, uint8_t, uint32_t);                // DEPRECATED: wie modelAnimateTexture(), nur, dass die Animation wiederholt wird, 4. Parameter: LE_FORWARD oder LE_BACKWARD
     int modelChangeDirection(uint32_t, uint32_t, glm::vec2);                                  // diese Funktion aendert eine Bewegungsrichtung
     bool modelCheckCollision(uint32_t, uint32_t);                                             // diese Funktion prueft, ob zwei Models miteinander kollidieren
     bool modelCheckFrameBoxCollision(uint32_t, uint32_t);                                     // diese Funktion prueft, ob die groben Kollisionsbereiche von zwei Models miteinander kollidieren

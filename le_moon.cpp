@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            05.02.2018
+  updated:            07.03.2018
 */
 
 #include "le_moon.h"
@@ -825,6 +825,7 @@ void LEMoon::clearKeyboard()
   this->keyboard.keyACStop                = LE_INACTIVE;
   this->keyboard.keyAgain                 = LE_INACTIVE;
   this->keyboard.keyAltErase              = LE_INACTIVE;
+  this->keyboard.keyApostrophe            = LE_INACTIVE;
   this->keyboard.keyApplication           = LE_INACTIVE;
   this->keyboard.keyAudioMute             = LE_INACTIVE;
   this->keyboard.keyAudioNext             = LE_INACTIVE;
@@ -842,6 +843,7 @@ void LEMoon::clearKeyboard()
   this->keyboard.keyCapsLock              = LE_INACTIVE;
   this->keyboard.keyClear                 = LE_INACTIVE;
   this->keyboard.keyClearAgain            = LE_INACTIVE;
+  this->keyboard.keyComma                 = LE_INACTIVE;
   this->keyboard.keyComputer              = LE_INACTIVE;
   this->keyboard.keyCopy                  = LE_INACTIVE;
   this->keyboard.keyCrSel                 = LE_INACTIVE;
@@ -978,6 +980,7 @@ void LEMoon::clearKeyboard()
   this->keyboard.keyO                     = LE_INACTIVE;
   this->keyboard.keyOper                  = LE_INACTIVE;
   this->keyboard.keyOut                   = LE_INACTIVE;
+  this->keyboard.keyP                     = LE_INACTIVE;
   this->keyboard.keyPageDown              = LE_INACTIVE;
   this->keyboard.keyPageUp                = LE_INACTIVE;
   this->keyboard.keyPaste                 = LE_INACTIVE;
@@ -1151,36 +1154,807 @@ void LEMoon::handleKeyboard()
         {
           this->keyboard.keyAltErase = LE_RELEASED;
         } break;
+        case SDLK_QUOTE:
+        {
+          this->keyboard.keyApostrophe = LE_RELEASED;
+        } break;
+        case SDLK_APPLICATION:
+        {
+          this->keyboard.keyApplication = LE_RELEASED;
+        } break;
+        case SDLK_AUDIOMUTE:
+        {
+          this->keyboard.keyAudioMute = LE_RELEASED;
+        } break;
+        case SDLK_AUDIONEXT:
+        {
+          this->keyboard.keyAudioNext = LE_RELEASED;
+        } break;
+        case SDLK_AUDIOPLAY:
+        {
+          this->keyboard.keyAudioPlay = LE_RELEASED;
+        } break;
+        case SDLK_AUDIOPREV:
+        {
+          this->keyboard.keyAudioPrev = LE_RELEASED;
+        } break;
+        case SDLK_AUDIOSTOP:
+        {
+          this->keyboard.keyAudioStop = LE_RELEASED;
+        } break;
+        case SDLK_b:
+        {
+          this->keyboard.keyB = LE_RELEASED;
+        } break;
+        case SDLK_BACKSLASH:
+        {
+          this->keyboard.keyBackslash = LE_RELEASED;
+        } break;
+        case SDLK_BACKSPACE:
+        {
+          this->keyboard.keyBackspace = LE_RELEASED;
+        } break;
+        case SDLK_BRIGHTNESSDOWN:
+        {
+          this->keyboard.keyBrightnessDown = LE_RELEASED;
+        } break;
+        case SDLK_BRIGHTNESSUP:
+        {
+          this->keyboard.keyBrightnessUp = LE_RELEASED;
+        } break;
+        case SDLK_c:
+        {
+          this->keyboard.keyC = LE_RELEASED;
+        } break;
+        case SDLK_CALCULATOR:
+        {
+          this->keyboard.keyCalculator = LE_RELEASED;
+        } break;
+        case SDLK_CANCEL:
+        {
+          this->keyboard.keyCancel = LE_RELEASED;
+        } break;
+        case SDLK_CAPSLOCK:
+        {
+          this->keyboard.keyCapsLock = LE_RELEASED;
+        } break;
+        case SDLK_CLEAR:
+        {
+          this->keyboard.keyClear = LE_RELEASED;
+        } break;
+        case SDLK_CLEARAGAIN:
+        {
+          this->keyboard.keyClearAgain = LE_RELEASED;
+        } break;
+        case SDLK_COMMA:
+        {
+          this->keyboard.keyComma = LE_RELEASED;
+        } break;
+        case SDLK_COMPUTER:
+        {
+          this->keyboard.keyComputer = LE_RELEASED;
+        } break;
+        case SDLK_COPY:
+        {
+          this->keyboard.keyCopy = LE_RELEASED;
+        } break;
+        case SDLK_CRSEL:
+        {
+          this->keyboard.keyCrSel = LE_RELEASED;
+        } break;
+        case SDLK_CURRENCYSUBUNIT:
+        {
+          this->keyboard.keyCurrencySubUnit = LE_RELEASED;
+        } break;
+        case SDLK_CURRENCYUNIT:
+        {
+          this->keyboard.keyCurrencyUnit = LE_RELEASED;
+        } break;
+        case SDLK_CUT:
+        {
+          this->keyboard.keyCut = LE_RELEASED;
+        } break;
+        case SDLK_d:
+        {
+          this->keyboard.keyD = LE_RELEASED;
+        } break;
+        case SDLK_DECIMALSEPARATOR:
+        {
+          this->keyboard.keyDecimalSeparator = LE_RELEASED;
+        } break;
+        case SDLK_DELETE:
+        {
+          this->keyboard.keyDelete = LE_RELEASED;
+        } break;
+        case SDLK_DISPLAYSWITCH:
+        {
+          this->keyboard.keyDisplaySwitch = LE_RELEASED;
+        } break;
         case SDLK_DOWN:
         {
           this->keyboard.keyDown = LE_RELEASED;
+        } break;
+        case SDLK_e:
+        {
+          this->keyboard.keyE = LE_RELEASED;
+        } break;
+        case SDLK_EJECT:
+        {
+          this->keyboard.keyEject = LE_RELEASED;
+        } break;
+        case SDLK_END:
+        {
+          this->keyboard.keyEnd = LE_RELEASED;
+        } break;
+        case SDLK_EQUALS:
+        {
+          this->keyboard.keyEquals = LE_RELEASED;
         } break;
         case SDLK_ESCAPE:
         {
           this->keyboard.keyEscape = LE_RELEASED;
         } break;
+        case SDLK_EXECUTE:
+        {
+          this->keyboard.keyExecute = LE_RELEASED;
+        } break;
+        case SDLK_EXSEL:
+        {
+          this->keyboard.keyExSel = LE_RELEASED;
+        } break;
+        case SDLK_f:
+        {
+          this->keyboard.keyF = LE_RELEASED;
+        } break;
+        case SDLK_F1:
+        {
+          this->keyboard.keyF1 = LE_RELEASED;
+        } break;
+        case SDLK_F10:
+        {
+          this->keyboard.keyF10 = LE_RELEASED;
+        } break;
+        case SDLK_F11:
+        {
+          this->keyboard.keyF11 = LE_RELEASED;
+        } break;
+        case SDLK_F12:
+        {
+          this->keyboard.keyF12 = LE_RELEASED;
+        } break;
+        case SDLK_F13:
+        {
+          this->keyboard.keyF13 = LE_RELEASED;
+        } break;
+        case SDLK_F14:
+        {
+          this->keyboard.keyF14 = LE_RELEASED;
+        } break;
+        case SDLK_F15:
+        {
+          this->keyboard.keyF15 = LE_RELEASED;
+        } break;
+        case SDLK_F16:
+        {
+          this->keyboard.keyF16 = LE_RELEASED;
+        } break;
+        case SDLK_F17:
+        {
+          this->keyboard.keyF17 = LE_RELEASED;
+        } break;
+        case SDLK_F18:
+        {
+          this->keyboard.keyF18 = LE_RELEASED;
+        } break;
+        case SDLK_F19:
+        {
+          this->keyboard.keyF19 = LE_RELEASED;
+        } break;
+        case SDLK_F2:
+        {
+          this->keyboard.keyF2 = LE_RELEASED;
+        } break;
+        case SDLK_F20:
+        {
+          this->keyboard.keyF20 = LE_RELEASED;
+        } break;
+        case SDLK_F21:
+        {
+          this->keyboard.keyF21 = LE_RELEASED;
+        } break;
+        case SDLK_F22:
+        {
+          this->keyboard.keyF22 = LE_RELEASED;
+        } break;
+        case SDLK_F23:
+        {
+          this->keyboard.keyF23 = LE_RELEASED;
+        } break;
+        case SDLK_F24:
+        {
+          this->keyboard.keyF24 = LE_RELEASED;
+        } break;
+        case SDLK_F3:
+        {
+          this->keyboard.keyF3 = LE_RELEASED;
+        } break;
+        case SDLK_F4:
+        {
+          this->keyboard.keyF4 = LE_RELEASED;
+        } break;
+        case SDLK_F5:
+        {
+          this->keyboard.keyF5 = LE_RELEASED;
+        } break;
+        case SDLK_F6:
+        {
+          this->keyboard.keyF6 = LE_RELEASED;
+        } break;
+        case SDLK_F7:
+        {
+          this->keyboard.keyF7 = LE_RELEASED;
+        } break;
+        case SDLK_F8:
+        {
+          this->keyboard.keyF8 = LE_RELEASED;
+        } break;
+        case SDLK_F9:
+        {
+          this->keyboard.keyF9 = LE_RELEASED;
+        } break;
+        case SDLK_FIND:
+        {
+          this->keyboard.keyFind = LE_RELEASED;
+        } break;
+        case SDLK_g:
+        {
+          this->keyboard.keyG = LE_RELEASED;
+        } break;
+        case SDLK_BACKQUOTE:
+        {
+          this->keyboard.keyBackquote = LE_RELEASED;
+        } break;
+        case SDLK_h:
+        {
+          this->keyboard.keyH = LE_RELEASED;
+        } break;
+        case SDLK_HELP:
+        {
+          this->keyboard.keyHelp = LE_RELEASED;
+        } break;
+        case SDLK_HOME:
+        {
+          this->keyboard.keyHome = LE_RELEASED;
+        } break;
+        case SDLK_i:
+        {
+          this->keyboard.keyI = LE_RELEASED;
+        } break;
+        case SDLK_INSERT:
+        {
+          this->keyboard.keyInsert = LE_RELEASED;
+        } break;
+        case SDLK_j:
+        {
+          this->keyboard.keyJ = LE_RELEASED;
+        } break;
+        case SDLK_k:
+        {
+          this->keyboard.keyK = LE_RELEASED;
+        } break;
+        case SDLK_KBDILLUMDOWN:
+        {
+          this->keyboard.keyKBDillumDown = LE_RELEASED;
+        } break;
+        case SDLK_KBDILLUMTOGGLE:
+        {
+          this->keyboard.keyKBDillumToggle = LE_RELEASED;
+        } break;
+        case SDLK_KBDILLUMUP:
+        {
+          this->keyboard.keyKBDillumUp = LE_RELEASED;
+        } break;
+        case SDLK_KP_0:
+        {
+          this->keyboard.keyKeypad0 = LE_RELEASED;
+        } break;
+        case SDLK_KP_00:
+        {
+          this->keyboard.keyKeypad00 = LE_RELEASED;
+        } break;
+        case SDLK_KP_000:
+        {
+          this->keyboard.keyKeypad000 = LE_RELEASED;
+        } break;
+        case SDLK_KP_1:
+        {
+          this->keyboard.keyKeypad1 = LE_RELEASED;
+        } break;
+        case SDLK_KP_2:
+        {
+          this->keyboard.keyKeypad2 = LE_RELEASED;
+        } break;
+        case SDLK_KP_3:
+        {
+          this->keyboard.keyKeypad3 = LE_RELEASED;
+        } break;
+        case SDLK_KP_4:
+        {
+          this->keyboard.keyKeypad4 = LE_RELEASED;
+        } break;
+        case SDLK_KP_5:
+        {
+          this->keyboard.keyKeypad5 = LE_RELEASED;
+        } break;
+        case SDLK_KP_6:
+        {
+          this->keyboard.keyKeypad6 = LE_RELEASED;
+        } break;
+        case SDLK_KP_7:
+        {
+          this->keyboard.keyKeypad7 = LE_RELEASED;
+        } break;
+        case SDLK_KP_8:
+        {
+          this->keyboard.keyKeypad8 = LE_RELEASED;
+        } break;
+        case SDLK_KP_9:
+        {
+          this->keyboard.keyKeypad9 = LE_RELEASED;
+        } break;
+        case SDLK_KP_A:
+        {
+          this->keyboard.keyKeypadA = LE_RELEASED;
+        } break;
+        case SDLK_KP_AMPERSAND:
+        {
+          this->keyboard.keyKeypadAnd = LE_RELEASED;
+        } break;
+        case SDLK_KP_AT:
+        {
+          this->keyboard.keyKeypadAt = LE_RELEASED;
+        } break;
+        case SDLK_KP_B:
+        {
+          this->keyboard.keyKeypadB = LE_RELEASED;
+        } break;
+        case SDLK_KP_BACKSPACE:
+        {
+          this->keyboard.keyKeypadBackspace = LE_RELEASED;
+        } break;
+        case SDLK_KP_BINARY:
+        {
+          this->keyboard.keyKeypadBinary = LE_RELEASED;
+        } break;
+        case SDLK_KP_C:
+        {
+          this->keyboard.keyKeypadC = LE_RELEASED;
+        } break;
+        case SDLK_KP_CLEAR:
+        {
+          this->keyboard.keyKeypadClear = LE_RELEASED;
+        } break;
+        case SDLK_KP_CLEARENTRY:
+        {
+          this->keyboard.keyKeypadClearEntry = LE_RELEASED;
+        } break;
+        case SDLK_KP_COLON:
+        {
+          this->keyboard.keyKeypadColon = LE_RELEASED;
+        } break;
+        case SDLK_KP_COMMA:
+        {
+          this->keyboard.keyKeypadComma = LE_RELEASED;
+        } break;
+        case SDLK_KP_D:
+        {
+          this->keyboard.keyKeypadD = LE_RELEASED;
+        } break;
+        case SDLK_KP_DBLAMPERSAND:
+        {
+          this->keyboard.keyKeypadDoubleAnd = LE_RELEASED;
+        } break;
+        case SDLK_KP_DBLVERTICALBAR:
+        {
+          this->keyboard.keyKeypadDoubleOr = LE_RELEASED;
+        } break;
+        case SDLK_KP_DECIMAL:
+        {
+          this->keyboard.keyKeypadDecimal = LE_RELEASED;
+        } break;
+        case SDLK_KP_DIVIDE:
+        {
+          this->keyboard.keyKeypadDivide = LE_RELEASED;
+        } break;
+        case SDLK_KP_E:
+        {
+          this->keyboard.keyKeypadE = LE_RELEASED;
+        } break;
+        case SDLK_KP_ENTER:
+        {
+          this->keyboard.keyKeypadEnter = LE_RELEASED;
+        } break;
+        case SDLK_KP_EQUALS:
+        {
+          this->keyboard.keyKeypadEquals = LE_RELEASED;
+        } break;
+        case SDLK_KP_EQUALSAS400:
+        {
+          this->keyboard.keyKeypadEqualsAS400 = LE_RELEASED;
+        } break;
+        case SDLK_KP_EXCLAM:
+        {
+          this->keyboard.keyKeypadExclamation = LE_RELEASED;
+        } break;
+        case SDLK_KP_F:
+        {
+          this->keyboard.keyKeypadF = LE_RELEASED;
+        } break;
+        case SDLK_KP_GREATER:
+        {
+          this->keyboard.keyKeypadGreater = LE_RELEASED;
+        } break;
+        case SDLK_KP_HASH:
+        {
+          this->keyboard.keyKeypadHash = LE_RELEASED;
+        } break;
+        case SDLK_KP_HEXADECIMAL:
+        {
+          this->keyboard.keyKeypadHexadecimal = LE_RELEASED;
+        } break;
+        case SDLK_KP_LEFTBRACE:
+        {
+          this->keyboard.keyKeypadLeftBrace = LE_RELEASED;
+        } break;
+        case SDLK_KP_LEFTPAREN:
+        {
+          this->keyboard.keyKeypadLeftParen = LE_RELEASED;
+        } break;
+        case SDLK_KP_LESS:
+        {
+          this->keyboard.keyKeypadLess = LE_RELEASED;
+        } break;
+        case SDLK_KP_MEMADD:
+        {
+          this->keyboard.keyKeypadMemAdd = LE_RELEASED;
+        } break;
+        case SDLK_KP_MEMCLEAR:
+        {
+          this->keyboard.keyKeypadMemClear = LE_RELEASED;
+        } break;
+        case SDLK_KP_MEMDIVIDE:
+        {
+          this->keyboard.keyKeypadMemDivide = LE_RELEASED;
+        } break;
+        case SDLK_KP_MEMMULTIPLY:
+        {
+          this->keyboard.keyKeypadMemMultiply = LE_RELEASED;
+        } break;
+        case SDLK_KP_MEMRECALL:
+        {
+          this->keyboard.keyKeypadMemRecall = LE_RELEASED;
+        } break;
+        case SDLK_KP_MEMSTORE:
+        {
+          this->keyboard.keyKeypadMemStore = LE_RELEASED;
+        } break;
+        case SDLK_KP_MEMSUBTRACT:
+        {
+          this->keyboard.keyKeypadMemSubtract = LE_RELEASED;
+        } break;
+        case SDLK_KP_MINUS:
+        {
+          this->keyboard.keyKeypadMinus = LE_RELEASED;
+        } break;
+        case SDLK_KP_MULTIPLY:
+        {
+          this->keyboard.keyKeypadMultiply = LE_RELEASED;
+        } break;
+        case SDLK_KP_OCTAL:
+        {
+          this->keyboard.keyKeypadOctal = LE_RELEASED;
+        } break;
+        case SDLK_KP_PERCENT:
+        {
+          this->keyboard.keyKeypadPercent = LE_RELEASED;
+        } break;
+        case SDLK_KP_PERIOD:
+        {
+          this->keyboard.keyKeypadPeriod = LE_RELEASED;
+        } break;
+        case SDLK_KP_PLUS:
+        {
+          this->keyboard.keyKeypadPlus = LE_RELEASED;
+        } break;
+        case SDLK_KP_PLUSMINUS:
+        {
+          this->keyboard.keyKeypadPlusMinus = LE_RELEASED;
+        } break;
+        case SDLK_KP_POWER:
+        {
+          this->keyboard.keyKeypadPower = LE_RELEASED;
+        } break;
+        case SDLK_KP_RIGHTBRACE:
+        {
+          this->keyboard.keyKeypadRightBrace = LE_RELEASED;
+        } break;
+        case SDLK_KP_RIGHTPAREN:
+        {
+          this->keyboard.keyKeypadRightParen = LE_RELEASED;
+        } break;
+        case SDLK_KP_SPACE:
+        {
+          this->keyboard.keyKeypadSpace = LE_RELEASED;
+        } break;
+        case SDLK_KP_TAB:
+        {
+          this->keyboard.keyKeypadTab = LE_RELEASED;
+        } break;
+        case SDLK_KP_VERTICALBAR:
+        {
+          this->keyboard.keyKeypadVerticalBar = LE_RELEASED;
+        } break;
+        case SDLK_KP_XOR:
+        {
+          this->keyboard.keyKeypadXOR = LE_RELEASED;
+        } break;
+        case SDLK_l:
+        {
+          this->keyboard.keyL = LE_RELEASED;
+        } break;
+        case SDLK_LALT:
+        {
+          this->keyboard.keyLeftAlt = LE_RELEASED;
+        } break;
+        case SDLK_LCTRL:
+        {
+          this->keyboard.keyLeftCtrl = LE_RELEASED;
+        } break;
         case SDLK_LEFT:
         {
           this->keyboard.keyLeft = LE_RELEASED;
+        } break;
+        case SDLK_LEFTBRACKET:
+        {
+          this->keyboard.keyLeftBracket = LE_RELEASED;
+        } break;
+        case SDLK_LGUI:
+        {
+          this->keyboard.keyLeftGUI = LE_RELEASED;
+        } break;
+        case SDLK_LSHIFT:
+        {
+          this->keyboard.keyLeftShift = LE_RELEASED;
+        } break;
+        case SDLK_m:
+        {
+          this->keyboard.keyM = LE_RELEASED;
+        } break;
+        case SDLK_MAIL:
+        {
+          this->keyboard.keyMail = LE_RELEASED;
+        } break;
+        case SDLK_MEDIASELECT:
+        {
+          this->keyboard.keyMediaSelect = LE_RELEASED;
+        } break;
+        case SDLK_MENU:
+        {
+          this->keyboard.keyMenu = LE_RELEASED;
+        } break;
+        case SDLK_MINUS:
+        {
+          this->keyboard.keyMinus = LE_RELEASED;
+        } break;
+        case SDLK_MODE:
+        {
+          this->keyboard.keyModeSwitch = LE_RELEASED;
+        } break;
+        case SDLK_MUTE:
+        {
+          this->keyboard.keyMute = LE_RELEASED;
+        } break;
+        case SDLK_n:
+        {
+          this->keyboard.keyN = LE_RELEASED;
+        } break;
+        case SDLK_NUMLOCKCLEAR:
+        {
+          this->keyboard.keyNumLock = LE_RELEASED;
+        } break;
+        case SDLK_o:
+        {
+          this->keyboard.keyO = LE_RELEASED;
+        } break;
+        case SDLK_OPER:
+        {
+          this->keyboard.keyOper = LE_RELEASED;
+        } break;
+        case SDLK_OUT:
+        {
+          this->keyboard.keyOut = LE_RELEASED;
+        } break;
+        case SDLK_p:
+        {
+          this->keyboard.keyP = LE_RELEASED;
+        } break;
+        case SDLK_PAGEDOWN:
+        {
+          this->keyboard.keyPageDown = LE_RELEASED;
+        } break;
+        case SDLK_PAGEUP:
+        {
+          this->keyboard.keyPageUp = LE_RELEASED;
+        } break;
+        case SDLK_PASTE:
+        {
+          this->keyboard.keyPaste = LE_RELEASED;
+        } break;
+        case SDLK_PAUSE:
+        {
+          this->keyboard.keyPause = LE_RELEASED;
+        } break;
+        case SDLK_PERIOD:
+        {
+          this->keyboard.keyPeriod = LE_RELEASED;
+        } break;
+        case SDLK_POWER:
+        {
+          this->keyboard.keyPower = LE_RELEASED;
+        } break;
+        case SDLK_PRINTSCREEN:
+        {
+          this->keyboard.keyPrintScreen = LE_RELEASED;
+        } break;
+        case SDLK_PRIOR:
+        {
+          this->keyboard.keyPrior = LE_RELEASED;
+        } break;
+        case SDLK_q:
+        {
+          this->keyboard.keyQ = LE_RELEASED;
+        } break;
+        case SDLK_r:
+        {
+          this->keyboard.keyR = LE_RELEASED;
+        } break;
+        case SDLK_RALT:
+        {
+          this->keyboard.keyRightAlt = LE_RELEASED;
+        } break;
+        case SDLK_RCTRL:
+        {
+          this->keyboard.keyRightCtrl = LE_RELEASED;
         } break;
         case SDLK_RETURN:
         {
           this->keyboard.keyReturn = LE_RELEASED;
         } break;
+        case SDLK_RETURN2:
+        {
+          this->keyboard.keyReturn2 = LE_RELEASED;
+        } break;
+        case SDLK_RGUI:
+        {
+          this->keyboard.keyRightGUI = LE_RELEASED;
+        } break;
         case SDLK_RIGHT:
         {
           this->keyboard.keyRight = LE_RELEASED;
+        } break;
+        case SDLK_RIGHTBRACKET:
+        {
+          this->keyboard.keyRightBracket = LE_RELEASED;
+        } break;
+        case SDLK_RSHIFT:
+        {
+          this->keyboard.keyRightShift = LE_RELEASED;
+        } break;
+        case SDLK_s:
+        {
+          this->keyboard.keyS = LE_RELEASED;
+        } break;
+        case SDLK_SCROLLLOCK:
+        {
+          this->keyboard.keyScrollLock = LE_RELEASED;
+        } break;
+        case SDLK_SELECT:
+        {
+          this->keyboard.keySelect = LE_RELEASED;
+        } break;
+        case SDLK_SEMICOLON:
+        {
+          this->keyboard.keySemicolon = LE_RELEASED;
+        } break;
+        case SDLK_SEPARATOR:
+        {
+          this->keyboard.keySeparator = LE_RELEASED;
+        } break;
+        case SDLK_SLASH:
+        {
+          this->keyboard.keySlash = LE_RELEASED;
+        } break;
+        case SDLK_SLEEP:
+        {
+          this->keyboard.keySleep = LE_RELEASED;
         } break;
         case SDLK_SPACE:
         {
           this->keyboard.keySpace = LE_RELEASED;
         } break;
+        case SDLK_STOP:
+        {
+          this->keyboard.keyStop = LE_RELEASED;
+        } break;
+        case SDLK_SYSREQ:
+        {
+          this->keyboard.keySysReq = LE_RELEASED;
+        } break;
+        case SDLK_t:
+        {
+          this->keyboard.keyT = LE_RELEASED;
+        } break;
+        case SDLK_TAB:
+        {
+          this->keyboard.keyTab = LE_RELEASED;
+        } break;
+        case SDLK_THOUSANDSSEPARATOR:
+        {
+          this->keyboard.keyThousandsSeparator = LE_RELEASED;
+        } break;
+        case SDLK_u:
+        {
+          this->keyboard.keyU = LE_RELEASED;
+        } break;
+        case SDLK_UNDO:
+        {
+          this->keyboard.keyUndo = LE_RELEASED;
+        } break;
         case SDLK_UP:
         {
           this->keyboard.keyUp = LE_RELEASED;
         } break;
+        case SDLK_v:
+        {
+          this->keyboard.keyV = LE_RELEASED;
+        } break;
+        case SDLK_VOLUMEDOWN:
+        {
+          this->keyboard.keyVolumeDown = LE_RELEASED;
+        } break;
+        case SDLK_VOLUMEUP:
+        {
+          this->keyboard.keyVolumeUp = LE_RELEASED;
+        } break;
+        case SDLK_w:
+        {
+          this->keyboard.keyW = LE_RELEASED;
+        } break;
+        case SDLK_WWW:
+        {
+          this->keyboard.keyWWW = LE_RELEASED;
+        } break;
+        case SDLK_x:
+        {
+          this->keyboard.keyX = LE_RELEASED;
+        } break;
+        case SDLK_y:
+        {
+          this->keyboard.keyY = LE_RELEASED;
+        } break;
+        case SDLK_z:
+        {
+          this->keyboard.keyZ = LE_RELEASED;
+        } break;
       };
     } break;
+
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // key down
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
     case SDL_KEYDOWN:
     {
       switch(this->event.key.keysym.sym)
@@ -1265,121 +2039,1029 @@ void LEMoon::handleKeyboard()
         {
           this->keyboard.keyAltErase = LE_PRESSED;
         } break;
+        case SDLK_QUOTE:
+        {
+          this->keyboard.keyApostrophe = LE_PRESSED;
+        } break;
+        case SDLK_APPLICATION:
+        {
+          this->keyboard.keyApplication = LE_PRESSED;
+        } break;
+        case SDLK_AUDIOMUTE:
+        {
+          this->keyboard.keyAudioMute = LE_PRESSED;
+        } break;
+        case SDLK_AUDIONEXT:
+        {
+          this->keyboard.keyAudioNext = LE_PRESSED;
+        } break;
+        case SDLK_AUDIOPLAY:
+        {
+          this->keyboard.keyAudioPlay = LE_PRESSED;
+        } break;
+        case SDLK_AUDIOPREV:
+        {
+          this->keyboard.keyAudioPrev = LE_PRESSED;
+        } break;
+        case SDLK_AUDIOSTOP:
+        {
+          this->keyboard.keyAudioStop = LE_PRESSED;
+        } break;
+        case SDLK_b:
+        {
+          this->keyboard.keyB = LE_PRESSED;
+        } break;
+        case SDLK_BACKSLASH:
+        {
+          this->keyboard.keyBackslash = LE_PRESSED;
+        } break;
+        case SDLK_BACKSPACE:
+        {
+          this->keyboard.keyBackspace = LE_PRESSED;
+        } break;
+        case SDLK_BRIGHTNESSDOWN:
+        {
+          this->keyboard.keyBrightnessDown = LE_PRESSED;
+        } break;
+        case SDLK_BRIGHTNESSUP:
+        {
+          this->keyboard.keyBrightnessUp = LE_PRESSED;
+        } break;
+        case SDLK_c:
+        {
+          this->keyboard.keyC = LE_PRESSED;
+        } break;
+        case SDLK_CALCULATOR:
+        {
+          this->keyboard.keyCalculator = LE_PRESSED;
+        } break;
+        case SDLK_CANCEL:
+        {
+          this->keyboard.keyCancel = LE_PRESSED;
+        } break;
+        case SDLK_CAPSLOCK:
+        {
+          this->keyboard.keyCapsLock = LE_PRESSED;
+        } break;
+        case SDLK_CLEAR:
+        {
+          this->keyboard.keyClear = LE_PRESSED;
+        } break;
+        case SDLK_CLEARAGAIN:
+        {
+          this->keyboard.keyClearAgain = LE_PRESSED;
+        } break;
+        case SDLK_COMMA:
+        {
+          this->keyboard.keyComma = LE_PRESSED;
+        } break;
+        case SDLK_COMPUTER:
+        {
+          this->keyboard.keyComputer = LE_PRESSED;
+        } break;
+        case SDLK_COPY:
+        {
+          this->keyboard.keyCopy = LE_PRESSED;
+        } break;
+        case SDLK_CRSEL:
+        {
+          this->keyboard.keyCrSel = LE_PRESSED;
+        } break;
+        case SDLK_CURRENCYSUBUNIT:
+        {
+          this->keyboard.keyCurrencySubUnit = LE_PRESSED;
+        } break;
+        case SDLK_CURRENCYUNIT:
+        {
+          this->keyboard.keyCurrencyUnit = LE_PRESSED;
+        } break;
+        case SDLK_CUT:
+        {
+          this->keyboard.keyCut = LE_PRESSED;
+        } break;
+        case SDLK_d:
+        {
+          this->keyboard.keyD = LE_PRESSED;
+        } break;
+        case SDLK_DECIMALSEPARATOR:
+        {
+          this->keyboard.keyDecimalSeparator = LE_PRESSED;
+        } break;
+        case SDLK_DELETE:
+        {
+          this->keyboard.keyDelete = LE_PRESSED;
+        } break;
+        case SDLK_DISPLAYSWITCH:
+        {
+          this->keyboard.keyDisplaySwitch = LE_PRESSED;
+        } break;
         case SDLK_DOWN:
         {
           this->keyboard.keyDown = LE_PRESSED;
+        } break;
+        case SDLK_e:
+        {
+          this->keyboard.keyE = LE_PRESSED;
+        } break;
+        case SDLK_EJECT:
+        {
+          this->keyboard.keyEject = LE_PRESSED;
+        } break;
+        case SDLK_END:
+        {
+          this->keyboard.keyEnd = LE_PRESSED;
+        } break;
+        case SDLK_EQUALS:
+        {
+          this->keyboard.keyEquals = LE_PRESSED;
         } break;
         case SDLK_ESCAPE:
         {
           this->keyboard.keyEscape = LE_PRESSED;
         } break;
+        case SDLK_EXECUTE:
+        {
+          this->keyboard.keyExecute = LE_PRESSED;
+        } break;
+        case SDLK_EXSEL:
+        {
+          this->keyboard.keyExSel = LE_PRESSED;
+        } break;
+        case SDLK_f:
+        {
+          this->keyboard.keyF = LE_PRESSED;
+        } break;
+        case SDLK_F1:
+        {
+          this->keyboard.keyF1 = LE_PRESSED;
+        } break;
+        case SDLK_F10:
+        {
+          this->keyboard.keyF10 = LE_PRESSED;
+        } break;
+        case SDLK_F11:
+        {
+          this->keyboard.keyF11 = LE_PRESSED;
+        } break;
+        case SDLK_F12:
+        {
+          this->keyboard.keyF12 = LE_PRESSED;
+        } break;
+        case SDLK_F13:
+        {
+          this->keyboard.keyF13 = LE_PRESSED;
+        } break;
+        case SDLK_F14:
+        {
+          this->keyboard.keyF14 = LE_PRESSED;
+        } break;
+        case SDLK_F15:
+        {
+          this->keyboard.keyF15 = LE_PRESSED;
+        } break;
+        case SDLK_F16:
+        {
+          this->keyboard.keyF16 = LE_PRESSED;
+        } break;
+        case SDLK_F17:
+        {
+          this->keyboard.keyF17 = LE_PRESSED;
+        } break;
+        case SDLK_F18:
+        {
+          this->keyboard.keyF18 = LE_PRESSED;
+        } break;
+        case SDLK_F19:
+        {
+          this->keyboard.keyF19 = LE_PRESSED;
+        } break;
+        case SDLK_F2:
+        {
+          this->keyboard.keyF2 = LE_PRESSED;
+        } break;
+        case SDLK_F20:
+        {
+          this->keyboard.keyF20 = LE_PRESSED;
+        } break;
+        case SDLK_F21:
+        {
+          this->keyboard.keyF21 = LE_PRESSED;
+        } break;
+        case SDLK_F22:
+        {
+          this->keyboard.keyF22 = LE_PRESSED;
+        } break;
+        case SDLK_F23:
+        {
+          this->keyboard.keyF23 = LE_PRESSED;
+        } break;
+        case SDLK_F24:
+        {
+          this->keyboard.keyF24 = LE_PRESSED;
+        } break;
+        case SDLK_F3:
+        {
+          this->keyboard.keyF3 = LE_PRESSED;
+        } break;
+        case SDLK_F4:
+        {
+          this->keyboard.keyF4 = LE_PRESSED;
+        } break;
+        case SDLK_F5:
+        {
+          this->keyboard.keyF5 = LE_PRESSED;
+        } break;
+        case SDLK_F6:
+        {
+          this->keyboard.keyF6 = LE_PRESSED;
+        } break;
+        case SDLK_F7:
+        {
+          this->keyboard.keyF7 = LE_PRESSED;
+        } break;
+        case SDLK_F8:
+        {
+          this->keyboard.keyF8 = LE_PRESSED;
+        } break;
+        case SDLK_F9:
+        {
+          this->keyboard.keyF9 = LE_PRESSED;
+        } break;
+        case SDLK_FIND:
+        {
+          this->keyboard.keyFind = LE_PRESSED;
+        } break;
+        case SDLK_g:
+        {
+          this->keyboard.keyG = LE_PRESSED;
+        } break;
+        case SDLK_BACKQUOTE:
+        {
+          this->keyboard.keyBackquote = LE_PRESSED;
+        } break;
+        case SDLK_h:
+        {
+          this->keyboard.keyH = LE_PRESSED;
+        } break;
+        case SDLK_HELP:
+        {
+          this->keyboard.keyHelp = LE_PRESSED;
+        } break;
+        case SDLK_HOME:
+        {
+          this->keyboard.keyHome = LE_PRESSED;
+        } break;
+        case SDLK_i:
+        {
+          this->keyboard.keyI = LE_PRESSED;
+        } break;
+        case SDLK_INSERT:
+        {
+          this->keyboard.keyInsert = LE_PRESSED;
+        } break;
+        case SDLK_j:
+        {
+          this->keyboard.keyJ = LE_PRESSED;
+        } break;
+        case SDLK_k:
+        {
+          this->keyboard.keyK = LE_PRESSED;
+        } break;
+        case SDLK_KBDILLUMDOWN:
+        {
+          this->keyboard.keyKBDillumDown = LE_PRESSED;
+        } break;
+        case SDLK_KBDILLUMTOGGLE:
+        {
+          this->keyboard.keyKBDillumToggle = LE_PRESSED;
+        } break;
+        case SDLK_KBDILLUMUP:
+        {
+          this->keyboard.keyKBDillumUp = LE_PRESSED;
+        } break;
+        case SDLK_KP_0:
+        {
+          this->keyboard.keyKeypad0 = LE_PRESSED;
+        } break;
+        case SDLK_KP_00:
+        {
+          this->keyboard.keyKeypad00 = LE_PRESSED;
+        } break;
+        case SDLK_KP_000:
+        {
+          this->keyboard.keyKeypad000 = LE_PRESSED;
+        } break;
+        case SDLK_KP_1:
+        {
+          this->keyboard.keyKeypad1 = LE_PRESSED;
+        } break;
+        case SDLK_KP_2:
+        {
+          this->keyboard.keyKeypad2 = LE_PRESSED;
+        } break;
+        case SDLK_KP_3:
+        {
+          this->keyboard.keyKeypad3 = LE_PRESSED;
+        } break;
+        case SDLK_KP_4:
+        {
+          this->keyboard.keyKeypad4 = LE_PRESSED;
+        } break;
+        case SDLK_KP_5:
+        {
+          this->keyboard.keyKeypad5 = LE_PRESSED;
+        } break;
+        case SDLK_KP_6:
+        {
+          this->keyboard.keyKeypad6 = LE_PRESSED;
+        } break;
+        case SDLK_KP_7:
+        {
+          this->keyboard.keyKeypad7 = LE_PRESSED;
+        } break;
+        case SDLK_KP_8:
+        {
+          this->keyboard.keyKeypad8 = LE_PRESSED;
+        } break;
+        case SDLK_KP_9:
+        {
+          this->keyboard.keyKeypad9 = LE_PRESSED;
+        } break;
+        case SDLK_KP_A:
+        {
+          this->keyboard.keyKeypadA = LE_PRESSED;
+        } break;
+        case SDLK_KP_AMPERSAND:
+        {
+          this->keyboard.keyKeypadAnd = LE_PRESSED;
+        } break;
+        case SDLK_KP_AT:
+        {
+          this->keyboard.keyKeypadAt = LE_PRESSED;
+        } break;
+        case SDLK_KP_B:
+        {
+          this->keyboard.keyKeypadB = LE_PRESSED;
+        } break;
+        case SDLK_KP_BACKSPACE:
+        {
+          this->keyboard.keyKeypadBackspace = LE_PRESSED;
+        } break;
+        case SDLK_KP_BINARY:
+        {
+          this->keyboard.keyKeypadBinary = LE_PRESSED;
+        } break;
+        case SDLK_KP_C:
+        {
+          this->keyboard.keyKeypadC = LE_PRESSED;
+        } break;
+        case SDLK_KP_CLEAR:
+        {
+          this->keyboard.keyKeypadClear = LE_PRESSED;
+        } break;
+        case SDLK_KP_CLEARENTRY:
+        {
+          this->keyboard.keyKeypadClearEntry = LE_PRESSED;
+        } break;
+        case SDLK_KP_COLON:
+        {
+          this->keyboard.keyKeypadColon = LE_PRESSED;
+        } break;
+        case SDLK_KP_COMMA:
+        {
+          this->keyboard.keyKeypadComma = LE_PRESSED;
+        } break;
+        case SDLK_KP_D:
+        {
+          this->keyboard.keyKeypadD = LE_PRESSED;
+        } break;
+        case SDLK_KP_DBLAMPERSAND:
+        {
+          this->keyboard.keyKeypadDoubleAnd = LE_PRESSED;
+        } break;
+        case SDLK_KP_DBLVERTICALBAR:
+        {
+          this->keyboard.keyKeypadDoubleOr = LE_PRESSED;
+        } break;
+        case SDLK_KP_DECIMAL:
+        {
+          this->keyboard.keyKeypadDecimal = LE_PRESSED;
+        } break;
+        case SDLK_KP_DIVIDE:
+        {
+          this->keyboard.keyKeypadDivide = LE_PRESSED;
+        } break;
+        case SDLK_KP_E:
+        {
+          this->keyboard.keyKeypadE = LE_PRESSED;
+        } break;
+        case SDLK_KP_ENTER:
+        {
+          this->keyboard.keyKeypadEnter = LE_PRESSED;
+        } break;
+        case SDLK_KP_EQUALS:
+        {
+          this->keyboard.keyKeypadEquals = LE_PRESSED;
+        } break;
+        case SDLK_KP_EQUALSAS400:
+        {
+          this->keyboard.keyKeypadEqualsAS400 = LE_PRESSED;
+        } break;
+        case SDLK_KP_EXCLAM:
+        {
+          this->keyboard.keyKeypadExclamation = LE_PRESSED;
+        } break;
+        case SDLK_KP_F:
+        {
+          this->keyboard.keyKeypadF = LE_PRESSED;
+        } break;
+        case SDLK_KP_GREATER:
+        {
+          this->keyboard.keyKeypadGreater = LE_PRESSED;
+        } break;
+        case SDLK_KP_HASH:
+        {
+          this->keyboard.keyKeypadHash = LE_PRESSED;
+        } break;
+        case SDLK_KP_HEXADECIMAL:
+        {
+          this->keyboard.keyKeypadHexadecimal = LE_PRESSED;
+        } break;
+        case SDLK_KP_LEFTBRACE:
+        {
+          this->keyboard.keyKeypadLeftBrace = LE_PRESSED;
+        } break;
+        case SDLK_KP_LEFTPAREN:
+        {
+          this->keyboard.keyKeypadLeftParen = LE_PRESSED;
+        } break;
+        case SDLK_KP_LESS:
+        {
+          this->keyboard.keyKeypadLess = LE_PRESSED;
+        } break;
+        case SDLK_KP_MEMADD:
+        {
+          this->keyboard.keyKeypadMemAdd = LE_PRESSED;
+        } break;
+        case SDLK_KP_MEMCLEAR:
+        {
+          this->keyboard.keyKeypadMemClear = LE_PRESSED;
+        } break;
+        case SDLK_KP_MEMDIVIDE:
+        {
+          this->keyboard.keyKeypadMemDivide = LE_PRESSED;
+        } break;
+        case SDLK_KP_MEMMULTIPLY:
+        {
+          this->keyboard.keyKeypadMemMultiply = LE_PRESSED;
+        } break;
+        case SDLK_KP_MEMRECALL:
+        {
+          this->keyboard.keyKeypadMemRecall = LE_PRESSED;
+        } break;
+        case SDLK_KP_MEMSTORE:
+        {
+          this->keyboard.keyKeypadMemStore = LE_PRESSED;
+        } break;
+        case SDLK_KP_MEMSUBTRACT:
+        {
+          this->keyboard.keyKeypadMemSubtract = LE_PRESSED;
+        } break;
+        case SDLK_KP_MINUS:
+        {
+          this->keyboard.keyKeypadMinus = LE_PRESSED;
+        } break;
+        case SDLK_KP_MULTIPLY:
+        {
+          this->keyboard.keyKeypadMultiply = LE_PRESSED;
+        } break;
+        case SDLK_KP_OCTAL:
+        {
+          this->keyboard.keyKeypadOctal = LE_PRESSED;
+        } break;
+        case SDLK_KP_PERCENT:
+        {
+          this->keyboard.keyKeypadPercent = LE_PRESSED;
+        } break;
+        case SDLK_KP_PERIOD:
+        {
+          this->keyboard.keyKeypadPeriod = LE_PRESSED;
+        } break;
+        case SDLK_KP_PLUS:
+        {
+          this->keyboard.keyKeypadPlus = LE_PRESSED;
+        } break;
+        case SDLK_KP_PLUSMINUS:
+        {
+          this->keyboard.keyKeypadPlusMinus = LE_PRESSED;
+        } break;
+        case SDLK_KP_POWER:
+        {
+          this->keyboard.keyKeypadPower = LE_PRESSED;
+        } break;
+        case SDLK_KP_RIGHTBRACE:
+        {
+          this->keyboard.keyKeypadRightBrace = LE_PRESSED;
+        } break;
+        case SDLK_KP_RIGHTPAREN:
+        {
+          this->keyboard.keyKeypadRightParen = LE_PRESSED;
+        } break;
+        case SDLK_KP_SPACE:
+        {
+          this->keyboard.keyKeypadSpace = LE_PRESSED;
+        } break;
+        case SDLK_KP_TAB:
+        {
+          this->keyboard.keyKeypadTab = LE_PRESSED;
+        } break;
+        case SDLK_KP_VERTICALBAR:
+        {
+          this->keyboard.keyKeypadVerticalBar = LE_PRESSED;
+        } break;
+        case SDLK_KP_XOR:
+        {
+          this->keyboard.keyKeypadXOR = LE_PRESSED;
+        } break;
+        case SDLK_l:
+        {
+          this->keyboard.keyL = LE_PRESSED;
+        } break;
+        case SDLK_LALT:
+        {
+          this->keyboard.keyLeftAlt = LE_PRESSED;
+        } break;
+        case SDLK_LCTRL:
+        {
+          this->keyboard.keyLeftCtrl = LE_PRESSED;
+        } break;
         case SDLK_LEFT:
         {
           this->keyboard.keyLeft = LE_PRESSED;
+        } break;
+        case SDLK_LEFTBRACKET:
+        {
+          this->keyboard.keyLeftBracket = LE_PRESSED;
+        } break;
+        case SDLK_LGUI:
+        {
+          this->keyboard.keyLeftGUI = LE_PRESSED;
+        } break;
+        case SDLK_LSHIFT:
+        {
+          this->keyboard.keyLeftShift = LE_PRESSED;
+        } break;
+        case SDLK_m:
+        {
+          this->keyboard.keyM = LE_PRESSED;
+        } break;
+        case SDLK_MAIL:
+        {
+          this->keyboard.keyMail = LE_PRESSED;
+        } break;
+        case SDLK_MEDIASELECT:
+        {
+          this->keyboard.keyMediaSelect = LE_PRESSED;
+        } break;
+        case SDLK_MENU:
+        {
+          this->keyboard.keyMenu = LE_PRESSED;
+        } break;
+        case SDLK_MINUS:
+        {
+          this->keyboard.keyMinus = LE_PRESSED;
+        } break;
+        case SDLK_MODE:
+        {
+          this->keyboard.keyModeSwitch = LE_PRESSED;
+        } break;
+        case SDLK_MUTE:
+        {
+          this->keyboard.keyMute = LE_PRESSED;
+        } break;
+        case SDLK_n:
+        {
+          this->keyboard.keyN = LE_PRESSED;
+        } break;
+        case SDLK_NUMLOCKCLEAR:
+        {
+          this->keyboard.keyNumLock = LE_PRESSED;
+        } break;
+        case SDLK_o:
+        {
+          this->keyboard.keyO = LE_PRESSED;
+        } break;
+        case SDLK_OPER:
+        {
+          this->keyboard.keyOper = LE_PRESSED;
+        } break;
+        case SDLK_OUT:
+        {
+          this->keyboard.keyOut = LE_PRESSED;
+        } break;
+        case SDLK_p:
+        {
+          this->keyboard.keyP = LE_PRESSED;
+        } break;
+        case SDLK_PAGEDOWN:
+        {
+          this->keyboard.keyPageDown = LE_PRESSED;
+        } break;
+        case SDLK_PAGEUP:
+        {
+          this->keyboard.keyPageUp = LE_PRESSED;
+        } break;
+        case SDLK_PASTE:
+        {
+          this->keyboard.keyPaste = LE_PRESSED;
+        } break;
+        case SDLK_PAUSE:
+        {
+          this->keyboard.keyPause = LE_PRESSED;
+        } break;
+        case SDLK_PERIOD:
+        {
+          this->keyboard.keyPeriod = LE_PRESSED;
+        } break;
+        case SDLK_POWER:
+        {
+          this->keyboard.keyPower = LE_PRESSED;
+        } break;
+        case SDLK_PRINTSCREEN:
+        {
+          this->keyboard.keyPrintScreen = LE_PRESSED;
+        } break;
+        case SDLK_PRIOR:
+        {
+          this->keyboard.keyPrior = LE_PRESSED;
+        } break;
+        case SDLK_q:
+        {
+          this->keyboard.keyQ = LE_PRESSED;
+        } break;
+        case SDLK_r:
+        {
+          this->keyboard.keyR = LE_PRESSED;
+        } break;
+        case SDLK_RALT:
+        {
+          this->keyboard.keyRightAlt = LE_PRESSED;
+        } break;
+        case SDLK_RCTRL:
+        {
+          this->keyboard.keyRightCtrl = LE_PRESSED;
         } break;
         case SDLK_RETURN:
         {
           this->keyboard.keyReturn = LE_PRESSED;
         } break;
+        case SDLK_RETURN2:
+        {
+          this->keyboard.keyReturn2 = LE_PRESSED;
+        } break;
+        case SDLK_RGUI:
+        {
+          this->keyboard.keyRightGUI = LE_PRESSED;
+        } break;
         case SDLK_RIGHT:
         {
           this->keyboard.keyRight = LE_PRESSED;
+        } break;
+        case SDLK_RIGHTBRACKET:
+        {
+          this->keyboard.keyRightBracket = LE_PRESSED;
+        } break;
+        case SDLK_RSHIFT:
+        {
+          this->keyboard.keyRightShift = LE_PRESSED;
+        } break;
+        case SDLK_s:
+        {
+          this->keyboard.keyS = LE_PRESSED;
+        } break;
+        case SDLK_SCROLLLOCK:
+        {
+          this->keyboard.keyScrollLock = LE_PRESSED;
+        } break;
+        case SDLK_SELECT:
+        {
+          this->keyboard.keySelect = LE_PRESSED;
+        } break;
+        case SDLK_SEMICOLON:
+        {
+          this->keyboard.keySemicolon = LE_PRESSED;
+        } break;
+        case SDLK_SEPARATOR:
+        {
+          this->keyboard.keySeparator = LE_PRESSED;
+        } break;
+        case SDLK_SLASH:
+        {
+          this->keyboard.keySlash = LE_PRESSED;
+        } break;
+        case SDLK_SLEEP:
+        {
+          this->keyboard.keySleep = LE_PRESSED;
         } break;
         case SDLK_SPACE:
         {
           this->keyboard.keySpace = LE_PRESSED;
         } break;
+        case SDLK_STOP:
+        {
+          this->keyboard.keyStop = LE_PRESSED;
+        } break;
+        case SDLK_SYSREQ:
+        {
+          this->keyboard.keySysReq = LE_PRESSED;
+        } break;
+        case SDLK_t:
+        {
+          this->keyboard.keyT = LE_PRESSED;
+        } break;
+        case SDLK_TAB:
+        {
+          this->keyboard.keyTab = LE_PRESSED;
+        } break;
+        case SDLK_THOUSANDSSEPARATOR:
+        {
+          this->keyboard.keyThousandsSeparator = LE_PRESSED;
+        } break;
+        case SDLK_u:
+        {
+          this->keyboard.keyU = LE_PRESSED;
+        } break;
+        case SDLK_UNDO:
+        {
+          this->keyboard.keyUndo = LE_PRESSED;
+        } break;
         case SDLK_UP:
         {
           this->keyboard.keyUp = LE_PRESSED;
+        } break;
+        case SDLK_v:
+        {
+          this->keyboard.keyV = LE_PRESSED;
+        } break;
+        case SDLK_VOLUMEDOWN:
+        {
+          this->keyboard.keyVolumeDown = LE_PRESSED;
+        } break;
+        case SDLK_VOLUMEUP:
+        {
+          this->keyboard.keyVolumeUp = LE_PRESSED;
+        } break;
+        case SDLK_w:
+        {
+          this->keyboard.keyW = LE_PRESSED;
+        } break;
+        case SDLK_WWW:
+        {
+          this->keyboard.keyWWW = LE_PRESSED;
+        } break;
+        case SDLK_x:
+        {
+          this->keyboard.keyX = LE_PRESSED;
+        } break;
+        case SDLK_y:
+        {
+          this->keyboard.keyY = LE_PRESSED;
+        } break;
+        case SDLK_z:
+        {
+          this->keyboard.keyZ = LE_PRESSED;
         } break;
       };
     } break;
   };
 }
 
+void LEMoon::freeKey(uint8_t &key)
+{
+  if(key == LE_RELEASED)
+    {key = LE_INACTIVE;}
+}
+
 void LEMoon::freeKeyboardKeys()
 {
-  if(this->keyboard.key0 == LE_RELEASED)
-    {this->keyboard.key0 = LE_INACTIVE;}
-
-  if(this->keyboard.key1 == LE_RELEASED)
-    {this->keyboard.key1 = LE_INACTIVE;}
-
-  if(this->keyboard.key2 == LE_RELEASED)
-    {this->keyboard.key2 = LE_INACTIVE;}
-
-  if(this->keyboard.key3 == LE_RELEASED)
-    {this->keyboard.key3 = LE_INACTIVE;}
-
-  if(this->keyboard.key4 == LE_RELEASED)
-    {this->keyboard.key4 = LE_INACTIVE;}
-
-  if(this->keyboard.key5 == LE_RELEASED)
-    {this->keyboard.key5 = LE_INACTIVE;}
-
-  if(this->keyboard.key6 == LE_RELEASED)
-    {this->keyboard.key6 = LE_INACTIVE;}
-
-  if(this->keyboard.key7 == LE_RELEASED)
-    {this->keyboard.key7 = LE_INACTIVE;}
-
-  if(this->keyboard.key8 == LE_RELEASED)
-    {this->keyboard.key8 = LE_INACTIVE;}
-
-  if(this->keyboard.key9 == LE_RELEASED)
-    {this->keyboard.key9 = LE_INACTIVE;}
-
-  if(this->keyboard.keyA == LE_RELEASED)
-    {this->keyboard.keyA = LE_INACTIVE;}
-
-  if(this->keyboard.keyACBack == LE_RELEASED)
-    {this->keyboard.keyACBack = LE_INACTIVE;}
-
-  if(this->keyboard.keyACBookmarks == LE_RELEASED)
-    {this->keyboard.keyACBookmarks = LE_INACTIVE;}
-
-  if(this->keyboard.keyACForward == LE_RELEASED)
-    {this->keyboard.keyACForward = LE_INACTIVE;}
-
-  if(this->keyboard.keyACHome == LE_RELEASED)
-    {this->keyboard.keyACHome = LE_INACTIVE;}
-
-  if(this->keyboard.keyACRefresh == LE_RELEASED)
-    {this->keyboard.keyACRefresh = LE_INACTIVE;}
-
-  if(this->keyboard.keyACSearch == LE_RELEASED)
-    {this->keyboard.keyACSearch = LE_INACTIVE;}
-
-  if(this->keyboard.keyACStop == LE_RELEASED)
-    {this->keyboard.keyACStop = LE_INACTIVE;}
-
-  if(this->keyboard.keyAgain == LE_RELEASED)
-    {this->keyboard.keyAgain = LE_INACTIVE;}
-
-  if(this->keyboard.keyAltErase == LE_RELEASED)
-    {this->keyboard.keyAltErase = LE_INACTIVE;}
-
-  if(this->keyboard.keyDown == LE_RELEASED)
-    {this->keyboard.keyDown = LE_INACTIVE;}
-
-  if(this->keyboard.keyEscape == LE_RELEASED)
-    {this->keyboard.keyEscape = LE_INACTIVE;}
-
-  if(this->keyboard.keyLeft == LE_RELEASED)
-    {this->keyboard.keyLeft = LE_INACTIVE;}
-
-  if(this->keyboard.keyReturn == LE_RELEASED)
-    {this->keyboard.keyReturn = LE_INACTIVE;}
-
-  if(this->keyboard.keyRight == LE_RELEASED)
-    {this->keyboard.keyRight = LE_INACTIVE;}
-
-  if(this->keyboard.keySpace == LE_RELEASED)
-    {this->keyboard.keySpace = LE_INACTIVE;}
-
-  if(this->keyboard.keyUp == LE_RELEASED)
-    {this->keyboard.keyUp = LE_INACTIVE;}
+  this->freeKey(this->keyboard.key0);
+  this->freeKey(this->keyboard.key1);
+  this->freeKey(this->keyboard.key2);
+  this->freeKey(this->keyboard.key3);
+  this->freeKey(this->keyboard.key4);
+  this->freeKey(this->keyboard.key5);
+  this->freeKey(this->keyboard.key6);
+  this->freeKey(this->keyboard.key7);
+  this->freeKey(this->keyboard.key8);
+  this->freeKey(this->keyboard.key9);
+  this->freeKey(this->keyboard.keyA);
+  this->freeKey(this->keyboard.keyACBack);
+  this->freeKey(this->keyboard.keyACBookmarks);
+  this->freeKey(this->keyboard.keyACForward);
+  this->freeKey(this->keyboard.keyACHome);
+  this->freeKey(this->keyboard.keyACRefresh);
+  this->freeKey(this->keyboard.keyACSearch);
+  this->freeKey(this->keyboard.keyACStop);
+  this->freeKey(this->keyboard.keyAgain);
+  this->freeKey(this->keyboard.keyAltErase);
+  this->freeKey(this->keyboard.keyApostrophe);
+  this->freeKey(this->keyboard.keyApplication);
+  this->freeKey(this->keyboard.keyAudioMute);
+  this->freeKey(this->keyboard.keyAudioNext);
+  this->freeKey(this->keyboard.keyAudioPlay);
+  this->freeKey(this->keyboard.keyAudioPrev);
+  this->freeKey(this->keyboard.keyAudioStop);
+  this->freeKey(this->keyboard.keyB);
+  this->freeKey(this->keyboard.keyBackslash);
+  this->freeKey(this->keyboard.keyBackspace);
+  this->freeKey(this->keyboard.keyBrightnessDown);
+  this->freeKey(this->keyboard.keyBrightnessUp);
+  this->freeKey(this->keyboard.keyC);
+  this->freeKey(this->keyboard.keyCalculator);
+  this->freeKey(this->keyboard.keyCancel);
+  this->freeKey(this->keyboard.keyCapsLock);
+  this->freeKey(this->keyboard.keyClear);
+  this->freeKey(this->keyboard.keyClearAgain);
+  this->freeKey(this->keyboard.keyComma);
+  this->freeKey(this->keyboard.keyComputer);
+  this->freeKey(this->keyboard.keyCopy);
+  this->freeKey(this->keyboard.keyCrSel);
+  this->freeKey(this->keyboard.keyCurrencySubUnit);
+  this->freeKey(this->keyboard.keyCurrencyUnit);
+  this->freeKey(this->keyboard.keyCut);
+  this->freeKey(this->keyboard.keyD);
+  this->freeKey(this->keyboard.keyDecimalSeparator);
+  this->freeKey(this->keyboard.keyDelete);
+  this->freeKey(this->keyboard.keyDisplaySwitch);
+  this->freeKey(this->keyboard.keyDown);
+  this->freeKey(this->keyboard.keyE);
+  this->freeKey(this->keyboard.keyEject);
+  this->freeKey(this->keyboard.keyEnd);
+  this->freeKey(this->keyboard.keyEquals);
+  this->freeKey(this->keyboard.keyEscape);
+  this->freeKey(this->keyboard.keyExecute);
+  this->freeKey(this->keyboard.keyExSel);
+  this->freeKey(this->keyboard.keyF);
+  this->freeKey(this->keyboard.keyF1);
+  this->freeKey(this->keyboard.keyF2);
+  this->freeKey(this->keyboard.keyF3);
+  this->freeKey(this->keyboard.keyF4);
+  this->freeKey(this->keyboard.keyF5);
+  this->freeKey(this->keyboard.keyF6);
+  this->freeKey(this->keyboard.keyF7);
+  this->freeKey(this->keyboard.keyF8);
+  this->freeKey(this->keyboard.keyF9);
+  this->freeKey(this->keyboard.keyF10);
+  this->freeKey(this->keyboard.keyF11);
+  this->freeKey(this->keyboard.keyF12);
+  this->freeKey(this->keyboard.keyF13);
+  this->freeKey(this->keyboard.keyF14);
+  this->freeKey(this->keyboard.keyF15);
+  this->freeKey(this->keyboard.keyF16);
+  this->freeKey(this->keyboard.keyF17);
+  this->freeKey(this->keyboard.keyF18);
+  this->freeKey(this->keyboard.keyF19);
+  this->freeKey(this->keyboard.keyF20);
+  this->freeKey(this->keyboard.keyF21);
+  this->freeKey(this->keyboard.keyF22);
+  this->freeKey(this->keyboard.keyF23);
+  this->freeKey(this->keyboard.keyF24);
+  this->freeKey(this->keyboard.keyFind);
+  this->freeKey(this->keyboard.keyG);
+  this->freeKey(this->keyboard.keyBackquote);
+  this->freeKey(this->keyboard.keyH);
+  this->freeKey(this->keyboard.keyHelp);
+  this->freeKey(this->keyboard.keyHome);
+  this->freeKey(this->keyboard.keyI);
+  this->freeKey(this->keyboard.keyInsert);
+  this->freeKey(this->keyboard.keyJ);
+  this->freeKey(this->keyboard.keyK);
+  this->freeKey(this->keyboard.keyKBDillumDown);
+  this->freeKey(this->keyboard.keyKBDillumToggle);
+  this->freeKey(this->keyboard.keyKBDillumUp);
+  this->freeKey(this->keyboard.keyKeypad0);
+  this->freeKey(this->keyboard.keyKeypad00);
+  this->freeKey(this->keyboard.keyKeypad000);
+  this->freeKey(this->keyboard.keyKeypad1);
+  this->freeKey(this->keyboard.keyKeypad2);
+  this->freeKey(this->keyboard.keyKeypad3);
+  this->freeKey(this->keyboard.keyKeypad4);
+  this->freeKey(this->keyboard.keyKeypad5);
+  this->freeKey(this->keyboard.keyKeypad6);
+  this->freeKey(this->keyboard.keyKeypad7);
+  this->freeKey(this->keyboard.keyKeypad8);
+  this->freeKey(this->keyboard.keyKeypad9);
+  this->freeKey(this->keyboard.keyKeypadA);
+  this->freeKey(this->keyboard.keyKeypadAnd);
+  this->freeKey(this->keyboard.keyKeypadAt);
+  this->freeKey(this->keyboard.keyKeypadB);
+  this->freeKey(this->keyboard.keyKeypadBackspace);
+  this->freeKey(this->keyboard.keyKeypadBinary);
+  this->freeKey(this->keyboard.keyKeypadC);
+  this->freeKey(this->keyboard.keyKeypadClear);
+  this->freeKey(this->keyboard.keyKeypadClearEntry);
+  this->freeKey(this->keyboard.keyKeypadColon);
+  this->freeKey(this->keyboard.keyKeypadComma);
+  this->freeKey(this->keyboard.keyKeypadD);
+  this->freeKey(this->keyboard.keyKeypadDoubleAnd);
+  this->freeKey(this->keyboard.keyKeypadDoubleOr);
+  this->freeKey(this->keyboard.keyKeypadDecimal);
+  this->freeKey(this->keyboard.keyKeypadDivide);
+  this->freeKey(this->keyboard.keyKeypadE);
+  this->freeKey(this->keyboard.keyKeypadEnter);
+  this->freeKey(this->keyboard.keyKeypadEquals);
+  this->freeKey(this->keyboard.keyKeypadEqualsAS400);
+  this->freeKey(this->keyboard.keyKeypadExclamation);
+  this->freeKey(this->keyboard.keyKeypadF);
+  this->freeKey(this->keyboard.keyKeypadGreater);
+  this->freeKey(this->keyboard.keyKeypadHash);
+  this->freeKey(this->keyboard.keyKeypadHexadecimal);
+  this->freeKey(this->keyboard.keyKeypadLeftBrace);
+  this->freeKey(this->keyboard.keyKeypadLeftParen);
+  this->freeKey(this->keyboard.keyKeypadLess);
+  this->freeKey(this->keyboard.keyKeypadMemAdd);
+  this->freeKey(this->keyboard.keyKeypadMemClear);
+  this->freeKey(this->keyboard.keyKeypadMemDivide);
+  this->freeKey(this->keyboard.keyKeypadMemMultiply);
+  this->freeKey(this->keyboard.keyKeypadMemRecall);
+  this->freeKey(this->keyboard.keyKeypadMemStore);
+  this->freeKey(this->keyboard.keyKeypadMemSubtract);
+  this->freeKey(this->keyboard.keyKeypadMinus);
+  this->freeKey(this->keyboard.keyKeypadMultiply);
+  this->freeKey(this->keyboard.keyKeypadOctal);
+  this->freeKey(this->keyboard.keyKeypadPercent);
+  this->freeKey(this->keyboard.keyKeypadPeriod);
+  this->freeKey(this->keyboard.keyKeypadPlus);
+  this->freeKey(this->keyboard.keyKeypadPlusMinus);
+  this->freeKey(this->keyboard.keyKeypadPower);
+  this->freeKey(this->keyboard.keyKeypadRightBrace);
+  this->freeKey(this->keyboard.keyKeypadRightParen);
+  this->freeKey(this->keyboard.keyKeypadSpace);
+  this->freeKey(this->keyboard.keyKeypadTab);
+  this->freeKey(this->keyboard.keyKeypadVerticalBar);
+  this->freeKey(this->keyboard.keyKeypadXOR);
+  this->freeKey(this->keyboard.keyL);
+  this->freeKey(this->keyboard.keyLeftAlt);
+  this->freeKey(this->keyboard.keyLeftCtrl);
+  this->freeKey(this->keyboard.keyLeft);
+  this->freeKey(this->keyboard.keyLeftBracket);
+  this->freeKey(this->keyboard.keyLeftGUI);
+  this->freeKey(this->keyboard.keyLeftShift);
+  this->freeKey(this->keyboard.keyM);
+  this->freeKey(this->keyboard.keyMail);
+  this->freeKey(this->keyboard.keyMediaSelect);
+  this->freeKey(this->keyboard.keyMenu);
+  this->freeKey(this->keyboard.keyMinus);
+  this->freeKey(this->keyboard.keyModeSwitch);
+  this->freeKey(this->keyboard.keyMute);
+  this->freeKey(this->keyboard.keyN);
+  this->freeKey(this->keyboard.keyNumLock);
+  this->freeKey(this->keyboard.keyO);
+  this->freeKey(this->keyboard.keyOper);
+  this->freeKey(this->keyboard.keyOut);
+  this->freeKey(this->keyboard.keyP);
+  this->freeKey(this->keyboard.keyPageDown);
+  this->freeKey(this->keyboard.keyPageUp);
+  this->freeKey(this->keyboard.keyPaste);
+  this->freeKey(this->keyboard.keyPause);
+  this->freeKey(this->keyboard.keyPeriod);
+  this->freeKey(this->keyboard.keyPower);
+  this->freeKey(this->keyboard.keyPrintScreen);
+  this->freeKey(this->keyboard.keyPrior);
+  this->freeKey(this->keyboard.keyQ);
+  this->freeKey(this->keyboard.keyR);
+  this->freeKey(this->keyboard.keyRightAlt);
+  this->freeKey(this->keyboard.keyRightCtrl);
+  this->freeKey(this->keyboard.keyReturn);
+  this->freeKey(this->keyboard.keyReturn2);
+  this->freeKey(this->keyboard.keyRightGUI);
+  this->freeKey(this->keyboard.keyRight);
+  this->freeKey(this->keyboard.keyRightBracket);
+  this->freeKey(this->keyboard.keyRightShift);
+  this->freeKey(this->keyboard.keyS);
+  this->freeKey(this->keyboard.keyScrollLock);
+  this->freeKey(this->keyboard.keySelect);
+  this->freeKey(this->keyboard.keySemicolon);
+  this->freeKey(this->keyboard.keySeparator);
+  this->freeKey(this->keyboard.keySlash);
+  this->freeKey(this->keyboard.keySleep);
+  this->freeKey(this->keyboard.keySpace);
+  this->freeKey(this->keyboard.keyStop);
+  this->freeKey(this->keyboard.keySysReq);
+  this->freeKey(this->keyboard.keyT);
+  this->freeKey(this->keyboard.keyTab);
+  this->freeKey(this->keyboard.keyThousandsSeparator);
+  this->freeKey(this->keyboard.keyU);
+  this->freeKey(this->keyboard.keyUndo);
+  this->freeKey(this->keyboard.keyUp);
+  this->freeKey(this->keyboard.keyV);
+  this->freeKey(this->keyboard.keyVolumeDown);
+  this->freeKey(this->keyboard.keyVolumeUp);
+  this->freeKey(this->keyboard.keyW);
+  this->freeKey(this->keyboard.keyWWW);
+  this->freeKey(this->keyboard.keyX);
+  this->freeKey(this->keyboard.keyY);
+  this->freeKey(this->keyboard.keyZ);
 }
 
 void LEMoon::freeMouse()
@@ -1407,7 +3089,10 @@ int LEMoon::modelDraw(LEModel * pModel)
   if(result)
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelDraw()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelDraw(%d)\n\n", pModel->id);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -1540,6 +3225,9 @@ LETimeEvent * LEMoon::timeEventGet(uint32_t id)
 int LEMoon::pointDraw(LEPoint * pPoint)
 {
   int result = LE_NO_ERROR;
+  #ifdef LE_DEBUG
+    char * pErrorString = nullptr;
+  #endif
 
   // draw points
 
@@ -1550,7 +3238,10 @@ int LEMoon::pointDraw(LEPoint * pPoint)
     if(SDL_SetRenderDrawColor(this->pRenderer, pPoint->color.r, pPoint->color.g, pPoint->color.b, pPoint->color.a))
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_SDL_DRAW_COLOR, "LEMoon::pointDraw()\n\n");
+        pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::pointDraw(%d)\n\n", pPoint->id);
+        this->printErrorDialog(LE_SDL_DRAW_COLOR, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_SDL_DRAW_COLOR;
@@ -1563,7 +3254,10 @@ int LEMoon::pointDraw(LEPoint * pPoint)
       if(SDL_SetRenderDrawBlendMode(this->pRenderer, SDL_BLENDMODE_BLEND))
       {
         #ifdef LE_DEBUG
-          this->printErrorDialog(LE_DRAW_BLEND_MODE, "LEMoon::pointDraw()\n\n");
+          pErrorString = new char[256 + 1];
+          sprintf(pErrorString, "LEMoon::pointDraw(%d)\n\n", pPoint->id);
+          this->printErrorDialog(LE_DRAW_BLEND_MODE, pErrorString);
+          delete [] pErrorString;
         #endif
       
         result = LE_DRAW_BLEND_MODE;
@@ -1577,7 +3271,10 @@ int LEMoon::pointDraw(LEPoint * pPoint)
       if(SDL_RenderDrawPoint(this->pRenderer, pPoint->pointBuffer.x, pPoint->pointBuffer.y))
       {
         #ifdef LE_DEBUG
-          this->printErrorDialog(LE_DRAW_POINT, "LEMoon::pointDraw()\n\n");
+          pErrorString = new char[256 + 1];
+          sprintf(pErrorString, "LEMoon::pointDraw(%d)\n\n", pPoint->id);
+          this->printErrorDialog(LE_DRAW_POINT, pErrorString);
+          delete [] pErrorString;
         #endif
       
         result = LE_DRAW_POINT;
@@ -1688,12 +3385,15 @@ int LEMoon::textDraw(LEText * pText)
 {
   int result = LE_NO_ERROR;
 
-  if(pText->visible && pText->alpha > 0.0f)
+  if(pText->visible && pText->alpha > 0.0f && pText->pTexture != nullptr)
   {
     if(SDL_RenderCopyEx(this->pRenderer, pText->pTexture, nullptr, &(pText->posSize), 0.0f, nullptr, SDL_FLIP_NONE))
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_SDL_RENDER_COPY_EX, "LEMoon::textDraw()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textDraw(%d)\n\n", pText->id);
+        this->printErrorDialog(LE_SDL_RENDER_COPY_EX, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_SDL_RENDER_COPY_EX;
@@ -1821,6 +3521,9 @@ LEFont * LEMoon::fontGet(uint32_t id)
 int LEMoon::lineDraw(LELine * pLine)
 {
   int result = LE_NO_ERROR;
+  #ifdef LE_DEBUG
+    char * pErrorString = nullptr;
+  #endif
 
   if(pLine->visible)
   {
@@ -1829,7 +3532,10 @@ int LEMoon::lineDraw(LELine * pLine)
       result = LE_SDL_DRAW_COLOR;
 
       #ifdef LE_DEBUG
-        this->printErrorDialog(result, "LEMoon::lineDraw()\n\n");
+        pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::lineDraw(%d)\n\n", pLine->id);
+        this->printErrorDialog(result, pErrorString);
+        delete [] pErrorString;
       #endif
     }
 
@@ -1840,7 +3546,10 @@ int LEMoon::lineDraw(LELine * pLine)
         result = LE_SDL_DRAW_LINE;
 
         #ifdef LE_DEBUG
-          this->printErrorDialog(result, "LEMoon::lineDraw()\n\n");
+          pErrorString = new char[256 + 1];
+          sprintf(pErrorString, "LEMoon::lineDraw(%d)\n\n", pLine->id);
+          this->printErrorDialog(result, pErrorString);
+          delete [] pErrorString;
         #endif
       }
     }
@@ -2174,9 +3883,7 @@ timestep(0.0f)
   this->mouse.mouseX = 0;
   this->mouse.mouseY = 0;
 
-  #ifdef LE_DESKTOP_APP
-    this->clearKeyboard();
-  #endif
+  this->clearKeyboard();
 
   this->mouse.leftButton = LE_INACTIVE;
   this->mouse.rightButton = LE_INACTIVE;
@@ -2338,12 +4045,23 @@ int LEMoon::init(const char * pAppName)
 
   if(!result)
   {
-    printf("Lynar Engine Moon 1.0.0 (author: Patrick-Christopher Mattulat)\n");
+    printf("Lynar Engine Moon 1.3.0 (author: Patrick-Christopher Mattulat)\n");
     this->initialized = LE_TRUE;
   }
 
-  delete [] pString;
-  pString = nullptr;
+
+  if(pString != nullptr)
+  {
+    delete [] pString;
+    pString = nullptr;
+  }
+
+  if(pBasePath != nullptr)
+  {
+    delete [] pBasePath;
+    pBasePath = nullptr;
+  }
+
   return result;
 }
 
@@ -2353,7 +4071,7 @@ int LEMoon::initImage()
 
   // load image library
 
-  if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+  if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) || !(IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG))
   {
     #ifdef LE_DEBUG
       this->printErrorDialog(LE_SDL_IMG_INIT, "LEMoon::initImage()\n\n");
@@ -2445,9 +4163,7 @@ int LEMoon::pollEvent()
 void LEMoon::beginFrame()
 {
   this->timestamp = SDL_GetTicks();
-  #ifdef LE_DESKTOP_APP
   this->handleKeyboard();
-  #endif
   this->handleMouse();
   this->handleWindow();
   SDL_GetMouseState(&(this->mouse.mouseX), &(this->mouse.mouseY));
@@ -2594,36 +4310,807 @@ bool LEMoon::keyEvent(uint32_t state, SDL_Keycode key)
         {
           flag = (this->keyboard.keyAltErase == LE_PRESSED);
         } break;
+        case SDLK_QUOTE:
+        {
+          flag = (this->keyboard.keyApostrophe == LE_PRESSED);
+        } break;
+        case SDLK_APPLICATION:
+        {
+          flag = (this->keyboard.keyApplication == LE_PRESSED);
+        } break;
+        case SDLK_AUDIOMUTE:
+        {
+          flag = (this->keyboard.keyAudioMute == LE_PRESSED);
+        } break;
+        case SDLK_AUDIONEXT:
+        {
+          flag = (this->keyboard.keyAudioNext == LE_PRESSED);
+        } break;
+        case SDLK_AUDIOPLAY:
+        {
+          flag = (this->keyboard.keyAudioPlay == LE_PRESSED);
+        } break;
+        case SDLK_AUDIOPREV:
+        {
+          flag = (this->keyboard.keyAudioPrev == LE_PRESSED);
+        } break;
+        case SDLK_AUDIOSTOP:
+        {
+          flag = (this->keyboard.keyAudioStop == LE_PRESSED);
+        } break;
+        case SDLK_b:
+        {
+          flag = (this->keyboard.keyB == LE_PRESSED);
+        } break;
+        case SDLK_BACKSLASH:
+        {
+          flag = (this->keyboard.keyBackslash == LE_PRESSED);
+        } break;
+        case SDLK_BACKSPACE:
+        {
+          flag = (this->keyboard.keyBackspace == LE_PRESSED);
+        } break;
+        case SDLK_BRIGHTNESSDOWN:
+        {
+          flag = (this->keyboard.keyBrightnessDown == LE_PRESSED);
+        } break;
+        case SDLK_BRIGHTNESSUP:
+        {
+          flag = (this->keyboard.keyBrightnessUp == LE_PRESSED);
+        } break;
+        case SDLK_c:
+        {
+          flag = (this->keyboard.keyC == LE_PRESSED);
+        } break;
+        case SDLK_CALCULATOR:
+        {
+          flag = (this->keyboard.keyCalculator == LE_PRESSED);
+        } break;
+        case SDLK_CANCEL:
+        {
+          flag = (this->keyboard.keyCancel == LE_PRESSED);
+        } break;
+        case SDLK_CAPSLOCK:
+        {
+          flag = (this->keyboard.keyCapsLock == LE_PRESSED);
+        } break;
+        case SDLK_CLEAR:
+        {
+          flag = (this->keyboard.keyClear == LE_PRESSED);
+        } break;
+        case SDLK_CLEARAGAIN:
+        {
+          flag = (this->keyboard.keyClearAgain == LE_PRESSED);
+        } break;
+        case SDLK_COMMA:
+        {
+          flag = (this->keyboard.keyComma == LE_PRESSED);
+        } break;
+        case SDLK_COMPUTER:
+        {
+          flag = (this->keyboard.keyComputer == LE_PRESSED);
+        } break;
+        case SDLK_COPY:
+        {
+          flag = (this->keyboard.keyCopy == LE_PRESSED);
+        } break;
+        case SDLK_CRSEL:
+        {
+          flag = (this->keyboard.keyCrSel == LE_PRESSED);
+        } break;
+        case SDLK_CURRENCYSUBUNIT:
+        {
+          flag = (this->keyboard.keyCurrencySubUnit == LE_PRESSED);
+        } break;
+        case SDLK_CURRENCYUNIT:
+        {
+          flag = (this->keyboard.keyCurrencyUnit == LE_PRESSED);
+        } break;
+        case SDLK_CUT:
+        {
+          flag = (this->keyboard.keyCut == LE_PRESSED);
+        } break;
+        case SDLK_d:
+        {
+          flag = (this->keyboard.keyD == LE_PRESSED);
+        } break;
+        case SDLK_DECIMALSEPARATOR:
+        {
+          flag = (this->keyboard.keyDecimalSeparator == LE_PRESSED);
+        } break;
+        case SDLK_DELETE:
+        {
+          flag = (this->keyboard.keyDelete == LE_PRESSED);
+        } break;
+        case SDLK_DISPLAYSWITCH:
+        {
+          flag = (this->keyboard.keyDisplaySwitch == LE_PRESSED);
+        } break;
         case SDLK_DOWN:
         {
           flag = (this->keyboard.keyDown == LE_PRESSED);
+        } break;
+        case SDLK_e:
+        {
+          flag = (this->keyboard.keyE == LE_PRESSED);
+        } break;
+        case SDLK_EJECT:
+        {
+          flag = (this->keyboard.keyEject == LE_PRESSED);
+        } break;
+        case SDLK_END:
+        {
+          flag = (this->keyboard.keyEnd == LE_PRESSED);
+        } break;
+        case SDLK_EQUALS:
+        {
+          flag = (this->keyboard.keyEquals == LE_PRESSED);
         } break;
         case SDLK_ESCAPE:
         {
           flag = (this->keyboard.keyEscape == LE_PRESSED);
         } break;
+        case SDLK_EXECUTE:
+        {
+          flag = (this->keyboard.keyExecute == LE_PRESSED);
+        } break;
+        case SDLK_EXSEL:
+        {
+          flag = (this->keyboard.keyExSel == LE_PRESSED);
+        } break;
+        case SDLK_f:
+        {
+          flag = (this->keyboard.keyF == LE_PRESSED);
+        } break;
+        case SDLK_F1:
+        {
+          flag = (this->keyboard.keyF1 == LE_PRESSED);
+        } break;
+        case SDLK_F10:
+        {
+          flag = (this->keyboard.keyF10 == LE_PRESSED);
+        } break;
+        case SDLK_F11:
+        {
+          flag = (this->keyboard.keyF11 == LE_PRESSED);
+        } break;
+        case SDLK_F12:
+        {
+          flag = (this->keyboard.keyF12 == LE_PRESSED);
+        } break;
+        case SDLK_F13:
+        {
+          flag = (this->keyboard.keyF13 == LE_PRESSED);
+        } break;
+        case SDLK_F14:
+        {
+          flag = (this->keyboard.keyF14 == LE_PRESSED);
+        } break;
+        case SDLK_F15:
+        {
+          flag = (this->keyboard.keyF15 == LE_PRESSED);
+        } break;
+        case SDLK_F16:
+        {
+          flag = (this->keyboard.keyF16 == LE_PRESSED);
+        } break;
+        case SDLK_F17:
+        {
+          flag = (this->keyboard.keyF17 == LE_PRESSED);
+        } break;
+        case SDLK_F18:
+        {
+          flag = (this->keyboard.keyF18 == LE_PRESSED);
+        } break;
+        case SDLK_F19:
+        {
+          flag = (this->keyboard.keyF19 == LE_PRESSED);
+        } break;
+        case SDLK_F2:
+        {
+          flag = (this->keyboard.keyF2 == LE_PRESSED);
+        } break;
+        case SDLK_F20:
+        {
+          flag = (this->keyboard.keyF20 == LE_PRESSED);
+        } break;
+        case SDLK_F21:
+        {
+          flag = (this->keyboard.keyF21 == LE_PRESSED);
+        } break;
+        case SDLK_F22:
+        {
+          flag = (this->keyboard.keyF22 == LE_PRESSED);
+        } break;
+        case SDLK_F23:
+        {
+          flag = (this->keyboard.keyF23 == LE_PRESSED);
+        } break;
+        case SDLK_F24:
+        {
+          flag = (this->keyboard.keyF24 == LE_PRESSED);
+        } break;
+        case SDLK_F3:
+        {
+          flag = (this->keyboard.keyF3 == LE_PRESSED);
+        } break;
+        case SDLK_F4:
+        {
+          flag = (this->keyboard.keyF4 == LE_PRESSED);
+        } break;
+        case SDLK_F5:
+        {
+          flag = (this->keyboard.keyF5 == LE_PRESSED);
+        } break;
+        case SDLK_F6:
+        {
+          flag = (this->keyboard.keyF6 == LE_PRESSED);
+        } break;
+        case SDLK_F7:
+        {
+          flag = (this->keyboard.keyF7 == LE_PRESSED);
+        } break;
+        case SDLK_F8:
+        {
+          flag = (this->keyboard.keyF8 == LE_PRESSED);
+        } break;
+        case SDLK_F9:
+        {
+          flag = (this->keyboard.keyF9 == LE_PRESSED);
+        } break;
+        case SDLK_FIND:
+        {
+          flag = (this->keyboard.keyFind == LE_PRESSED);
+        } break;
+        case SDLK_g:
+        {
+          flag = (this->keyboard.keyG == LE_PRESSED);
+        } break;
+        case SDLK_BACKQUOTE:
+        {
+          flag = (this->keyboard.keyBackquote == LE_PRESSED);
+        } break;
+        case SDLK_h:
+        {
+          flag = (this->keyboard.keyH == LE_PRESSED);
+        } break;
+        case SDLK_HELP:
+        {
+          flag = (this->keyboard.keyHelp == LE_PRESSED);
+        } break;
+        case SDLK_HOME:
+        {
+          flag = (this->keyboard.keyHome == LE_PRESSED);
+        } break;
+        case SDLK_i:
+        {
+          flag = (this->keyboard.keyI == LE_PRESSED);
+        } break;
+        case SDLK_INSERT:
+        {
+          flag = (this->keyboard.keyInsert == LE_PRESSED);
+        } break;
+        case SDLK_j:
+        {
+          flag = (this->keyboard.keyJ == LE_PRESSED);
+        } break;
+        case SDLK_k:
+        {
+          flag = (this->keyboard.keyK == LE_PRESSED);
+        } break;
+        case SDLK_KBDILLUMDOWN:
+        {
+          flag = (this->keyboard.keyKBDillumDown == LE_PRESSED);
+        } break;
+        case SDLK_KBDILLUMTOGGLE:
+        {
+          flag = (this->keyboard.keyKBDillumToggle == LE_PRESSED);
+        } break;
+        case SDLK_KBDILLUMUP:
+        {
+          flag = (this->keyboard.keyKBDillumUp == LE_PRESSED);
+        } break;
+        case SDLK_KP_0:
+        {
+          flag = (this->keyboard.keyKeypad0 == LE_PRESSED);
+        } break;
+        case SDLK_KP_00:
+        {
+          flag = (this->keyboard.keyKeypad00 == LE_PRESSED);
+        } break;
+        case SDLK_KP_000:
+        {
+          flag = (this->keyboard.keyKeypad000 == LE_PRESSED);
+        } break;
+        case SDLK_KP_1:
+        {
+          flag = (this->keyboard.keyKeypad1 == LE_PRESSED);
+        } break;
+        case SDLK_KP_2:
+        {
+          flag = (this->keyboard.keyKeypad2 == LE_PRESSED);
+        } break;
+        case SDLK_KP_3:
+        {
+          flag = (this->keyboard.keyKeypad3 == LE_PRESSED);
+        } break;
+        case SDLK_KP_4:
+        {
+          flag = (this->keyboard.keyKeypad4 == LE_PRESSED);
+        } break;
+        case SDLK_KP_5:
+        {
+          flag = (this->keyboard.keyKeypad5 == LE_PRESSED);
+        } break;
+        case SDLK_KP_6:
+        {
+          flag = (this->keyboard.keyKeypad6 == LE_PRESSED);
+        } break;
+        case SDLK_KP_7:
+        {
+          flag = (this->keyboard.keyKeypad7 == LE_PRESSED);
+        } break;
+        case SDLK_KP_8:
+        {
+          flag = (this->keyboard.keyKeypad8 == LE_PRESSED);
+        } break;
+        case SDLK_KP_9:
+        {
+          flag = (this->keyboard.keyKeypad9 == LE_PRESSED);
+        } break;
+        case SDLK_KP_A:
+        {
+          flag = (this->keyboard.keyKeypadA == LE_PRESSED);
+        } break;
+        case SDLK_KP_AMPERSAND:
+        {
+          flag = (this->keyboard.keyKeypadAnd == LE_PRESSED);
+        } break;
+        case SDLK_KP_AT:
+        {
+          flag = (this->keyboard.keyKeypadAt == LE_PRESSED);
+        } break;
+        case SDLK_KP_B:
+        {
+          flag = (this->keyboard.keyKeypadB == LE_PRESSED);
+        } break;
+        case SDLK_KP_BACKSPACE:
+        {
+          flag = (this->keyboard.keyKeypadBackspace == LE_PRESSED);
+        } break;
+        case SDLK_KP_BINARY:
+        {
+          flag = (this->keyboard.keyKeypadBinary == LE_PRESSED);
+        } break;
+        case SDLK_KP_C:
+        {
+          flag = (this->keyboard.keyKeypadC == LE_PRESSED);
+        } break;
+        case SDLK_KP_CLEAR:
+        {
+          flag = (this->keyboard.keyKeypadClear == LE_PRESSED);
+        } break;
+        case SDLK_KP_CLEARENTRY:
+        {
+          flag = (this->keyboard.keyKeypadClearEntry == LE_PRESSED);
+        } break;
+        case SDLK_KP_COLON:
+        {
+          flag = (this->keyboard.keyKeypadColon == LE_PRESSED);
+        } break;
+        case SDLK_KP_COMMA:
+        {
+          flag = (this->keyboard.keyKeypadComma == LE_PRESSED);
+        } break;
+        case SDLK_KP_D:
+        {
+          flag = (this->keyboard.keyKeypadD == LE_PRESSED);
+        } break;
+        case SDLK_KP_DBLAMPERSAND:
+        {
+          flag = (this->keyboard.keyKeypadDoubleAnd == LE_PRESSED);
+        } break;
+        case SDLK_KP_DBLVERTICALBAR:
+        {
+          flag = (this->keyboard.keyKeypadDoubleOr == LE_PRESSED);
+        } break;
+        case SDLK_KP_DECIMAL:
+        {
+          flag = (this->keyboard.keyKeypadDecimal == LE_PRESSED);
+        } break;
+        case SDLK_KP_DIVIDE:
+        {
+          flag = (this->keyboard.keyKeypadDivide == LE_PRESSED);
+        } break;
+        case SDLK_KP_E:
+        {
+          flag = (this->keyboard.keyKeypadE == LE_PRESSED);
+        } break;
+        case SDLK_KP_ENTER:
+        {
+          flag = (this->keyboard.keyKeypadEnter == LE_PRESSED);
+        } break;
+        case SDLK_KP_EQUALS:
+        {
+          flag = (this->keyboard.keyKeypadEquals == LE_PRESSED);
+        } break;
+        case SDLK_KP_EQUALSAS400:
+        {
+          flag = (this->keyboard.keyKeypadEqualsAS400 == LE_PRESSED);
+        } break;
+        case SDLK_KP_EXCLAM:
+        {
+          flag = (this->keyboard.keyKeypadExclamation == LE_PRESSED);
+        } break;
+        case SDLK_KP_F:
+        {
+          flag = (this->keyboard.keyKeypadF == LE_PRESSED);
+        } break;
+        case SDLK_KP_GREATER:
+        {
+          flag = (this->keyboard.keyKeypadGreater == LE_PRESSED);
+        } break;
+        case SDLK_KP_HASH:
+        {
+          flag = (this->keyboard.keyKeypadHash == LE_PRESSED);
+        } break;
+        case SDLK_KP_HEXADECIMAL:
+        {
+          flag = (this->keyboard.keyKeypadHexadecimal == LE_PRESSED);
+        } break;
+        case SDLK_KP_LEFTBRACE:
+        {
+          flag = (this->keyboard.keyKeypadLeftBrace == LE_PRESSED);
+        } break;
+        case SDLK_KP_LEFTPAREN:
+        {
+          flag = (this->keyboard.keyKeypadLeftParen == LE_PRESSED);
+        } break;
+        case SDLK_KP_LESS:
+        {
+          flag = (this->keyboard.keyKeypadLess == LE_PRESSED);
+        } break;
+        case SDLK_KP_MEMADD:
+        {
+          flag = (this->keyboard.keyKeypadMemAdd == LE_PRESSED);
+        } break;
+        case SDLK_KP_MEMCLEAR:
+        {
+          flag = (this->keyboard.keyKeypadMemClear == LE_PRESSED);
+        } break;
+        case SDLK_KP_MEMDIVIDE:
+        {
+          flag = (this->keyboard.keyKeypadMemDivide == LE_PRESSED);
+        } break;
+        case SDLK_KP_MEMMULTIPLY:
+        {
+          flag = (this->keyboard.keyKeypadMemMultiply == LE_PRESSED);
+        } break;
+        case SDLK_KP_MEMRECALL:
+        {
+          flag = (this->keyboard.keyKeypadMemRecall == LE_PRESSED);
+        } break;
+        case SDLK_KP_MEMSTORE:
+        {
+          flag = (this->keyboard.keyKeypadMemStore == LE_PRESSED);
+        } break;
+        case SDLK_KP_MEMSUBTRACT:
+        {
+          flag = (this->keyboard.keyKeypadMemSubtract == LE_PRESSED);
+        } break;
+        case SDLK_KP_MINUS:
+        {
+          flag = (this->keyboard.keyKeypadMinus == LE_PRESSED);
+        } break;
+        case SDLK_KP_MULTIPLY:
+        {
+          flag = (this->keyboard.keyKeypadMultiply == LE_PRESSED);
+        } break;
+        case SDLK_KP_OCTAL:
+        {
+          flag = (this->keyboard.keyKeypadOctal == LE_PRESSED);
+        } break;
+        case SDLK_KP_PERCENT:
+        {
+          flag = (this->keyboard.keyKeypadPercent == LE_PRESSED);
+        } break;
+        case SDLK_KP_PERIOD:
+        {
+          flag = (this->keyboard.keyKeypadPeriod == LE_PRESSED);
+        } break;
+        case SDLK_KP_PLUS:
+        {
+          flag = (this->keyboard.keyKeypadPlus == LE_PRESSED);
+        } break;
+        case SDLK_KP_PLUSMINUS:
+        {
+          flag = (this->keyboard.keyKeypadPlusMinus == LE_PRESSED);
+        } break;
+        case SDLK_KP_POWER:
+        {
+          flag = (this->keyboard.keyKeypadPower == LE_PRESSED);
+        } break;
+        case SDLK_KP_RIGHTBRACE:
+        {
+          flag = (this->keyboard.keyKeypadRightBrace == LE_PRESSED);
+        } break;
+        case SDLK_KP_RIGHTPAREN:
+        {
+          flag = (this->keyboard.keyKeypadRightParen == LE_PRESSED);
+        } break;
+        case SDLK_KP_SPACE:
+        {
+          flag = (this->keyboard.keyKeypadSpace == LE_PRESSED);
+        } break;
+        case SDLK_KP_TAB:
+        {
+          flag = (this->keyboard.keyKeypadTab == LE_PRESSED);
+        } break;
+        case SDLK_KP_VERTICALBAR:
+        {
+          flag = (this->keyboard.keyKeypadVerticalBar == LE_PRESSED);
+        } break;
+        case SDLK_KP_XOR:
+        {
+          flag = (this->keyboard.keyKeypadXOR == LE_PRESSED);
+        } break;
+        case SDLK_l:
+        {
+          flag = (this->keyboard.keyL == LE_PRESSED);
+        } break;
+        case SDLK_LALT:
+        {
+          flag = (this->keyboard.keyLeftAlt == LE_PRESSED);
+        } break;
+        case SDLK_LCTRL:
+        {
+          flag = (this->keyboard.keyLeftCtrl == LE_PRESSED);
+        } break;
         case SDLK_LEFT:
         {
           flag = (this->keyboard.keyLeft == LE_PRESSED);
+        } break;
+        case SDLK_LEFTBRACKET:
+        {
+          flag = (this->keyboard.keyLeftBracket == LE_PRESSED);
+        } break;
+        case SDLK_LGUI:
+        {
+          flag = (this->keyboard.keyLeftGUI == LE_PRESSED);
+        } break;
+        case SDLK_LSHIFT:
+        {
+          flag = (this->keyboard.keyLeftShift == LE_PRESSED);
+        } break;
+        case SDLK_m:
+        {
+          flag = (this->keyboard.keyM == LE_PRESSED);
+        } break;
+        case SDLK_MAIL:
+        {
+          flag = (this->keyboard.keyMail == LE_PRESSED);
+        } break;
+        case SDLK_MEDIASELECT:
+        {
+          flag = (this->keyboard.keyMediaSelect == LE_PRESSED);
+        } break;
+        case SDLK_MENU:
+        {
+          flag = (this->keyboard.keyMenu == LE_PRESSED);
+        } break;
+        case SDLK_MINUS:
+        {
+          flag = (this->keyboard.keyMinus == LE_PRESSED);
+        } break;
+        case SDLK_MODE:
+        {
+          flag = (this->keyboard.keyModeSwitch == LE_PRESSED);
+        } break;
+        case SDLK_MUTE:
+        {
+          flag = (this->keyboard.keyMute == LE_PRESSED);
+        } break;
+        case SDLK_n:
+        {
+          flag = (this->keyboard.keyN == LE_PRESSED);
+        } break;
+        case SDLK_NUMLOCKCLEAR:
+        {
+          flag = (this->keyboard.keyNumLock == LE_PRESSED);
+        } break;
+        case SDLK_o:
+        {
+          flag = (this->keyboard.keyO == LE_PRESSED);
+        } break;
+        case SDLK_OPER:
+        {
+          flag = (this->keyboard.keyOper == LE_PRESSED);
+        } break;
+        case SDLK_OUT:
+        {
+          flag = (this->keyboard.keyOut == LE_PRESSED);
+        } break;
+        case SDLK_p:
+        {
+          flag = (this->keyboard.keyP == LE_PRESSED);
+        } break;
+        case SDLK_PAGEDOWN:
+        {
+          flag = (this->keyboard.keyPageDown == LE_PRESSED);
+        } break;
+        case SDLK_PAGEUP:
+        {
+          flag = (this->keyboard.keyPageUp == LE_PRESSED);
+        } break;
+        case SDLK_PASTE:
+        {
+          flag = (this->keyboard.keyPaste == LE_PRESSED);
+        } break;
+        case SDLK_PAUSE:
+        {
+          flag = (this->keyboard.keyPause == LE_PRESSED);
+        } break;
+        case SDLK_PERIOD:
+        {
+          flag = (this->keyboard.keyPeriod == LE_PRESSED);
+        } break;
+        case SDLK_POWER:
+        {
+          flag = (this->keyboard.keyPower == LE_PRESSED);
+        } break;
+        case SDLK_PRINTSCREEN:
+        {
+          flag = (this->keyboard.keyPrintScreen == LE_PRESSED);
+        } break;
+        case SDLK_PRIOR:
+        {
+          flag = (this->keyboard.keyPrior == LE_PRESSED);
+        } break;
+        case SDLK_q:
+        {
+          flag = (this->keyboard.keyQ == LE_PRESSED);
+        } break;
+        case SDLK_r:
+        {
+          flag = (this->keyboard.keyR == LE_PRESSED);
+        } break;
+        case SDLK_RALT:
+        {
+          flag = (this->keyboard.keyRightAlt == LE_PRESSED);
+        } break;
+        case SDLK_RCTRL:
+        {
+          flag = (this->keyboard.keyRightCtrl == LE_PRESSED);
         } break;
         case SDLK_RETURN:
         {
           flag = (this->keyboard.keyReturn == LE_PRESSED);
         } break;
+        case SDLK_RETURN2:
+        {
+          flag = (this->keyboard.keyReturn2 == LE_PRESSED);
+        } break;
+        case SDLK_RGUI:
+        {
+          flag = (this->keyboard.keyRightGUI == LE_PRESSED);
+        } break;
         case SDLK_RIGHT:
         {
           flag = (this->keyboard.keyRight == LE_PRESSED);
+        } break;
+        case SDLK_RIGHTBRACKET:
+        {
+          flag = (this->keyboard.keyRightBracket == LE_PRESSED);
+        } break;
+        case SDLK_RSHIFT:
+        {
+          flag = (this->keyboard.keyRightShift == LE_PRESSED);
+        } break;
+        case SDLK_s:
+        {
+          flag = (this->keyboard.keyS == LE_PRESSED);
+        } break;
+        case SDLK_SCROLLLOCK:
+        {
+          flag = (this->keyboard.keyScrollLock == LE_PRESSED);
+        } break;
+        case SDLK_SELECT:
+        {
+          flag = (this->keyboard.keySelect == LE_PRESSED);
+        } break;
+        case SDLK_SEMICOLON:
+        {
+          flag = (this->keyboard.keySemicolon == LE_PRESSED);
+        } break;
+        case SDLK_SEPARATOR:
+        {
+          flag = (this->keyboard.keySeparator == LE_PRESSED);
+        } break;
+        case SDLK_SLASH:
+        {
+          flag = (this->keyboard.keySlash == LE_PRESSED);
+        } break;
+        case SDLK_SLEEP:
+        {
+          flag = (this->keyboard.keySleep == LE_PRESSED);
         } break;
         case SDLK_SPACE:
         {
           flag = (this->keyboard.keySpace == LE_PRESSED);
         } break;
+        case SDLK_STOP:
+        {
+          flag = (this->keyboard.keyStop == LE_PRESSED);
+        } break;
+        case SDLK_SYSREQ:
+        {
+          flag = (this->keyboard.keySysReq == LE_PRESSED);
+        } break;
+        case SDLK_t:
+        {
+          flag = (this->keyboard.keyT == LE_PRESSED);
+        } break;
+        case SDLK_TAB:
+        {
+          flag = (this->keyboard.keyTab == LE_PRESSED);
+        } break;
+        case SDLK_THOUSANDSSEPARATOR:
+        {
+          flag = (this->keyboard.keyThousandsSeparator == LE_PRESSED);
+        } break;
+        case SDLK_u:
+        {
+          flag = (this->keyboard.keyU == LE_PRESSED);
+        } break;
+        case SDLK_UNDO:
+        {
+          flag = (this->keyboard.keyUndo == LE_PRESSED);
+        } break;
         case SDLK_UP:
         {
           flag = (this->keyboard.keyUp == LE_PRESSED);
         } break;
+        case SDLK_v:
+        {
+          flag = (this->keyboard.keyV == LE_PRESSED);
+        } break;
+        case SDLK_VOLUMEDOWN:
+        {
+          flag = (this->keyboard.keyVolumeDown == LE_PRESSED);
+        } break;
+        case SDLK_VOLUMEUP:
+        {
+          flag = (this->keyboard.keyVolumeUp == LE_PRESSED);
+        } break;
+        case SDLK_w:
+        {
+          flag = (this->keyboard.keyW == LE_PRESSED);
+        } break;
+        case SDLK_WWW:
+        {
+          flag = (this->keyboard.keyWWW == LE_PRESSED);
+        } break;
+        case SDLK_x:
+        {
+          flag = (this->keyboard.keyX == LE_PRESSED);
+        } break;
+        case SDLK_y:
+        {
+          flag = (this->keyboard.keyY == LE_PRESSED);
+        } break;
+        case SDLK_z:
+        {
+          flag = (this->keyboard.keyZ == LE_PRESSED);
+        } break;
       };
     } break;
+
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    // key up
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
     case SDL_KEYUP:
     {
       switch(key)
@@ -2708,33 +5195,797 @@ bool LEMoon::keyEvent(uint32_t state, SDL_Keycode key)
         {
           flag = (this->keyboard.keyAltErase == LE_RELEASED);
         } break;
+        case SDLK_QUOTE:
+        {
+          flag = (this->keyboard.keyApostrophe == LE_RELEASED);
+        } break;
+        case SDLK_APPLICATION:
+        {
+          flag = (this->keyboard.keyApplication == LE_RELEASED);
+        } break;
+        case SDLK_AUDIOMUTE:
+        {
+          flag = (this->keyboard.keyAudioMute == LE_RELEASED);
+        } break;
+        case SDLK_AUDIONEXT:
+        {
+          flag = (this->keyboard.keyAudioNext == LE_RELEASED);
+        } break;
+        case SDLK_AUDIOPLAY:
+        {
+          flag = (this->keyboard.keyAudioPlay == LE_RELEASED);
+        } break;
+        case SDLK_AUDIOPREV:
+        {
+          flag = (this->keyboard.keyAudioPrev == LE_RELEASED);
+        } break;
+        case SDLK_AUDIOSTOP:
+        {
+          flag = (this->keyboard.keyAudioStop == LE_RELEASED);
+        } break;
+        case SDLK_b:
+        {
+          flag = (this->keyboard.keyB == LE_RELEASED);
+        } break;
+        case SDLK_BACKSLASH:
+        {
+          flag = (this->keyboard.keyBackslash == LE_RELEASED);
+        } break;
+        case SDLK_BACKSPACE:
+        {
+          flag = (this->keyboard.keyBackspace == LE_RELEASED);
+        } break;
+        case SDLK_BRIGHTNESSDOWN:
+        {
+          flag = (this->keyboard.keyBrightnessDown == LE_RELEASED);
+        } break;
+        case SDLK_BRIGHTNESSUP:
+        {
+          flag = (this->keyboard.keyBrightnessUp == LE_RELEASED);
+        } break;
+        case SDLK_c:
+        {
+          flag = (this->keyboard.keyC == LE_RELEASED);
+        } break;
+        case SDLK_CALCULATOR:
+        {
+          flag = (this->keyboard.keyCalculator == LE_RELEASED);
+        } break;
+        case SDLK_CANCEL:
+        {
+          flag = (this->keyboard.keyCancel == LE_RELEASED);
+        } break;
+        case SDLK_CAPSLOCK:
+        {
+          flag = (this->keyboard.keyCapsLock == LE_RELEASED);
+        } break;
+        case SDLK_CLEAR:
+        {
+          flag = (this->keyboard.keyClear == LE_RELEASED);
+        } break;
+        case SDLK_CLEARAGAIN:
+        {
+          flag = (this->keyboard.keyClearAgain == LE_RELEASED);
+        } break;
+        case SDLK_COMMA:
+        {
+          flag = (this->keyboard.keyComma == LE_RELEASED);
+        } break;
+        case SDLK_COMPUTER:
+        {
+          flag = (this->keyboard.keyComputer == LE_RELEASED);
+        } break;
+        case SDLK_COPY:
+        {
+          flag = (this->keyboard.keyCopy == LE_RELEASED);
+        } break;
+        case SDLK_CRSEL:
+        {
+          flag = (this->keyboard.keyCrSel == LE_RELEASED);
+        } break;
+        case SDLK_CURRENCYSUBUNIT:
+        {
+          flag = (this->keyboard.keyCurrencySubUnit == LE_RELEASED);
+        } break;
+        case SDLK_CURRENCYUNIT:
+        {
+          flag = (this->keyboard.keyCurrencyUnit == LE_RELEASED);
+        } break;
+        case SDLK_CUT:
+        {
+          flag = (this->keyboard.keyCut == LE_RELEASED);
+        } break;
+        case SDLK_d:
+        {
+          flag = (this->keyboard.keyD == LE_RELEASED);
+        } break;
+        case SDLK_DECIMALSEPARATOR:
+        {
+          flag = (this->keyboard.keyDecimalSeparator == LE_RELEASED);
+        } break;
+        case SDLK_DELETE:
+        {
+          flag = (this->keyboard.keyDelete == LE_RELEASED);
+        } break;
+        case SDLK_DISPLAYSWITCH:
+        {
+          flag = (this->keyboard.keyDisplaySwitch == LE_RELEASED);
+        } break;
         case SDLK_DOWN:
         {
           flag = (this->keyboard.keyDown == LE_RELEASED);
+        } break;
+        case SDLK_e:
+        {
+          flag = (this->keyboard.keyE == LE_RELEASED);
+        } break;
+        case SDLK_EJECT:
+        {
+          flag = (this->keyboard.keyEject == LE_RELEASED);
+        } break;
+        case SDLK_END:
+        {
+          flag = (this->keyboard.keyEnd == LE_RELEASED);
+        } break;
+        case SDLK_EQUALS:
+        {
+          flag = (this->keyboard.keyEquals == LE_RELEASED);
         } break;
         case SDLK_ESCAPE:
         {
           flag = (this->keyboard.keyEscape == LE_RELEASED);
         } break;
+        case SDLK_EXECUTE:
+        {
+          flag = (this->keyboard.keyExecute == LE_RELEASED);
+        } break;
+        case SDLK_EXSEL:
+        {
+          flag = (this->keyboard.keyExSel == LE_RELEASED);
+        } break;
+        case SDLK_f:
+        {
+          flag = (this->keyboard.keyF == LE_RELEASED);
+        } break;
+        case SDLK_F1:
+        {
+          flag = (this->keyboard.keyF1 == LE_RELEASED);
+        } break;
+        case SDLK_F10:
+        {
+          flag = (this->keyboard.keyF10 == LE_RELEASED);
+        } break;
+        case SDLK_F11:
+        {
+          flag = (this->keyboard.keyF11 == LE_RELEASED);
+        } break;
+        case SDLK_F12:
+        {
+          flag = (this->keyboard.keyF12 == LE_RELEASED);
+        } break;
+        case SDLK_F13:
+        {
+          flag = (this->keyboard.keyF13 == LE_RELEASED);
+        } break;
+        case SDLK_F14:
+        {
+          flag = (this->keyboard.keyF14 == LE_RELEASED);
+        } break;
+        case SDLK_F15:
+        {
+          flag = (this->keyboard.keyF15 == LE_RELEASED);
+        } break;
+        case SDLK_F16:
+        {
+          flag = (this->keyboard.keyF16 == LE_RELEASED);
+        } break;
+        case SDLK_F17:
+        {
+          flag = (this->keyboard.keyF17 == LE_RELEASED);
+        } break;
+        case SDLK_F18:
+        {
+          flag = (this->keyboard.keyF18 == LE_RELEASED);
+        } break;
+        case SDLK_F19:
+        {
+          flag = (this->keyboard.keyF19 == LE_RELEASED);
+        } break;
+        case SDLK_F2:
+        {
+          flag = (this->keyboard.keyF2 == LE_RELEASED);
+        } break;
+        case SDLK_F20:
+        {
+          flag = (this->keyboard.keyF20 == LE_RELEASED);
+        } break;
+        case SDLK_F21:
+        {
+          flag = (this->keyboard.keyF21 == LE_RELEASED);
+        } break;
+        case SDLK_F22:
+        {
+          flag = (this->keyboard.keyF22 == LE_RELEASED);
+        } break;
+        case SDLK_F23:
+        {
+          flag = (this->keyboard.keyF23 == LE_RELEASED);
+        } break;
+        case SDLK_F24:
+        {
+          flag = (this->keyboard.keyF24 == LE_RELEASED);
+        } break;
+        case SDLK_F3:
+        {
+          flag = (this->keyboard.keyF3 == LE_RELEASED);
+        } break;
+        case SDLK_F4:
+        {
+          flag = (this->keyboard.keyF4 == LE_RELEASED);
+        } break;
+        case SDLK_F5:
+        {
+          flag = (this->keyboard.keyF5 == LE_RELEASED);
+        } break;
+        case SDLK_F6:
+        {
+          flag = (this->keyboard.keyF6 == LE_RELEASED);
+        } break;
+        case SDLK_F7:
+        {
+          flag = (this->keyboard.keyF7 == LE_RELEASED);
+        } break;
+        case SDLK_F8:
+        {
+          flag = (this->keyboard.keyF8 == LE_RELEASED);
+        } break;
+        case SDLK_F9:
+        {
+          flag = (this->keyboard.keyF9 == LE_RELEASED);
+        } break;
+        case SDLK_FIND:
+        {
+          flag = (this->keyboard.keyFind == LE_RELEASED);
+        } break;
+        case SDLK_g:
+        {
+          flag = (this->keyboard.keyG == LE_RELEASED);
+        } break;
+        case SDLK_BACKQUOTE:
+        {
+          flag = (this->keyboard.keyBackquote == LE_RELEASED);
+        } break;
+        case SDLK_h:
+        {
+          flag = (this->keyboard.keyH == LE_RELEASED);
+        } break;
+        case SDLK_HELP:
+        {
+          flag = (this->keyboard.keyHelp == LE_RELEASED);
+        } break;
+        case SDLK_HOME:
+        {
+          flag = (this->keyboard.keyHome == LE_RELEASED);
+        } break;
+        case SDLK_i:
+        {
+          flag = (this->keyboard.keyI == LE_RELEASED);
+        } break;
+        case SDLK_INSERT:
+        {
+          flag = (this->keyboard.keyInsert == LE_RELEASED);
+        } break;
+        case SDLK_j:
+        {
+          flag = (this->keyboard.keyJ == LE_RELEASED);
+        } break;
+        case SDLK_k:
+        {
+          flag = (this->keyboard.keyK == LE_RELEASED);
+        } break;
+        case SDLK_KBDILLUMDOWN:
+        {
+          flag = (this->keyboard.keyKBDillumDown == LE_RELEASED);
+        } break;
+        case SDLK_KBDILLUMTOGGLE:
+        {
+          flag = (this->keyboard.keyKBDillumToggle == LE_RELEASED);
+        } break;
+        case SDLK_KBDILLUMUP:
+        {
+          flag = (this->keyboard.keyKBDillumUp == LE_RELEASED);
+        } break;
+        case SDLK_KP_0:
+        {
+          flag = (this->keyboard.keyKeypad0 == LE_RELEASED);
+        } break;
+        case SDLK_KP_00:
+        {
+          flag = (this->keyboard.keyKeypad00 == LE_RELEASED);
+        } break;
+        case SDLK_KP_000:
+        {
+          flag = (this->keyboard.keyKeypad000 == LE_RELEASED);
+        } break;
+        case SDLK_KP_1:
+        {
+          flag = (this->keyboard.keyKeypad1 == LE_RELEASED);
+        } break;
+        case SDLK_KP_2:
+        {
+          flag = (this->keyboard.keyKeypad2 == LE_RELEASED);
+        } break;
+        case SDLK_KP_3:
+        {
+          flag = (this->keyboard.keyKeypad3 == LE_RELEASED);
+        } break;
+        case SDLK_KP_4:
+        {
+          flag = (this->keyboard.keyKeypad4 == LE_RELEASED);
+        } break;
+        case SDLK_KP_5:
+        {
+          flag = (this->keyboard.keyKeypad5 == LE_RELEASED);
+        } break;
+        case SDLK_KP_6:
+        {
+          flag = (this->keyboard.keyKeypad6 == LE_RELEASED);
+        } break;
+        case SDLK_KP_7:
+        {
+          flag = (this->keyboard.keyKeypad7 == LE_RELEASED);
+        } break;
+        case SDLK_KP_8:
+        {
+          flag = (this->keyboard.keyKeypad8 == LE_RELEASED);
+        } break;
+        case SDLK_KP_9:
+        {
+          flag = (this->keyboard.keyKeypad9 == LE_RELEASED);
+        } break;
+        case SDLK_KP_A:
+        {
+          flag = (this->keyboard.keyKeypadA == LE_RELEASED);
+        } break;
+        case SDLK_KP_AMPERSAND:
+        {
+          flag = (this->keyboard.keyKeypadAnd == LE_RELEASED);
+        } break;
+        case SDLK_KP_AT:
+        {
+          flag = (this->keyboard.keyKeypadAt == LE_RELEASED);
+        } break;
+        case SDLK_KP_B:
+        {
+          flag = (this->keyboard.keyKeypadB == LE_RELEASED);
+        } break;
+        case SDLK_KP_BACKSPACE:
+        {
+          flag = (this->keyboard.keyKeypadBackspace == LE_RELEASED);
+        } break;
+        case SDLK_KP_BINARY:
+        {
+          flag = (this->keyboard.keyKeypadBinary == LE_RELEASED);
+        } break;
+        case SDLK_KP_C:
+        {
+          flag = (this->keyboard.keyKeypadC == LE_RELEASED);
+        } break;
+        case SDLK_KP_CLEAR:
+        {
+          flag = (this->keyboard.keyKeypadClear == LE_RELEASED);
+        } break;
+        case SDLK_KP_CLEARENTRY:
+        {
+          flag = (this->keyboard.keyKeypadClearEntry == LE_RELEASED);
+        } break;
+        case SDLK_KP_COLON:
+        {
+          flag = (this->keyboard.keyKeypadColon == LE_RELEASED);
+        } break;
+        case SDLK_KP_COMMA:
+        {
+          flag = (this->keyboard.keyKeypadComma == LE_RELEASED);
+        } break;
+        case SDLK_KP_D:
+        {
+          flag = (this->keyboard.keyKeypadD == LE_RELEASED);
+        } break;
+        case SDLK_KP_DBLAMPERSAND:
+        {
+          flag = (this->keyboard.keyKeypadDoubleAnd == LE_RELEASED);
+        } break;
+        case SDLK_KP_DBLVERTICALBAR:
+        {
+          flag = (this->keyboard.keyKeypadDoubleOr == LE_RELEASED);
+        } break;
+        case SDLK_KP_DECIMAL:
+        {
+          flag = (this->keyboard.keyKeypadDecimal == LE_RELEASED);
+        } break;
+        case SDLK_KP_DIVIDE:
+        {
+          flag = (this->keyboard.keyKeypadDivide == LE_RELEASED);
+        } break;
+        case SDLK_KP_E:
+        {
+          flag = (this->keyboard.keyKeypadE == LE_RELEASED);
+        } break;
+        case SDLK_KP_ENTER:
+        {
+          flag = (this->keyboard.keyKeypadEnter == LE_RELEASED);
+        } break;
+        case SDLK_KP_EQUALS:
+        {
+          flag = (this->keyboard.keyKeypadEquals == LE_RELEASED);
+        } break;
+        case SDLK_KP_EQUALSAS400:
+        {
+          flag = (this->keyboard.keyKeypadEqualsAS400 == LE_RELEASED);
+        } break;
+        case SDLK_KP_EXCLAM:
+        {
+          flag = (this->keyboard.keyKeypadExclamation == LE_RELEASED);
+        } break;
+        case SDLK_KP_F:
+        {
+          flag = (this->keyboard.keyKeypadF == LE_RELEASED);
+        } break;
+        case SDLK_KP_GREATER:
+        {
+          flag = (this->keyboard.keyKeypadGreater == LE_RELEASED);
+        } break;
+        case SDLK_KP_HASH:
+        {
+          flag = (this->keyboard.keyKeypadHash == LE_RELEASED);
+        } break;
+        case SDLK_KP_HEXADECIMAL:
+        {
+          flag = (this->keyboard.keyKeypadHexadecimal == LE_RELEASED);
+        } break;
+        case SDLK_KP_LEFTBRACE:
+        {
+          flag = (this->keyboard.keyKeypadLeftBrace == LE_RELEASED);
+        } break;
+        case SDLK_KP_LEFTPAREN:
+        {
+          flag = (this->keyboard.keyKeypadLeftParen == LE_RELEASED);
+        } break;
+        case SDLK_KP_LESS:
+        {
+          flag = (this->keyboard.keyKeypadLess == LE_RELEASED);
+        } break;
+        case SDLK_KP_MEMADD:
+        {
+          flag = (this->keyboard.keyKeypadMemAdd == LE_RELEASED);
+        } break;
+        case SDLK_KP_MEMCLEAR:
+        {
+          flag = (this->keyboard.keyKeypadMemClear == LE_RELEASED);
+        } break;
+        case SDLK_KP_MEMDIVIDE:
+        {
+          flag = (this->keyboard.keyKeypadMemDivide == LE_RELEASED);
+        } break;
+        case SDLK_KP_MEMMULTIPLY:
+        {
+          flag = (this->keyboard.keyKeypadMemMultiply == LE_RELEASED);
+        } break;
+        case SDLK_KP_MEMRECALL:
+        {
+          flag = (this->keyboard.keyKeypadMemRecall == LE_RELEASED);
+        } break;
+        case SDLK_KP_MEMSTORE:
+        {
+          flag = (this->keyboard.keyKeypadMemStore == LE_RELEASED);
+        } break;
+        case SDLK_KP_MEMSUBTRACT:
+        {
+          flag = (this->keyboard.keyKeypadMemSubtract == LE_RELEASED);
+        } break;
+        case SDLK_KP_MINUS:
+        {
+          flag = (this->keyboard.keyKeypadMinus == LE_RELEASED);
+        } break;
+        case SDLK_KP_MULTIPLY:
+        {
+          flag = (this->keyboard.keyKeypadMultiply == LE_RELEASED);
+        } break;
+        case SDLK_KP_OCTAL:
+        {
+          flag = (this->keyboard.keyKeypadOctal == LE_RELEASED);
+        } break;
+        case SDLK_KP_PERCENT:
+        {
+          flag = (this->keyboard.keyKeypadPercent == LE_RELEASED);
+        } break;
+        case SDLK_KP_PERIOD:
+        {
+          flag = (this->keyboard.keyKeypadPeriod == LE_RELEASED);
+        } break;
+        case SDLK_KP_PLUS:
+        {
+          flag = (this->keyboard.keyKeypadPlus == LE_RELEASED);
+        } break;
+        case SDLK_KP_PLUSMINUS:
+        {
+          flag = (this->keyboard.keyKeypadPlusMinus == LE_RELEASED);
+        } break;
+        case SDLK_KP_POWER:
+        {
+          flag = (this->keyboard.keyKeypadPower == LE_RELEASED);
+        } break;
+        case SDLK_KP_RIGHTBRACE:
+        {
+          flag = (this->keyboard.keyKeypadRightBrace == LE_RELEASED);
+        } break;
+        case SDLK_KP_RIGHTPAREN:
+        {
+          flag = (this->keyboard.keyKeypadRightParen == LE_RELEASED);
+        } break;
+        case SDLK_KP_SPACE:
+        {
+          flag = (this->keyboard.keyKeypadSpace == LE_RELEASED);
+        } break;
+        case SDLK_KP_TAB:
+        {
+          flag = (this->keyboard.keyKeypadTab == LE_RELEASED);
+        } break;
+        case SDLK_KP_VERTICALBAR:
+        {
+          flag = (this->keyboard.keyKeypadVerticalBar == LE_RELEASED);
+        } break;
+        case SDLK_KP_XOR:
+        {
+          flag = (this->keyboard.keyKeypadXOR == LE_RELEASED);
+        } break;
+        case SDLK_l:
+        {
+          flag = (this->keyboard.keyL == LE_RELEASED);
+        } break;
+        case SDLK_LALT:
+        {
+          flag = (this->keyboard.keyLeftAlt == LE_RELEASED);
+        } break;
+        case SDLK_LCTRL:
+        {
+          flag = (this->keyboard.keyLeftCtrl == LE_RELEASED);
+        } break;
         case SDLK_LEFT:
         {
           flag = (this->keyboard.keyLeft == LE_RELEASED);
+        } break;
+        case SDLK_LEFTBRACKET:
+        {
+          flag = (this->keyboard.keyLeftBracket == LE_RELEASED);
+        } break;
+        case SDLK_LGUI:
+        {
+          flag = (this->keyboard.keyLeftGUI == LE_RELEASED);
+        } break;
+        case SDLK_LSHIFT:
+        {
+          flag = (this->keyboard.keyLeftShift == LE_RELEASED);
+        } break;
+        case SDLK_m:
+        {
+          flag = (this->keyboard.keyM == LE_RELEASED);
+        } break;
+        case SDLK_MAIL:
+        {
+          flag = (this->keyboard.keyMail == LE_RELEASED);
+        } break;
+        case SDLK_MEDIASELECT:
+        {
+          flag = (this->keyboard.keyMediaSelect == LE_RELEASED);
+        } break;
+        case SDLK_MENU:
+        {
+          flag = (this->keyboard.keyMenu == LE_RELEASED);
+        } break;
+        case SDLK_MINUS:
+        {
+          flag = (this->keyboard.keyMinus == LE_RELEASED);
+        } break;
+        case SDLK_MODE:
+        {
+          flag = (this->keyboard.keyModeSwitch == LE_RELEASED);
+        } break;
+        case SDLK_MUTE:
+        {
+          flag = (this->keyboard.keyMute == LE_RELEASED);
+        } break;
+        case SDLK_n:
+        {
+          flag = (this->keyboard.keyN == LE_RELEASED);
+        } break;
+        case SDLK_NUMLOCKCLEAR:
+        {
+          flag = (this->keyboard.keyNumLock == LE_RELEASED);
+        } break;
+        case SDLK_o:
+        {
+          flag = (this->keyboard.keyO == LE_RELEASED);
+        } break;
+        case SDLK_OPER:
+        {
+          flag = (this->keyboard.keyOper == LE_RELEASED);
+        } break;
+        case SDLK_OUT:
+        {
+          flag = (this->keyboard.keyOut == LE_RELEASED);
+        } break;
+        case SDLK_p:
+        {
+          flag = (this->keyboard.keyP == LE_RELEASED);
+        } break;
+        case SDLK_PAGEDOWN:
+        {
+          flag = (this->keyboard.keyPageDown == LE_RELEASED);
+        } break;
+        case SDLK_PAGEUP:
+        {
+          flag = (this->keyboard.keyPageUp == LE_RELEASED);
+        } break;
+        case SDLK_PASTE:
+        {
+          flag = (this->keyboard.keyPaste == LE_RELEASED);
+        } break;
+        case SDLK_PAUSE:
+        {
+          flag = (this->keyboard.keyPause == LE_RELEASED);
+        } break;
+        case SDLK_PERIOD:
+        {
+          flag = (this->keyboard.keyPeriod == LE_RELEASED);
+        } break;
+        case SDLK_POWER:
+        {
+          flag = (this->keyboard.keyPower == LE_RELEASED);
+        } break;
+        case SDLK_PRINTSCREEN:
+        {
+          flag = (this->keyboard.keyPrintScreen == LE_RELEASED);
+        } break;
+        case SDLK_PRIOR:
+        {
+          flag = (this->keyboard.keyPrior == LE_RELEASED);
+        } break;
+        case SDLK_q:
+        {
+          flag = (this->keyboard.keyQ == LE_RELEASED);
+        } break;
+        case SDLK_r:
+        {
+          flag = (this->keyboard.keyR == LE_RELEASED);
+        } break;
+        case SDLK_RALT:
+        {
+          flag = (this->keyboard.keyRightAlt == LE_RELEASED);
+        } break;
+        case SDLK_RCTRL:
+        {
+          flag = (this->keyboard.keyRightCtrl == LE_RELEASED);
         } break;
         case SDLK_RETURN:
         {
           flag = (this->keyboard.keyReturn == LE_RELEASED);
         } break;
+        case SDLK_RETURN2:
+        {
+          flag = (this->keyboard.keyReturn2 == LE_RELEASED);
+        } break;
+        case SDLK_RGUI:
+        {
+          flag = (this->keyboard.keyRightGUI == LE_RELEASED);
+        } break;
         case SDLK_RIGHT:
         {
           flag = (this->keyboard.keyRight == LE_RELEASED);
+        } break;
+        case SDLK_RIGHTBRACKET:
+        {
+          flag = (this->keyboard.keyRightBracket == LE_RELEASED);
+        } break;
+        case SDLK_RSHIFT:
+        {
+          flag = (this->keyboard.keyRightShift == LE_RELEASED);
+        } break;
+        case SDLK_s:
+        {
+          flag = (this->keyboard.keyS == LE_RELEASED);
+        } break;
+        case SDLK_SCROLLLOCK:
+        {
+          flag = (this->keyboard.keyScrollLock == LE_RELEASED);
+        } break;
+        case SDLK_SELECT:
+        {
+          flag = (this->keyboard.keySelect == LE_RELEASED);
+        } break;
+        case SDLK_SEMICOLON:
+        {
+          flag = (this->keyboard.keySemicolon == LE_RELEASED);
+        } break;
+        case SDLK_SEPARATOR:
+        {
+          flag = (this->keyboard.keySeparator == LE_RELEASED);
+        } break;
+        case SDLK_SLASH:
+        {
+          flag = (this->keyboard.keySlash == LE_RELEASED);
+        } break;
+        case SDLK_SLEEP:
+        {
+          flag = (this->keyboard.keySleep == LE_RELEASED);
         } break;
         case SDLK_SPACE:
         {
           flag = (this->keyboard.keySpace == LE_RELEASED);
         } break;
+        case SDLK_STOP:
+        {
+          flag = (this->keyboard.keyStop == LE_RELEASED);
+        } break;
+        case SDLK_SYSREQ:
+        {
+          flag = (this->keyboard.keySysReq == LE_RELEASED);
+        } break;
+        case SDLK_t:
+        {
+          flag = (this->keyboard.keyT == LE_RELEASED);
+        } break;
+        case SDLK_TAB:
+        {
+          flag = (this->keyboard.keyTab == LE_RELEASED);
+        } break;
+        case SDLK_THOUSANDSSEPARATOR:
+        {
+          flag = (this->keyboard.keyThousandsSeparator == LE_RELEASED);
+        } break;
+        case SDLK_u:
+        {
+          flag = (this->keyboard.keyU == LE_RELEASED);
+        } break;
+        case SDLK_UNDO:
+        {
+          flag = (this->keyboard.keyUndo == LE_RELEASED);
+        } break;
         case SDLK_UP:
         {
           flag = (this->keyboard.keyUp == LE_RELEASED);
+        } break;
+        case SDLK_v:
+        {
+          flag = (this->keyboard.keyV == LE_RELEASED);
+        } break;
+        case SDLK_VOLUMEDOWN:
+        {
+          flag = (this->keyboard.keyVolumeDown == LE_RELEASED);
+        } break;
+        case SDLK_VOLUMEUP:
+        {
+          flag = (this->keyboard.keyVolumeUp == LE_RELEASED);
+        } break;
+        case SDLK_w:
+        {
+          flag = (this->keyboard.keyW == LE_RELEASED);
+        } break;
+        case SDLK_WWW:
+        {
+          flag = (this->keyboard.keyWWW == LE_RELEASED);
+        } break;
+        case SDLK_x:
+        {
+          flag = (this->keyboard.keyX == LE_RELEASED);
+        } break;
+        case SDLK_y:
+        {
+          flag = (this->keyboard.keyY == LE_RELEASED);
+        } break;
+        case SDLK_z:
+        {
+          flag = (this->keyboard.keyZ == LE_RELEASED);
         } break;
       };
     } break;
@@ -2801,9 +6052,7 @@ void LEMoon::messageBox(const char * pTitle, const char * pText)
 void LEMoon::endFrame()
 {
   this->timestep = (SDL_GetTicks() - this->timestamp) * 0.001f;
-  #ifdef LE_DESKTOP_APP
-    this->freeKeyboardKeys();
-  #endif
+  this->freeKeyboardKeys();
   this->freeMouse();
 }
 
@@ -2961,6 +6210,10 @@ void LEMoon::mkpath(const char * dir, mode_t mode)
 
 int LEMoon::modelCreate(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxModel.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEModel * pNew = this->modelGet(id);
 
@@ -2974,6 +6227,7 @@ int LEMoon::modelCreate(uint32_t id)
       this->pModelHead->pLeft = this->pModelHead;
       this->pModelHead->pRight = this->pModelHead;
       this->pModelHead->pModel = nullptr;
+      this->pModelHead->id = 1989;
       this->pModelHead->zindex = 0;
     }
 
@@ -2990,17 +6244,28 @@ int LEMoon::modelCreate(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_EXIST, "LEMoon::modelCreate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCreate(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_EXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_EXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxModel.mtxAdd.unlock();
+  #endif
 
   return result;
 }
 
 int LEMoon::modelDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxModel.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -3022,11 +6287,18 @@ int LEMoon::modelDelete(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelDelete()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelDelete(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxModel.mtxDel.unlock();
+  #endif
 
   return result;
 }
@@ -3036,18 +6308,28 @@ int LEMoon::modelCreateTexture(uint32_t id, uint32_t idTexture, const char * pFi
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
+  #ifdef LE_DEBUG
+    char * pErrorString = nullptr;
+  #endif
+
   if(pElem != nullptr)
   {
     result = pElem->pModel->mdlCreateTexture(idTexture, pFile, this->pRenderer);
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelCreateTexture()\n\n");
+      pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCreateTexture(%u, %u, %s)\n\n", id, idTexture, pFile);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelCreateTexture()\n\n");
+      pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCreateTexture(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3061,18 +6343,28 @@ int LEMoon::modelAddTextureSourceRect(uint32_t id, uint32_t idTexture, uint32_t 
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
+  #ifdef LE_DEBUG
+    char * pErrorString = nullptr;
+  #endif
+
   if(pElem != nullptr)
   {
     result = pElem->pModel->mdlAddTextureSourceRect(idTexture, idSrcRect, x, y, w, h);
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelAddTextureSourceRect()\n\n");
+      pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelAddTextureSourceRect(%u, %u, %u, %d, %d, %d, %d)\n\n", id, idTexture, idSrcRect, x, y, w, h);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelAddTextureSourceRect()\n\n");
+      pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelAddTextureSourceRect(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3085,8 +6377,9 @@ int LEMoon::modelFocusTextureSourceRect(uint32_t id, uint32_t idTexture, uint32_
 {
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
+
   #ifdef LE_DEBUG
-  char * pErrorString = new char[256 + 1];
+    char * pErrorString = new char[256 + 1];
   #endif
 
   if(pElem != nullptr)
@@ -3094,19 +6387,23 @@ int LEMoon::modelFocusTextureSourceRect(uint32_t id, uint32_t idTexture, uint32_
     result = pElem->pModel->mdlFocusTextureSourceRect(idTexture, idSrcRect);
 
     #ifdef LE_DEBUG
-      sprintf(pErrorString, "LEMoon::modelFocusTextureSourceRect(%d, %d)\n\n", idTexture, idSrcRect);
+      sprintf(pErrorString, "LEMoon::modelFocusTextureSourceRect(%u, %u, %u)\n\n", id, idTexture, idSrcRect);
       this->printErrorDialog(result, pErrorString);
-      delete [] pErrorString;
     #endif
   }
   else
   {
-    #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelFocusTextureSourceRect()\n\n");
-    #endif
-
     result = LE_MDL_NOEXIST;
+
+    #ifdef LE_DEBUG
+      sprintf(pErrorString, "LEMoon::modelFocusTextureSourceRect(%u)\n\n", id);
+      this->printErrorDialog(result, pErrorString);
+    #endif
   }
+
+  #ifdef LE_DEBUG
+    delete [] pErrorString;
+  #endif
 
   return result;
 }
@@ -3121,7 +6418,10 @@ int LEMoon::modelSetSize(uint32_t id, int w, int h)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetSize()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetSize(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3140,61 +6440,14 @@ double LEMoon::modelSetSize(uint32_t id, double percent)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetSize()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetSize(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
   return factor;
-}
-
-int LEMoon::modelAnimateTexture(uint32_t id, uint32_t idTexture, int idStart, int stepsTotal, uint32_t animationDuration)
-{
-  int result = LE_NO_ERROR;
-  LEModel * pElem = this->modelGet(id);
-
-  if(pElem != nullptr)
-  {
-    result = pElem->pModel->mdlAnimateTexture(idTexture, idStart, stepsTotal, animationDuration, this->timestep);
-
-    #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelAnimateTexture()\n\n");
-    #endif
-  }
-  else
-  {
-    #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelAnimateTexture()\n\n");
-    #endif
-
-    result = LE_MDL_NOEXIST;
-  }
-
-  return result;
-}
-
-int LEMoon::modelAnimateTextureRepeat(uint32_t id, uint32_t idTexture, int idStart, uint8_t direction, uint32_t animationDuration)
-{
-  int result = LE_NO_ERROR;
-  LEModel * pElem = this->modelGet(id);
-
-  if(pElem != nullptr)
-  {
-    result = pElem->pModel->mdlAnimateTextureRepeat(idTexture, idStart, direction, animationDuration, this->timestep);
-
-    #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelAnimateTextureRepeat()\n\n");
-    #endif
-  }
-  else
-  {
-    #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelAnimateTextureRepeat()\n\n");
-    #endif
-
-    result = LE_MDL_NOEXIST;
-  }
-
-  return result;
 }
 
 int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
@@ -3207,7 +6460,10 @@ int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
   if(zindex == 0)
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::modelSetZindex()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetZindex(%u, %u)\n\n", id, zindex);
+      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_INVALID_ZINDEX;
@@ -3241,7 +6497,10 @@ int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetZindex()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::modelSetZindex(%u)\n\n", id);
+        this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+        delete [] pErrorString;
       #endif
     
       result = LE_MDL_NOEXIST;
@@ -3261,13 +6520,19 @@ int LEMoon::modelSetTextureZindex(uint32_t id, uint32_t idTexture, uint32_t zind
     result = pElem->pModel->mdlSetTextureZindex(idTexture, zindex);
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelSetTextureZindex()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetTextureZindex(%u, %u, %u)\n\n", id, idTexture, zindex);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetTextureZindex()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetTextureZindex(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3286,13 +6551,19 @@ int LEMoon::modelSetTextureActive(uint32_t id, uint32_t idTexture, bool active)
     result = pElem->pModel->mdlSetTextureActive(idTexture, active);
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelSetTextureActive()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetTextureActive(%u, %u, %d)\n\n", id, idTexture, active);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetTextureActive()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetTextureActive(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3311,7 +6582,10 @@ int LEMoon::modelSetPosition(uint32_t id, double x, double y)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetPosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetPosition(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3330,13 +6604,19 @@ int LEMoon::modelAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direc
     result = pElem->pModel->mdlAddDirection(idDirection, direction);
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelAddDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelAddDirection(%u, %u, glm::vec2(%1.2f, %1.2f))\n\n", id, idDirection, direction.x, direction.y);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelAddDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelAddDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3355,13 +6635,19 @@ int LEMoon::modelMoveDirection(uint32_t id, uint32_t idDirection)
     result = pElem->pModel->mdlMoveDirection(idDirection, this->timestep);
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelMoveDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelMoveDirection(%u, %u)\n\n", id, idDirection);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelMoveDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelMoveDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3380,7 +6666,10 @@ int LEMoon::modelRotate(uint32_t id, double ndegree)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelRotate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelRotate(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3399,7 +6688,10 @@ int LEMoon::modelRotateOnce(uint32_t id, double ndegree)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelRotateOnce()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelRotateOnce(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3414,11 +6706,23 @@ int LEMoon::modelSetTextureAlpha(uint32_t id, uint32_t idTexture, uint8_t alpha)
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlSetTextureAlpha(idTexture, alpha);}
+  {
+    result = pElem->pModel->mdlSetTextureAlpha(idTexture, alpha);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetTextureAlpha(%u, %u, %u)\n\n", id, idTexture, alpha);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetTextureAlpha()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetTextureAlpha(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3433,11 +6737,23 @@ int LEMoon::modelFadeTexture(uint32_t id, uint32_t idTexture, double alphaPerSec
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlFadeTexture(idTexture, alphaPerSecond, this->timestep);}
+  {
+    result = pElem->pModel->mdlFadeTexture(idTexture, alphaPerSecond, this->timestep);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelFadeTexture(%u, %u, %1.2f)\n\n", id, idTexture, alphaPerSecond);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelFadeTexture()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelFadeTexture(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3456,13 +6772,19 @@ int LEMoon::modelRotateDir(uint32_t id, uint32_t idDirection, double degree)
     result = pElem->pModel->mdlRotateDir(idDirection, degree, this->timestep);
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::modelRotateDir()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelRotateDir(%u, %u, %1.2f)\n\n", id, idDirection, degree);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelRotateDir()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelRotateDir(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3483,7 +6805,10 @@ SDL_Point LEMoon::modelGetSize(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetSize()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetSize(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3502,7 +6827,10 @@ SDL_Point LEMoon::modelGetPosition(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetPosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetPosition(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3519,7 +6847,10 @@ glm::vec2 LEMoon::modelGetPositionD(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetPosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetPositionD(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3536,7 +6867,10 @@ double LEMoon::modelGetTextureAlpha(uint32_t id, uint32_t idTexture)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetTextureAlpha()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetTextureAlpha(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3553,7 +6887,10 @@ int LEMoon::modelSetSizeFactor(uint32_t id, double nsizeFactor)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetSizeFactor()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetSizeFactor(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3572,7 +6909,10 @@ double LEMoon::modelGetSizeFactor(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetSizeFactor()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetSizeFactor(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3585,11 +6925,23 @@ int LEMoon::modelCreateSurface(uint32_t id, uint32_t idTexture, const char * pFi
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlCreateSurface(idTexture, pFile);}
+  {
+    result = pElem->pModel->mdlCreateSurface(idTexture, pFile);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCreateSurface(%u, %u, %s)\n\n", id, idTexture, pFile);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelCreateSurface()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCreateSurface(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3604,11 +6956,23 @@ int LEMoon::modelDeleteSurface(uint32_t id, uint32_t idTexture)
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlDeleteSurface(idTexture);}
+  {
+    result = pElem->pModel->mdlDeleteSurface(idTexture);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelDeleteSurface(%u, %u)\n\n", id, idTexture);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelDeleteSurface()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelDeleteSurface(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3627,7 +6991,10 @@ SDL_Surface * LEMoon::modelGetSurface(uint32_t id, uint32_t idTexture)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetSurface()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetSurface(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3644,7 +7011,10 @@ Color LEMoon::modelGetPixelRGBA(uint32_t id, uint32_t idTexture, uint32_t x, uin
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetPixelRGBA()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetPixelRGBA(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3661,7 +7031,10 @@ glm::vec2 LEMoon::modelGetDirection(uint32_t id, uint32_t idDirection)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3678,7 +7051,10 @@ LECollBox_d LEMoon::modelGetFrameBox(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetFrameBox()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetFrameBox(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3695,7 +7071,10 @@ LECollBox_d LEMoon::modelGetCollisionBox(uint32_t id, uint32_t idCollRect)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetCollisionBox()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetCollisionBox(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3708,11 +7087,23 @@ int LEMoon::modelChangeDirection(uint32_t id, uint32_t idDirection, glm::vec2 di
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlChangeDirection(idDirection, dir);}
+  {
+    result = pElem->pModel->mdlChangeDirection(idDirection, dir);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelChangeDirection(%u, %u, glm::vec2(%1.2f, %1.2f))\n\n", id, idDirection, dir.x, dir.y);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelChangeDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelChangeDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3731,7 +7122,10 @@ int LEMoon::modelSetVisible(uint32_t id, bool visible)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetVisible()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetVisible(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3746,11 +7140,23 @@ int LEMoon::modelCreateClone(uint32_t id, uint32_t idClone)
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlCreateClone(idClone);}
+  {
+    result = pElem->pModel->mdlCreateClone(idClone);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCreateClone(%u, %u)\n\n", id, idClone);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelCreateClone()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCreateClone(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3765,11 +7171,23 @@ int LEMoon::modelSetClonePosition(uint32_t id, uint32_t idClone, glm::vec2 posit
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlSetClonePosition(idClone, position);}
+  {
+    result = pElem->pModel->mdlSetClonePosition(idClone, position);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetClonePosition(%u, %u, glm::vec2(%1.2f, %1.2f))\n\n", id, idClone, position.x, position.y);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetClonePosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetClonePosition(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3788,7 +7206,10 @@ int LEMoon::modelClearClones(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelClearClones()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelClearClones(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3803,11 +7224,23 @@ int LEMoon::modelSetCloneVisible(uint32_t id, uint32_t idClone, bool visible)
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlSetCloneVisible(idClone, visible);}
+  {
+    result = pElem->pModel->mdlSetCloneVisible(idClone, visible);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetCloneVisible(%u, %u, %d)\n\n", id, idClone, visible);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelSetCloneVisible()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelSetCloneVisible(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3822,11 +7255,23 @@ int LEMoon::modelAddCollisionRect(uint32_t id, uint32_t idCollRect, SDL_Rect col
   LEModel * pElem = this->modelGet(id);
 
   if(pElem != nullptr)
-    {result = pElem->pModel->mdlAddCollisionRect(idCollRect, collRect);}
+  {
+    result = pElem->pModel->mdlAddCollisionRect(idCollRect, collRect);
+
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelAddCollisionRect(%u, %u, {%d, %d, %d, %d})\n\n", id, idCollRect, collRect.x, collRect.y, collRect.w, collRect.h);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelAddCollisionRect()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelAddCollisionRect(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_MDL_NOEXIST;
@@ -3846,7 +7291,10 @@ bool LEMoon::modelCheckFrameBoxCollision(uint32_t idModel, uint32_t idForeignMod
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelCheckFrameBoxCollision()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCheckFrameBoxCollision(%u, %u)\n\n", idModel, idForeignModel);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3864,7 +7312,10 @@ bool LEMoon::modelCheckCollision(uint32_t idModel, uint32_t idForeignModel)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelCheckCollision()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelCheckCollision(%u, %u)\n\n", idModel, idForeignModel);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3881,7 +7332,10 @@ uint32_t LEMoon::modelGetAmountOfCollisionBoxes(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetAmountOfCollisionBoxes()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetAmountOfCollisionBoxes(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3898,7 +7352,10 @@ uint32_t LEMoon::modelGetAmountOfTextureSourceRectangles(uint32_t id, uint32_t i
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_MDL_NOEXIST, "LEMoon::modelGetAmountOfTextureSourceRectangles()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::modelGetAmountOfTextureSourceRectangles(%u)\n\n", id);
+      this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -3946,6 +7403,10 @@ bool LEMoon::modelGetVisible(uint32_t id)
 
 int LEMoon::timeEventCreate(uint32_t id, uint32_t ntimestamp)
 {
+  #ifdef LE_MUTEX
+    this->mtxTimeEvent.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LETimeEvent * pNew = this->timeEventGet(id);
 
@@ -3970,22 +7431,30 @@ int LEMoon::timeEventCreate(uint32_t id, uint32_t ntimestamp)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TIMEEVENT_EXIST, "LEMoon::timeEventCreate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::timeEventCreate(%u)\n\n", id);
+      this->printErrorDialog(LE_TIMEEVENT_EXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TIMEEVENT_EXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxTimeEvent.mtxAdd.unlock();
+  #endif
 
   return result;
 }
 
 int LEMoon::timeEventDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxTimeEvent.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LETimeEvent * pElem = this->timeEventGet(id);
-  #ifdef LE_DEBUG
-  char * pErrorString = new char[256 + 1];
-  #endif
 
   if(pElem != nullptr)
   {
@@ -4002,7 +7471,8 @@ int LEMoon::timeEventDelete(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      sprintf(pErrorString, "LEMoon::timeEventDelete(%d)\n\n", id);
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::timeEventDelete(%u)\n\n", id);
       this->printErrorDialog(LE_TIMEEVENT_NOEXIST, pErrorString);
       delete [] pErrorString;
     #endif
@@ -4010,15 +7480,16 @@ int LEMoon::timeEventDelete(uint32_t id)
     result = LE_TIMEEVENT_NOEXIST;
   }
 
+  #ifdef LE_MUTEX
+    this->mtxTimeEvent.mtxDel.unlock();
+  #endif
+
   return result;
 }
 
 bool LEMoon::timeEventReached(uint32_t id)
 {
   LETimeEvent * pElem = this->timeEventGet(id);
-  #ifdef LE_DEBUG
-  char * pErrorString = new char[256 + 1];
-  #endif
 
   if(pElem != nullptr)
   {
@@ -4028,7 +7499,8 @@ bool LEMoon::timeEventReached(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      sprintf(pErrorString, "LEMoon::timeEventReached(%d)\n\n", id);
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::timeEventReached(%u)\n\n", id);
       this->printErrorDialog(LE_TIMEEVENT_NOEXIST, pErrorString);
       delete [] pErrorString;
     #endif
@@ -4041,9 +7513,6 @@ int LEMoon::timeEventReset(uint32_t id, uint32_t ntimestamp)
 {
   int result = LE_NO_ERROR;
   LETimeEvent * pElem = this->timeEventGet(id);
-  #ifdef LE_DEBUG
-  char * pErrorString = new char[256 + 1];
-  #endif
 
   if(pElem != nullptr)
   {
@@ -4053,7 +7522,8 @@ int LEMoon::timeEventReset(uint32_t id, uint32_t ntimestamp)
   else
   {
     #ifdef LE_DEBUG
-      sprintf(pErrorString, "LEMoon::timeEventReset(%d)\n\n", id);
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::timeEventReset(%u)\n\n", id);
       this->printErrorDialog(LE_TIMEEVENT_NOEXIST, pErrorString);
       delete [] pErrorString;
     #endif
@@ -4073,7 +7543,13 @@ int LEMoon::timeEventUpdate(uint32_t id, uint32_t milliseconds)
     {pElem->timestamp += milliseconds;}
   else
   {
-    this->printErrorDialog(LE_TIMEEVENT_NOEXIST, "LEMoon::timeEventUpdate()\n\n");
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::timeEventUpdate(%u)\n\n", id);
+      this->printErrorDialog(LE_TIMEEVENT_NOEXIST, pErrorString);
+      delete [] pErrorString;
+    #endif
+
     result = LE_TIMEEVENT_NOEXIST;
   }
 
@@ -4117,6 +7593,10 @@ uint32_t LEMoon::timeEventGetStamp(uint32_t id)
 
 int LEMoon::pointCreate(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxPoint.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -4147,17 +7627,28 @@ int LEMoon::pointCreate(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_EXIST, "LEMoon::pointCreate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointCreate(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_EXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_EXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxPoint.mtxAdd.unlock();
+  #endif
 
   return result;
 }
 
 int LEMoon::pointDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxPoint.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
   LinkedVec2 * pCurrentDirection = nullptr;
@@ -4196,11 +7687,18 @@ int LEMoon::pointDelete(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointDelete()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointDelete(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxPoint.mtxDel.unlock();
+  #endif
 
   return result;
 }
@@ -4221,7 +7719,10 @@ int LEMoon::pointSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t 
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointSetColor()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointSetColor(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
@@ -4247,7 +7748,10 @@ int LEMoon::pointSetPosition(uint32_t id, int x, int y)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointSetPosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointSetPosition(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
@@ -4266,7 +7770,10 @@ Color LEMoon::pointGetColor(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointGetColor()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointGetColor(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -4293,7 +7800,10 @@ int LEMoon::pointFade(uint32_t id, double alphaPerSecond)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointFade()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointFade(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
@@ -4316,7 +7826,10 @@ int LEMoon::pointRotate(uint32_t id, double degreePerSecond, SDL_Point rotationP
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointRotate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointRotate(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
@@ -4335,7 +7848,10 @@ int LEMoon::pointSetVisible(uint32_t id, bool visible)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointSetVisible()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointSetVisible(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
@@ -4379,7 +7895,10 @@ int LEMoon::pointAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direc
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_DIRECTION_EXIST, "LEMoon::pointAddDirection()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::pointAddDirection(%u, %u, glm::vec2(%1.2f, %1.2f))\n\n", id, idDirection, direction.x, direction.y);
+        this->printErrorDialog(LE_DIRECTION_EXIST, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_DIRECTION_EXIST;
@@ -4388,7 +7907,10 @@ int LEMoon::pointAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direc
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointAddDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointAddDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
@@ -4417,7 +7939,10 @@ int LEMoon::pointMoveDirection(uint32_t id, uint32_t idDirection)
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_DIRECTION_NOEXIST, "LEMoon::pointMoveDirection()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::pointMoveDirection(%u, %u)\n\n", id, idDirection);
+        this->printErrorDialog(LE_DIRECTION_NOEXIST, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_DIRECTION_NOEXIST;
@@ -4426,7 +7951,10 @@ int LEMoon::pointMoveDirection(uint32_t id, uint32_t idDirection)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointMoveDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointMoveDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_POINT_NOEXIST;
@@ -4448,7 +7976,10 @@ SDL_Point LEMoon::pointGetPosition(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointGetPosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointGetPosition(%u)\n\n", id);
+      this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -4465,7 +7996,10 @@ int LEMoon::pointSetZindex(uint32_t id, uint32_t zindex)
   if(zindex == 0)
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::modelSetZindex()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::pointSetZindex(%u, %u)\n\n", id, zindex);
+      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_INVALID_ZINDEX;
@@ -4499,7 +8033,10 @@ int LEMoon::pointSetZindex(uint32_t id, uint32_t zindex)
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_POINT_NOEXIST, "LEMoon::pointSetZindex()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::pointSetZindex(%u)\n\n", id);
+        this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
+        delete [] pErrorString;
       #endif
     
       result = LE_POINT_NOEXIST;
@@ -4517,6 +8054,10 @@ int LEMoon::pointSetZindex(uint32_t id, uint32_t zindex)
 
 int LEMoon::soundCreate(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxSound.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LESound * pNew = this->soundGet(id);
 
@@ -4541,17 +8082,28 @@ int LEMoon::soundCreate(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_SOUND_EXIST, "LEMoon::soundCreate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::soundCreate(%u)\n\n", id);
+      this->printErrorDialog(LE_SOUND_EXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_SOUND_EXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxSound.mtxAdd.unlock();
+  #endif
 
   return result;
 }
 
 int LEMoon::soundDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxSound.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
 
@@ -4574,11 +8126,18 @@ int LEMoon::soundDelete(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_SOUND_NOEXIST, "LEMoon::soundDelete()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::soundDelete(%u)\n\n", id);
+      this->printErrorDialog(LE_SOUND_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_SOUND_NOEXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxSound.mtxDel.unlock();
+  #endif
 
   return result;
 }
@@ -4587,9 +8146,6 @@ int LEMoon::soundLoadWAV(uint32_t id, const char * pFile)
 {
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
-  #ifdef LE_DEBUG
-    char * pErrorString = new char[256 + 1];
-  #endif
 
   if(pSound != nullptr)
   {
@@ -4600,7 +8156,8 @@ int LEMoon::soundLoadWAV(uint32_t id, const char * pFile)
       if(pSound->pSample == nullptr)
       {
         #ifdef LE_DEBUG
-          sprintf(pErrorString, "LEMoon::soundLoadWAV()\n\nPath: %s\n\n", pFile);
+          char * pErrorString = new char[256 + 1];
+          sprintf(pErrorString, "LEMoon::soundLoadWAV(%u, %s)\n\n", id, pFile);
           this->printErrorDialog(LE_LOAD_WAV, pErrorString);
           delete [] pErrorString;
         #endif
@@ -4612,7 +8169,10 @@ int LEMoon::soundLoadWAV(uint32_t id, const char * pFile)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_SOUND_NOEXIST, "LEMoon::soundLoadWAV()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::soundLoadWAV(%u)\n\n", id);
+      this->printErrorDialog(LE_SOUND_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_SOUND_NOEXIST;
@@ -4638,7 +8198,10 @@ int LEMoon::soundPlay(uint32_t id, int loops)
       if(Mix_PlayChannel(-1, pSound->pSample, loops) == -1)
       {
         #ifdef LE_DEBUG
-          this->printErrorDialog(LE_PLAY_CHANNEL, "LEMoon::soundPlay()\n\n");
+          char * pErrorString = new char[256 + 1];
+          sprintf(pErrorString, "LEMoon::soundPlay(%u, %d)\n\n", id, loops);
+          this->printErrorDialog(LE_PLAY_CHANNEL, pErrorString);
+          delete [] pErrorString;
         #endif
 
         result = LE_PLAY_CHANNEL;
@@ -4648,7 +8211,10 @@ int LEMoon::soundPlay(uint32_t id, int loops)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_SOUND_NOEXIST, "LEMoon::soundPlay()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::soundPlay(%u)\n\n", id);
+      this->printErrorDialog(LE_SOUND_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_SOUND_NOEXIST;
@@ -4667,7 +8233,10 @@ int LEMoon::soundLock(uint32_t id, bool lock)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_SOUND_NOEXIST, "LEMoon::soundLock()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::soundLock(%d)\n\n", id);
+      this->printErrorDialog(LE_SOUND_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_SOUND_NOEXIST;
@@ -4686,7 +8255,10 @@ int LEMoon::soundFadeIn(uint32_t id, int ms)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_SOUND_NOEXIST, "LEMoon::soundFadeIn()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::soundFadeIn(%u)\n\n", id);
+      this->printErrorDialog(LE_SOUND_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_SOUND_NOEXIST;
@@ -4713,11 +8285,12 @@ void LEMoon::soundPause()
 
 int LEMoon::textCreate(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxText.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEText * pNew = this->textGet(id);
-  #ifdef LE_DEBUG
-    char * pErrorString = new char[256 + 1];
-  #endif
 
   if(pNew == nullptr)
   {
@@ -4752,7 +8325,8 @@ int LEMoon::textCreate(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      sprintf(pErrorString, "LEMoon::textCreate(%d)\n\n", id);
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textCreate(%u)\n\n", id);
       this->printErrorDialog(LE_TEXT_EXIST, pErrorString);
       delete [] pErrorString;
     #endif
@@ -4760,11 +8334,19 @@ int LEMoon::textCreate(uint32_t id)
     result = LE_TEXT_EXIST;
   }
 
+  #ifdef LE_MUTEX
+    this->mtxText.mtxAdd.unlock();
+  #endif
+
   return result;
 }
 
 int LEMoon::textDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxText.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
   LinkedVec2 * pCurrentDirection = nullptr;
@@ -4838,11 +8420,18 @@ int LEMoon::textDelete(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textDelete()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textDelete(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxText.mtxDel.unlock();
+  #endif
 
   return result;
 }
@@ -4873,7 +8462,10 @@ int LEMoon::textAddLetter(uint32_t id, uint8_t letter)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textAddLetter()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textAddLetter(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;	
@@ -4918,7 +8510,10 @@ int LEMoon::textSubmit(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSubmit()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textSubmit(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;	
@@ -4937,7 +8532,10 @@ int LEMoon::textSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetColor()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textSetColor(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;	
@@ -4956,7 +8554,10 @@ int LEMoon::textSetVisible(uint32_t id, bool visible)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetVisible()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textSetVisible(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;	
@@ -4975,7 +8576,10 @@ int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
   if(zindex == 0)
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::textSetZindex()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textSetZindex(%u, %u)\n\n", id, zindex);
+      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_INVALID_ZINDEX;
@@ -5014,7 +8618,10 @@ int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetZindex()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textSetZindex(%u)\n\n", id);
+        this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+        delete [] pErrorString;
       #endif
     
       result = LE_TEXT_NOEXIST;	
@@ -5037,7 +8644,10 @@ int LEMoon::textRelateFont(uint32_t id, uint32_t idFont)
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_FONT_NOEXIST, "LEMoon::textRelateFont()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textRelateFont(%u, %u)\n\n", id, idFont);
+        this->printErrorDialog(LE_FONT_NOEXIST, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_FONT_NOEXIST;
@@ -5046,7 +8656,10 @@ int LEMoon::textRelateFont(uint32_t id, uint32_t idFont)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textRelateFont()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textRelateFont(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5088,7 +8701,10 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
               if(SDL_SetTextureBlendMode(pText->pTexture, SDL_BLENDMODE_BLEND))
               {
                 #ifdef LE_DEBUG
-                  this->printErrorDialog(LE_SDL_BLENDMODE, "LEMoon::textPrepareForDrawing()\n\n");
+                  char * pErrorString = new char[256 + 1];
+                  sprintf(pErrorString, "LEMoon::textPrepareForDrawing(%u)\n\n", id);
+                  this->printErrorDialog(LE_SDL_BLENDMODE, pErrorString);
+                  delete [] pErrorString;
                 #endif
 
                 result = LE_SDL_BLENDMODE;
@@ -5097,7 +8713,10 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
             else
             {
               #ifdef LE_DEBUG
-                this->printErrorDialog(LE_SDL_TEXTURE_LOAD, "LEMoon::textPrepareForDrawing()\n\n");
+                char * pErrorString = new char[256 + 1];
+                sprintf(pErrorString, "LEMoon::textPrepareForDrawing(%u)\n\n", id);
+                this->printErrorDialog(LE_SDL_TEXTURE_LOAD, pErrorString);
+                delete [] pErrorString;
               #endif
 
               result = LE_SDL_TEXTURE_LOAD;
@@ -5106,7 +8725,10 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
           else
           {
             #ifdef LE_DEBUG
-              this->printErrorDialog(LE_SDL_HINT, "LEMoon::textPrepareForDrawing()\n\n");
+              char * pErrorString = new char[256 + 1];
+              sprintf(pErrorString, "LEMoon::textPrepareForDrawing(%u)\n\n", id);
+              this->printErrorDialog(LE_SDL_HINT, pErrorString);
+              delete [] pErrorString;
             #endif
 
             result = LE_SDL_HINT;
@@ -5115,7 +8737,10 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
         else
         {
           #ifdef LE_DEBUG
-            this->printErrorDialog(LE_RENDER_TEXT_BLENDED, "LEMoon::textPrepareForDrawing()\n\n");
+            char * pErrorString = new char[256 + 1];
+            sprintf(pErrorString, "LEMoon::textPrepareForDrawing(%u)\n\n", id);
+            this->printErrorDialog(LE_RENDER_TEXT_BLENDED, pErrorString);
+            delete [] pErrorString;
           #endif
 
           result = LE_RENDER_TEXT_BLENDED;
@@ -5124,7 +8749,10 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
       else
       {
         #ifdef LE_DEBUG
-          this->printErrorDialog(LE_TEXT_RELATE_FONT, "LEMoon::textPrepareForDrawing()\n\n");
+          char * pErrorString = new char[256 + 1];
+          sprintf(pErrorString, "LEMoon::textPrepareForDrawing(%u)\n\n", id);
+          this->printErrorDialog(LE_TEXT_RELATE_FONT, pErrorString);
+          delete [] pErrorString;
         #endif
 
         result = LE_TEXT_RELATE_FONT;
@@ -5133,7 +8761,10 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_TEXT_NOSUBMIT, "LEMoon::textPrepareForDrawing()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textPrepareForDrawing(%u)\n\n", id);
+        this->printErrorDialog(LE_TEXT_NOSUBMIT, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_TEXT_NOSUBMIT;
@@ -5142,7 +8773,10 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textPrepareForDrawing()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textPrepareForDrawing(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5166,7 +8800,10 @@ int LEMoon::textSetPosition(uint32_t id, int x, int y)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetPosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textSetPosition(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5206,7 +8843,10 @@ int LEMoon::textAddString(uint32_t id, const char * pString)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textAddString()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textAddString(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5227,7 +8867,10 @@ int LEMoon::textSetAlpha(uint32_t id, uint8_t alpha)
     if(SDL_SetTextureAlphaMod(pText->pTexture, (uint8_t) pText->alpha))
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_ALPHA_MOD, "LEMoon::textSetAlpha()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textSetAlpha(%u, %u)\n\n", id, alpha);
+        this->printErrorDialog(LE_ALPHA_MOD, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_ALPHA_MOD;
@@ -5236,7 +8879,10 @@ int LEMoon::textSetAlpha(uint32_t id, uint8_t alpha)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textSetAlpha()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textSetAlpha(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5263,7 +8909,10 @@ int LEMoon::textFade(uint32_t id, double alphaPerSecond)
     if(SDL_SetTextureAlphaMod(pText->pTexture, (uint8_t) pText->alpha))
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_ALPHA_MOD, "LEMoon::textFade()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textFade(%u, %1.2f)\n\n", id, alphaPerSecond);
+        this->printErrorDialog(LE_ALPHA_MOD, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_ALPHA_MOD;
@@ -5272,7 +8921,10 @@ int LEMoon::textFade(uint32_t id, double alphaPerSecond)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textFade()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textFade(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5315,7 +8967,10 @@ int LEMoon::textClear(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textClear()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textClear(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5334,7 +8989,10 @@ double LEMoon::textGetAlpha(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textGetAlpha()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textGetAlpha(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -5372,7 +9030,10 @@ int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direct
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_DIRECTION_EXIST, "LEMoon::textAddDirection()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textAddDirection(%u, %u, glm::vec2(%1.2f, %1.2f))\n\n", id, idDirection, direction.x, direction.y);
+        this->printErrorDialog(LE_DIRECTION_EXIST, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_DIRECTION_EXIST;
@@ -5381,7 +9042,10 @@ int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direct
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textAddDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textAddDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5410,7 +9074,10 @@ int LEMoon::textMoveDirection(uint32_t id, uint32_t idDirection)
     else
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_DIRECTION_NOEXIST, "LEMoon::textMoveDirection()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textMoveDirection(%u, %u)\n\n", id, idDirection);
+        this->printErrorDialog(LE_DIRECTION_NOEXIST, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_DIRECTION_NOEXIST;
@@ -5419,7 +9086,10 @@ int LEMoon::textMoveDirection(uint32_t id, uint32_t idDirection)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textMoveDirection()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textMoveDirection(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_TEXT_NOEXIST;
@@ -5441,7 +9111,10 @@ SDL_Point LEMoon::textGetPosition(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textGetPosition()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textGetPosition(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -5461,7 +9134,10 @@ SDL_Point LEMoon::textGetSize(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_TEXT_NOEXIST, "LEMoon::textGetSize()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::textGetSize(%u)\n\n", id);
+      this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -5487,6 +9163,10 @@ bool LEMoon::textGetVisible(uint32_t id)
 
 int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
 {
+  #ifdef LE_MUTEX
+    this->mtxFont.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEFont * pNew = this->fontGet(id);
 
@@ -5510,7 +9190,10 @@ int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
     if(pNew->pFont == nullptr)
     {
       #ifdef LE_DEBUG
-        this->printErrorDialog(LE_OPEN_FONT, "LEMoon::fontCreateTTF()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::fontCreateTTF(%u, %s, %d)\n\n", id, pFile, fontSize);
+        this->printErrorDialog(LE_OPEN_FONT, pErrorString);
+        delete [] pErrorString;
       #endif
 
       result = LE_OPEN_FONT;
@@ -5519,17 +9202,28 @@ int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_FONT_EXIST, "LEMoon::fontCreateTTF()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::fontCreateTTF(%u)\n\n", id);
+      this->printErrorDialog(LE_FONT_EXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_FONT_EXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxFont.mtxAdd.unlock();
+  #endif
 
   return result;
 }
 
 int LEMoon::fontDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxFont.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEFont * pFont = this->fontGet(id);
 
@@ -5552,11 +9246,18 @@ int LEMoon::fontDelete(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_FONT_NOEXIST, "LEMoon::fontDelete()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::fontDelete(%u)\n\n", id);
+      this->printErrorDialog(LE_FONT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_FONT_NOEXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxFont.mtxDel.unlock();
+  #endif
 
   return result;
 }
@@ -5574,7 +9275,10 @@ int LEMoon::fontSetStyle(uint32_t id, int style)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_FONT_NOEXIST, "LEMoon::fontSetStyle()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::fontSetStyle(%u)\n\n", id);
+      this->printErrorDialog(LE_FONT_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_FONT_NOEXIST;
@@ -5591,6 +9295,10 @@ int LEMoon::fontSetStyle(uint32_t id, int style)
 
 int LEMoon::lineCreate(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxLine.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LELine * pNew = this->lineGet(id);
 
@@ -5621,15 +9329,26 @@ int LEMoon::lineCreate(uint32_t id)
     result = LE_LINE_EXIST;
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::lineCreate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::lineCreate(%u)\n\n", id);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
+
+  #ifdef LE_MUTEX
+    this->mtxLine.mtxAdd.unlock();
+  #endif
 
   return result;
 }
 
 int LEMoon::lineDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxLine.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LELine * pLine = this->lineGet(id);
 
@@ -5650,9 +9369,16 @@ int LEMoon::lineDelete(uint32_t id)
     result = LE_LINE_NOEXIST;
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::lineDelete()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::lineDelete(%u)\n\n", id);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
+
+  #ifdef LE_MUTEX
+    this->mtxLine.mtxDel.unlock();
+  #endif
 
   return result;
 }
@@ -5674,7 +9400,10 @@ int LEMoon::lineSet(uint32_t id, int x1, int y1, int x2, int y2)
     result = LE_LINE_NOEXIST;
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::lineSet()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::lineSet(%u)\n\n", id);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -5698,7 +9427,10 @@ int LEMoon::lineSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a
     result = LE_LINE_NOEXIST;
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::lineSetColor()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::lineSetColor(%u)\n\n", id);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -5726,7 +9458,10 @@ int LEMoon::lineSetZindex(uint32_t id, uint32_t zindex)
   if(zindex == 0)
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_INVALID_ZINDEX, "LEMoon::lineSetZindex()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::lineSetZindex(%u, %u)\n\n", id, zindex);
+      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_INVALID_ZINDEX;
@@ -5762,7 +9497,10 @@ int LEMoon::lineSetZindex(uint32_t id, uint32_t zindex)
       result = LE_LINE_NOEXIST;
     
       #ifdef LE_DEBUG
-        this->printErrorDialog(result, "LEMoon::lineSetZindex()\n\n");
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::lineSetZindex(%u)\n\n", id);
+        this->printErrorDialog(result, pErrorString);
+        delete [] pErrorString;
       #endif
     }
   }
@@ -5778,6 +9516,10 @@ int LEMoon::lineSetZindex(uint32_t id, uint32_t zindex)
 
 int LEMoon::videoCreate(uint32_t id, const char * pFile)
 {
+  #ifdef LE_MUTEX
+    this->mtxVideo.mtxAdd.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEVideo * pVideo = this->videoGet(id);
 
@@ -5804,9 +9546,16 @@ int LEMoon::videoCreate(uint32_t id, const char * pFile)
     result = LE_VIDEO_EXIST;
 
     #ifdef LE_DEBUG
-      this->printErrorDialog(result, "LEMoon::videoCreate()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::videoCreate(%u)\n\n", id);
+      this->printErrorDialog(result, pErrorString);
+      delete [] pErrorString;
     #endif
   }
+
+  #ifdef LE_MUTEX
+    this->mtxVideo.mtxAdd.unlock();
+  #endif
 
   return result;
 }
@@ -5825,7 +9574,10 @@ bool LEMoon::videoPlay(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_VIDEO_NOEXIST, "LEMoon::videoPlay()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::videoPlay(%u)\n\n", id);
+      this->printErrorDialog(LE_VIDEO_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
   }
 
@@ -5834,6 +9586,10 @@ bool LEMoon::videoPlay(uint32_t id)
 
 int LEMoon::videoDelete(uint32_t id)
 {
+  #ifdef LE_MUTEX
+    this->mtxVideo.mtxDel.lock();
+  #endif
+
   int result = LE_NO_ERROR;
   LEVideo * pVideo = this->videoGet(id);
 
@@ -5854,11 +9610,18 @@ int LEMoon::videoDelete(uint32_t id)
   else
   {
     #ifdef LE_DEBUG
-      this->printErrorDialog(LE_VIDEO_NOEXIST, "LEMoon::videoDelete()\n\n");
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::videoDelete(%u)\n\n", id);
+      this->printErrorDialog(LE_VIDEO_NOEXIST, pErrorString);
+      delete [] pErrorString;
     #endif
 
     result = LE_VIDEO_NOEXIST;
   }
+
+  #ifdef LE_MUTEX
+    this->mtxVideo.mtxDel.unlock();
+  #endif
 
   return result;
 }
