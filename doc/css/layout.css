@@ -304,6 +304,11 @@ b.identifier
   color:                            #6269c9;
 }
 
+b.justAdded
+{
+  color:                            #99079b;
+}
+
 a.underline
 {
   text-decoration:                  underline;
