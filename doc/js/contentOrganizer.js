@@ -28,8 +28,14 @@ function loadSite()
     {loadDiv('fCreateDiv');}
   if(hashString == 'fDelete')
     {loadDiv('fDeleteDiv');}
+  if(hashString == 'fPrintBufferList')
+    {loadDiv('fPrintBufferListDiv');}
+  if(hashString == 'fPrintList')
+    {loadDiv('fPrintListDiv');}
   if(hashString == 'fSetStyle')
     {loadDiv('fSetStyleDiv');}
+  if(hashString == 'fUsingThread')
+    {loadDiv('fUsingThreadDiv');}
 
   //////////////////////////////////
   // GENERAL
