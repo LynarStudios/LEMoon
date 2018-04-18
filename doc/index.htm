@@ -6,7 +6,7 @@
   <meta name="author" content="Patrick-Christopher Mattulat">
   <meta name="description" content="Lynar Moon Engine is a 2D game engine based on SDL2 and its companion libraries.">
   <meta name="keywords" content="2d, game engine, engine, game, games, lynar, moon, lynar moon, le, lynar moon engine, sdl2, sdl, simple directmedia layer">
-  <meta name="date" content="2018-02-06T11:14:00+02:00">
+  <meta name="date" content="2018-04-18T11:14:00+02:00">
   <!-- Robots -->
   <meta name="robots" content="index, follow">
   <!-- Settings -->
@@ -86,7 +86,7 @@
   <div id="navDiv" style="display: none;">
     <h1>Welcome</h1>
     Welcome to the <b class="identifier">Lynar Moon Engine</b> website. It's an open source game engine for 2D game development based on <b class="identifier">SDL2</b>. You can find a detailed documentation below. If you spotted any errors you can either contribute on <b class="identifier">gitHub</b> or send a message to the webmaster of this page.
-    <h2 style=" font-size: 1.5em;">Documentation v1.1</h2>
+    <h2 style=" font-size: 1.5em;">Documentation v1.3.1</h2>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#font">Font</a></p></div>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#general">General</a></p></div>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#line">Line</a></p></div>
@@ -126,13 +126,16 @@
   -->
 
   <div id="fontDiv" style="display: none;">
-    <h1>Font (3)</h1>
+    <h1>Font (6)</h1>
     &laquo; <a href="#index" class="normalNav">index</a>
     <br>
     <br>
     <a class="normalNavBlock" href="#fCreate">fontCreateTTF()</a>
     <a class="normalNavBlock" href="#fDelete">fontDelete()</a>
+    <a class="normalNavBlock" href="#fPrintBufferList"><b class="justAdded">NEW:</b> fontPrintBufferList()</a>
+    <a class="normalNavBlock" href="#fPrintList"><b class="justAdded">NEW:</b> fontPrintList()</a>
     <a class="normalNavBlock" href="#fSetStyle">fontSetStyle()</a>
+    <a class="normalNavBlock" href="#fUsingThread"><b class="justAdded">NEW:</b> fontUsingThread()</a>
   </div>
 
   <div id="fCreateDiv" style="display: none;">
@@ -147,6 +150,9 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
     &laquo; <a href="#index" class="normalNav">index</a>
@@ -162,6 +168,33 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#font" class="normalNav">Font</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="fPrintBufferListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> fontPrintBufferList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the font buffer list to the console. This doubly linked list contains all recently added fonts, which will end up in the original font list after <b class="identifier">endFrame()</b> function have been called. If the list is empty nothing will be printed to the console.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#font" class="normalNav">Font</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="fPrintListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> fontPrintList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the original font list to the console. This doubly linked list contains all fonts, which have been created before. If the list is empty nothing will be printed to the console. This list will only contain any elements after <b class="identifier">fontCreateTTF()</b> and <b class="identifier">endFrame()</b> have been called before.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
     &laquo; <a href="#index" class="normalNav">index</a>
@@ -178,6 +211,25 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#font" class="normalNav">Font</a>
+    &laquo; <a href="#index" class="normalNav">index</a>
+  </div>
+
+  <div id="fUsingThreadDiv" style="display: none;">
+    <h1><b class="datatype">void</b> fontUsingThread(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>Use this function if you want to use any font function in one or more threads. This will indicate that changes can be made to a specific font in all threads you are running. You only have to call this function once before you start running threads and again after you finished running threads.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> if you start running threads or set this flag to <b class="constant">LE_FALSE</b> after you finished running threads.</li>
+    </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
     &laquo; <a href="#index" class="normalNav">index</a>
@@ -197,11 +249,11 @@
     <br>
     <br>
     <a class="normalNavBlock" href="#gBeginFrame">beginFrame()</a>
-    <a class="normalNavBlock" href="#gConvertResHeight">NEW: convertResHeight()</a>
-    <a class="normalNavBlock" href="#gConvertResWidth">NEW: convertResWidth()</a>
+    <a class="normalNavBlock" href="#gConvertResHeight">convertResHeight()</a>
+    <a class="normalNavBlock" href="#gConvertResWidth">convertResWidth()</a>
     <a class="normalNavBlock" href="#gDelay">delay()</a>
     <a class="normalNavBlock" href="#gDrawFrame">drawFrame()</a>
-    <a class="normalNavBlock" href="#gEndFrame">endFrame()</a>
+    <a class="normalNavBlock" href="#gEndFrame"><b class="justAdded">NEW:</b> endFrame()</a>
     <a class="normalNavBlock" href="#gEngineInitialized">engineInitialized()</a>
     <a class="normalNavBlock" href="#gGetBackgroundColor">getBackgroundColor()</a>
     <a class="normalNavBlock" href="#gGetFPS">getFPS()</a>
@@ -210,10 +262,10 @@
     <a class="normalNavBlock" href="#gGetScreenWidth">getScreenWidth()</a>
     <a class="normalNavBlock" href="#gGetTimestamp">getTimestamp()</a>
     <a class="normalNavBlock" href="#gGetTimestep">getTimestep()</a>
-    <a class="normalNavBlock" href="#gInit">NEW: init()</a>
-    <a class="normalNavBlock" href="#gInitImage">NEW: initImage()</a>
-    <a class="normalNavBlock" href="#gInitSound">NEW: initSound()</a>
-    <a class="normalNavBlock" href="#gInitTTF">NEW: initTTF()</a>
+    <a class="normalNavBlock" href="#gInit">init()</a>
+    <a class="normalNavBlock" href="#gInitImage">initImage()</a>
+    <a class="normalNavBlock" href="#gInitSound">initSound()</a>
+    <a class="normalNavBlock" href="#gInitTTF">initTTF()</a>
     <a class="normalNavBlock" href="#gKeyEvent">keyEvent()</a>
     <a class="normalNavBlock" href="#gMessageBox">messageBox()</a>
     <a class="normalNavBlock" href="#gMkpath">mkpath()</a>
@@ -296,9 +348,11 @@
   </div>
 
   <div id="gEndFrameDiv" style="display: none;">
-    <h1><b class="datatype">void</b> endFrame()</h1>
+    <h1><b class="datatype">int</b> endFrame()</h1>
     <h2>Description</h2>
-    <p>This function should be called at the end of the main loop. It updates some specific events and calculates the current frame duration.</p>
+    <p>This function should be called at the end of the main loop. It updates some specific events, calculates the current frame duration and merges recently added elements with the original lists.</p>
+    <h2>return value</h2>
+    <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
     &laquo; <a href="#index" class="normalNav">index</a>
@@ -455,8 +509,6 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns <b class="identifier">true</b> if the specific key was pressed or released or <b class="identifier">false</b> in case it wasn't.</p>
-    <h2>Note</h2>
-    <p>Not all keys do work yet. This ability will be available in future versions of the engine.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
     &laquo; <a href="#index" class="normalNav">index</a>
@@ -804,8 +856,8 @@
     <a class="normalNavBlock" href="#mGetSizeFactor">modelGetSizeFactor()</a>
     <a class="normalNavBlock" href="#mGetSurface">modelGetSurface()</a>
     <a class="normalNavBlock" href="#mGetTextureAlpha">modelGetTextureAlpha()</a>
-    <a class="normalNavBlock" href="#mGetVisible">NEW: modelGetVisible()</a>
-    <a class="normalNavBlock" href="#mGetZindex">NEW: modelGetZindex()</a>
+    <a class="normalNavBlock" href="#mGetVisible">modelGetVisible()</a>
+    <a class="normalNavBlock" href="#mGetZindex">modelGetZindex()</a>
     <a class="normalNavBlock" href="#mMoveDirection">modelMoveDirection()</a>
     <a class="normalNavBlock" href="#mRotate">modelRotate()</a>
     <a class="normalNavBlock" href="#mRotateDir">modelRotateDir()</a>
@@ -820,7 +872,7 @@
     <a class="normalNavBlock" href="#mSetTextureZindex">modelSetTextureZindex()</a>
     <a class="normalNavBlock" href="#mSetVisible">modelSetVisible()</a>
     <a class="normalNavBlock" href="#mSetZindex">modelSetZindex()</a>
-    <a class="normalNavBlock" href="#mTextureExists">NEW: modelTextureExists()</a>
+    <a class="normalNavBlock" href="#mTextureExists">modelTextureExists()</a>
   </div>
 
   <div id="mAddCollisionRectDiv" style="display: none;">
@@ -1573,7 +1625,7 @@
     <a class="normalNavBlock" href="#pSetColor">pointSetColor()</a>
     <a class="normalNavBlock" href="#pSetPosition">pointSetPosition()</a>
     <a class="normalNavBlock" href="#pSetVisible">pointSetVisible()</a>
-    <a class="normalNavBlock" href="#pSetZindex">NEW: pointSetZindex()</a>
+    <a class="normalNavBlock" href="#pSetZindex">pointSetZindex()</a>
   </div>
 
   <div id="pAddDirectionDiv" style="display: none;">
