@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            18.04.2018
+  updated:            21.04.2018
 */
 
 #include "../include/le_moon.h"
@@ -282,7 +282,7 @@ int LEMoon::drawWithZindex()
   if(this->pTextHead != nullptr)
   {
     pText = this->pTextHead->pRight;
-    zindex = mathMin(zindex, pModel->zindex);
+    zindex = mathMin(zindex, pText->zindex);
   }
 
   if(this->pLineHead != nullptr)

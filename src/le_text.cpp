@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            12.04.2018
+  updated:            21.04.2018
 
   NOTES:              bufferHead muss beim mergen auch komplett zerlegt und auf nullptr gesetzt werden, pLast muss auch auf nullptr gesetzt werden
 */
@@ -454,6 +454,9 @@ int LEMoon::textRelateFont(uint32_t id, uint32_t idFont)
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
   LEFont * pFont = this->fontGet(idFont);
+
+  if(pFont == nullptr)
+    {pFont = this->fontGetFromBuffer(idFont);}
 
   if(pText != nullptr)
   {
