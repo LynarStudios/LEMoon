@@ -1,3 +1,13 @@
+//////////////////////////////////
+// LINKS GLOBAL
+//////////////////////////////////
+
+var indexStr = '#index'; // main site
+var docMenuStr = '#documentation'; // der link zum Doc Menu
+
+var linkIndex = '<a href=\"' + indexStr + '\" class=\"normalNav\">Main Page</a>';
+var linkDocMenu = '<a href=\"' + docMenuStr + '\" class=\"normalNav\">Documentation</a>';
+
 function newTab(url)
 {
   var win = window.open(url, '_blank');
@@ -15,6 +25,12 @@ function loadSite()
   // LINKS
   //////////////////////////////////
 
+  if(hashString == 'download')
+    {loadDiv('downloadDiv');}
+  if(hashString == 'documentation')
+    {loadDiv('documentationDiv');}
+  if(hashString == 'tutorial')
+    {loadDiv('tutorialDiv');}
   if(hashString == 'links')
     {loadDiv('linksDiv');}
 
@@ -118,6 +134,10 @@ function loadSite()
     {loadDiv('lCreateDiv');}
   if(hashString == 'lDelete')
     {loadDiv('lDeleteDiv');}
+  if(hashString == 'lPrintBufferList')
+    {loadDiv('lPrintBufferListDiv');}
+  if(hashString == 'lPrintList')
+    {loadDiv('lPrintListDiv');}
   if(hashString == 'lSet')
     {loadDiv('lSetDiv');}
   if(hashString == 'lSetColor')
@@ -126,6 +146,8 @@ function loadSite()
     {loadDiv('lSetVisibleDiv');}
   if(hashString == 'lSetZindex')
     {loadDiv('lSetZindexDiv');}
+  if(hashString == 'lUsingThread')
+    {loadDiv('lUsingThreadDiv');}
 
   //////////////////////////////////
   // MODEL
@@ -193,6 +215,10 @@ function loadSite()
     {loadDiv('mGetZindexDiv');}
   if(hashString == 'mMoveDirection')
     {loadDiv('mMoveDirectionDiv');}
+  if(hashString == 'mPrintBufferList')
+    {loadDiv('mPrintBufferListDiv');}
+  if(hashString == 'mPrintList')
+    {loadDiv('mPrintListDiv');}
   if(hashString == 'mRotate')
     {loadDiv('mRotateDiv');}
   if(hashString == 'mRotateDir')
@@ -221,6 +247,8 @@ function loadSite()
     {loadDiv('mSetZindexDiv');}
   if(hashString == 'mTextureExists')
     {loadDiv('mTextureExistsDiv');}
+  if(hashString == 'mUsingThread')
+    {loadDiv('mUsingThreadDiv');}
 
   //////////////////////////////////
   // POINT
@@ -242,6 +270,10 @@ function loadSite()
     {loadDiv('pGetPositionDiv');}
   if(hashString == 'pMoveDirection')
     {loadDiv('pMoveDirectionDiv');}
+  if(hashString == 'pPrintBufferList')
+    {loadDiv('pPrintBufferListDiv');}
+  if(hashString == 'pPrintList')
+    {loadDiv('pPrintListDiv');}
   if(hashString == 'pRotate')
     {loadDiv('pRotateDiv');}
   if(hashString == 'pSetColor')
@@ -252,6 +284,8 @@ function loadSite()
     {loadDiv('pSetVisibleDiv');}
   if(hashString == 'pSetZindex')
     {loadDiv('pSetZindexDiv');}
+  if(hashString == 'pUsingThread')
+    {loadDiv('pUsingThreadDiv');}
 
   //////////////////////////////////
   // SOUND
@@ -275,8 +309,14 @@ function loadSite()
     {loadDiv('sPauseDiv');}
   if(hashString == 'sPlay')
     {loadDiv('sPlayDiv');}
+  if(hashString == 'sPrintBufferList')
+    {loadDiv('sPrintBufferListDiv');}
+  if(hashString == 'sPrintList')
+    {loadDiv('sPrintListDiv');}
   if(hashString == 'sSetVolume')
     {loadDiv('sSetVolumeDiv');}
+  if(hashString == 'sUsingThread')
+    {loadDiv('sUsingThreadDiv');}
 
   //////////////////////////////////
   // TEXT
@@ -310,6 +350,10 @@ function loadSite()
     {loadDiv('tMoveDirectionDiv');}
   if(hashString == 'tPrepareForDrawing')
     {loadDiv('tPrepareForDrawingDiv');}
+  if(hashString == 'tPrintBufferList')
+    {loadDiv('tPrintBufferListDiv');}
+  if(hashString == 'tPrintList')
+    {loadDiv('tPrintListDiv');}
   if(hashString == 'tRelateFont')
     {loadDiv('tRelateFontDiv');}
   if(hashString == 'tSetAlpha')
@@ -324,6 +368,8 @@ function loadSite()
     {loadDiv('tSetZindexDiv');}
   if(hashString == 'tSubmit')
     {loadDiv('tSubmitDiv');}
+  if(hashString == 'tUsingThread')
+    {loadDiv('tUsingThreadDiv');}
 
   //////////////////////////////////
   // TIME EVENT
@@ -337,6 +383,10 @@ function loadSite()
     {loadDiv('teDeleteDiv');}
   if(hashString == 'teGetStamp')
     {loadDiv('teGetStampDiv');}
+  if(hashString == 'tePrintBufferList')
+    {loadDiv('tePrintBufferListDiv');}
+  if(hashString == 'tePrintList')
+    {loadDiv('tePrintListDiv');}
   if(hashString == 'teReached')
     {loadDiv('teReachedDiv');}
   if(hashString == 'teReset')
@@ -345,6 +395,8 @@ function loadSite()
     {loadDiv('teUpdateDiv');}
   if(hashString == 'teUpdateValidALL')
     {loadDiv('teUpdateValidALLDiv');}
+  if(hashString == 'teUsingThread')
+    {loadDiv('teUsingThreadDiv');}
 
   //////////////////////////////////
   // VIDEO
