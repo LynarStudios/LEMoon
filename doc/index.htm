@@ -45,6 +45,9 @@
     <div id="footer">
       <div id="navigation">
         <nav>
+          <a class="button" href="#download">Download</a>
+          <a class="button" href="#documentation">Documentation</a>
+          <a class="button" href="#tutorial">Tutorial</a>
           <a class="button" href="#impressum">Impressum</a>
           <a class="button" href="#links">Links</a>
         </nav>
@@ -83,10 +86,19 @@
     </div>
   </div>
 
-  <div id="navDiv" style="display: none;">
-    <h1>Welcome</h1>
-    Welcome to the <b class="identifier">Lynar Moon Engine</b> website. It's an open source game engine for 2D game development based on <b class="identifier">SDL2</b>. You can find a detailed documentation below. If you spotted any errors you can either contribute on <b class="identifier">gitHub</b> or send a message to the webmaster of this page.
-    <h2 style=" font-size: 1.5em;">Documentation v1.3.1</h2>
+  <div id="downloadDiv" style="display: none;">
+    <h1>Download</h1>
+    &laquo; <script>document.write(linkIndex);</script>
+    <br>
+    <br>
+    <h2 style=" font-size: 1.5em;">gitHub</h2>
+    You can find and download the <b class="identifier">Lynar Moon Engine</b> from <b class="identifier">gitHub</b>: &raquo; <a href="#" class="normalNav" onclick="javascript: newTab('https://github.com/LynarStudios/LEMoon');">LEMoon gitHub Repository</a>
+  </div>
+
+  <div id="documentationDiv" style="display: none;">
+    <h1 style=" font-size: 1.5em;">Documentation v1.4.0</h1>
+    &laquo; <script>document.write(linkIndex);</script>
+    <br>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#font">Font</a></p></div>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#general">General</a></p></div>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#line">Line</a></p></div>
@@ -97,15 +109,42 @@
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#timeevent">Time Event</a></p></div>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#video">Video</a></p></div>
     <div class="navButton" style="float: left;"><p class="center"><a class="navLink" href="#window">Window</a></p></div>
-    <div style="position: relative; top: 1em; clear: both;">
-      <h2 style=" font-size: 1.5em;">gitHub</h2>
-      You can find and download the <b class="identifier">Lynar Moon Engine</b> from <b class="identifier">gitHub</b>: &raquo; <a href="#" class="normalNav" onclick="javascript: newTab('https://github.com/LynarStudios/LEMoon');">LEMoon gitHub Repository</a>
+  </div>
+
+  <div id="navDiv" style="display: none;">
+    <h1>Welcome</h1>
+    Welcome to the <b class="identifier">Lynar Moon Engine</b> website. It's an open source game engine for 2D game development based on <b class="identifier">SDL2</b>. You can find a detailed documentation below. If you spotted any errors you can either contribute on <b class="identifier">gitHub</b> or send a message to the webmaster of this page.
+    <h2 style=" font-size: 1.5em;">News</h2>
+    <u>04.05.2018:</u>
+    <ul>
+      <li>Lynar Moon Engine 1.4 is out now! New features are x64 compatibility, threading and some bug fixes!</li>
+      <li>There is a YouTube tutorial and an Udemy Course now covering the basic concepts of this engine! Just check out the tutorial section!</li>
+    </ul>
+  </div>
+
+  <div id="tutorialDiv" style="display: none;">
+    <h1>Tutorial</h1>
+    &laquo; <script>document.write(linkIndex);</script>
+    <br>
+    <br>
+    Welcome to the tutorial section. Here you can either start the YouTube tutorial or the udemy course <b class="identifier">Lynar Moon Engine Basics</b>. This tutorial covers the basic concepts of the <b class="identifier">Lynar Moon Engine</b>. Learn how to build your own small application using C/C++ within 1 hour!
+    <br>
+    <br>
+    <div style="text-align: center;">
+      <h3 style="text-decoration: underline;">Udemy</h3>
+      <a href="#tutorial" onclick="newTab('https://www.udemy.com/lynar-moon-engine-basics');"><img style="width: 30em; height: auto; border: 0px;" src="images/udemy.jpg" title="Udemy Course"></a>
     </div>
+    <br>
+    <div style="text-align: center;">
+      <h3 style="text-decoration: underline;">YouTube</h3>
+    </div>
+    <br>
+    <iframe style="display: block; margin: 0 auto;" width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLmvHLkJs7MrXB9tCf79HLtXggOyO9lUe1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 
   <div id="linksDiv" style="display: none;">
     <h1>Links</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkIndex);</script>
     <br>
     <br>
     Visit some of our partners or supporters!
@@ -127,15 +166,15 @@
 
   <div id="fontDiv" style="display: none;">
     <h1>Font (6)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#fCreate">fontCreateTTF()</a>
     <a class="normalNavBlock" href="#fDelete">fontDelete()</a>
-    <a class="normalNavBlock" href="#fPrintBufferList"><b class="justAdded">NEW:</b> fontPrintBufferList()</a>
-    <a class="normalNavBlock" href="#fPrintList"><b class="justAdded">NEW:</b> fontPrintList()</a>
+    <a class="normalNavBlock" href="#fPrintBufferList">fontPrintBufferList()</a>
+    <a class="normalNavBlock" href="#fPrintList">fontPrintList()</a>
     <a class="normalNavBlock" href="#fSetStyle">fontSetStyle()</a>
-    <a class="normalNavBlock" href="#fUsingThread"><b class="justAdded">NEW:</b> fontUsingThread()</a>
+    <a class="normalNavBlock" href="#fUsingThread">fontUsingThread()</a>
   </div>
 
   <div id="fCreateDiv" style="display: none;">
@@ -155,7 +194,7 @@
     <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="fDeleteDiv" style="display: none;">
@@ -173,19 +212,19 @@
     <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="fPrintBufferListDiv" style="display: none;">
     <h1><b class="datatype">void</b> fontPrintBufferList()</h1>
     <h2>Description</h2>
-    <p>This function will print the font buffer list to the console. This doubly linked list contains all recently added fonts, which will end up in the original font list after <b class="identifier">endFrame()</b> function have been called. If the list is empty nothing will be printed to the console.</p>
+    <p>This function will print the font buffer list to the console. This doubly linked list contains all recently added fonts, which will end up in the original font list after <b class="identifier">endFrame()</b> function has been called. If the list is empty nothing will be printed to the console.</p>
     <h2>thread safe</h2>
     yes
     <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="fPrintListDiv" style="display: none;">
@@ -197,7 +236,7 @@
     <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="fSetStyleDiv" style="display: none;">
@@ -216,7 +255,7 @@
     <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="fUsingThreadDiv" style="display: none;">
@@ -232,7 +271,7 @@
     <br>
     <br>
     &laquo; <a href="#font" class="normalNav">Font</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -245,7 +284,7 @@
 
   <div id="generalDiv" style="display: none;">
     <h1>General (32)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#gBeginFrame">beginFrame()</a>
@@ -253,7 +292,7 @@
     <a class="normalNavBlock" href="#gConvertResWidth">convertResWidth()</a>
     <a class="normalNavBlock" href="#gDelay">delay()</a>
     <a class="normalNavBlock" href="#gDrawFrame">drawFrame()</a>
-    <a class="normalNavBlock" href="#gEndFrame"><b class="justAdded">NEW:</b> endFrame()</a>
+    <a class="normalNavBlock" href="#gEndFrame">endFrame()</a>
     <a class="normalNavBlock" href="#gEngineInitialized">engineInitialized()</a>
     <a class="normalNavBlock" href="#gGetBackgroundColor">getBackgroundColor()</a>
     <a class="normalNavBlock" href="#gGetFPS">getFPS()</a>
@@ -288,7 +327,7 @@
     <p>This function should be called at the beginning of the main loop. It handles different events and calculates processor time plus frames per seconds.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gConvertResHeightDiv" style="display: none;">
@@ -304,7 +343,7 @@
     <p>This function will return a new pixel value as <b class="datatype">double</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gConvertResWidthDiv" style="display: none;">
@@ -320,7 +359,7 @@
     <p>This function will return a new pixel value as <b class="datatype">double</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gDelayDiv" style="display: none;">
@@ -333,7 +372,7 @@
     </ul>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gDrawFrameDiv" style="display: none;">
@@ -344,7 +383,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gEndFrameDiv" style="display: none;">
@@ -355,7 +394,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gEngineInitializedDiv" style="display: none;">
@@ -366,7 +405,7 @@
     <p>This function returns <b class="datatype">true</b> in case the <b class="identifier">Lynar Moon Engine</b> has been initialized or <b class="datatype">false</b> in case an error occured.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gGetBackgroundColorDiv" style="display: none;">
@@ -377,7 +416,7 @@
     <p>This function returns a <b class="datatype">Color</b> struct which contains the current background color.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gGetFPSDiv" style="display: none;">
@@ -388,7 +427,7 @@
     <p>This function returns the FPS as <b class="datatype">uint16_t</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gGetPrefPathDiv" style="display: none;">
@@ -399,7 +438,7 @@
     <p>This function returns the preferred path.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gGetScreenHeightDiv" style="display: none;">
@@ -410,7 +449,7 @@
     <p>This function returns the height as <b class="datatype">int</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gGetScreenWidthDiv" style="display: none;">
@@ -421,7 +460,7 @@
     <p>This function returns the width as <b class="datatype">int</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gGetTimestampDiv" style="display: none;">
@@ -432,7 +471,7 @@
     <p>This function returns the amount of milliseconds as <b class="datatype">uint32_t</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gGetTimestepDiv" style="display: none;">
@@ -443,7 +482,7 @@
     <p>This function returns the timestep factor as <b class="datatype">double</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gInitDiv" style="display: none;">
@@ -458,7 +497,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gInitImageDiv" style="display: none;">
@@ -469,7 +508,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gInitSoundDiv" style="display: none;">
@@ -484,7 +523,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gInitTTFDiv" style="display: none;">
@@ -495,7 +534,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gKeyEventDiv" style="display: none;">
@@ -511,7 +550,7 @@
     <p>This function returns <b class="identifier">true</b> if the specific key was pressed or released or <b class="identifier">false</b> in case it wasn't.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gMessageBoxDiv" style="display: none;">
@@ -525,7 +564,7 @@
     </ul>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gMkpathDiv" style="display: none;">
@@ -539,7 +578,7 @@
     </ul>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gMouseEventDiv" style="display: none;">
@@ -555,7 +594,7 @@
     <p>This function returns <b class="identifier">true</b> if the specific key was pressed or released or <b class="identifier">false</b> in case it wasn't.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gMouseGetPositionDiv" style="display: none;">
@@ -566,7 +605,7 @@
     <p>This function returns a <b class="datatype">SDL_Point</b> struct which contains the mouse position.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gPercentToPixelXDiv" style="display: none;">
@@ -581,7 +620,7 @@
     <p>This function returns the number of pixels as <b class="datatype">double</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gPercentToPixelYDiv" style="display: none;">
@@ -596,7 +635,7 @@
     <p>This function returns the number of pixels as <b class="datatype">double</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gPixelToPercentXDiv" style="display: none;">
@@ -611,7 +650,7 @@
     <p>This function returns the percent as <b class="datatype">double</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gPixelToPercentYDiv" style="display: none;">
@@ -626,7 +665,7 @@
     <p>This function returns the percent as <b class="datatype">double</b> type.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gPollEventDiv" style="display: none;">
@@ -637,7 +676,7 @@
     <p>This function returns 1 if there is a pending event or 0 if there are none available.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gPrintErrorMessageDiv" style="display: none;">
@@ -651,7 +690,7 @@
     </ul>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gRecentFPSAvailableDiv" style="display: none;">
@@ -662,7 +701,7 @@
     <p>This function will return <b class="identifier">true</b> if there are recent FPS available.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gSetBackgroundColorDiv" style="display: none;">
@@ -677,7 +716,7 @@
     </ul>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="gShowCursorDiv" style="display: none;">
@@ -692,7 +731,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#general" class="normalNav">General</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -704,16 +743,19 @@
   -->
 
   <div id="lineDiv" style="display: none;">
-    <h1>Line (6)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    <h1>Line (9)</h1>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#lCreate">lineCreate()</a>
     <a class="normalNavBlock" href="#lDelete">lineDelete()</a>
+    <a class="normalNavBlock" href="#lPrintBufferList"><b class="justAdded">NEW:</b> linePrintBufferList()</a>
+    <a class="normalNavBlock" href="#lPrintList"><b class="justAdded">NEW:</b> linePrintList()</a>
     <a class="normalNavBlock" href="#lSet">lineSet()</a>
     <a class="normalNavBlock" href="#lSetColor">lineSetColor()</a>
     <a class="normalNavBlock" href="#lSetVisible">lineSetVisible()</a>
     <a class="normalNavBlock" href="#lSetZindex">lineSetZindex()</a>
+    <a class="normalNavBlock" href="#lUsingThread"><b class="justAdded">NEW:</b> lineUsingThread()</a>
   </div>
 
   <div id="lCreateDiv" style="display: none;">
@@ -726,9 +768,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#line" class="normalNav">Line</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="lDeleteDiv" style="display: none;">
@@ -741,9 +786,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#line" class="normalNav">Line</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="lSetDiv" style="display: none;">
@@ -760,9 +808,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#line" class="normalNav">Line</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="lSetColorDiv" style="display: none;">
@@ -779,9 +830,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#line" class="normalNav">Line</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="lSetVisibleDiv" style="display: none;">
@@ -791,13 +845,16 @@
     <h2>Parameters</h2>
     <ul>
       <li><b class="identifier">id</b>: This is the specific ID of the line you created before.</li>
-      <li><b class="identifier">visible</b>: Set this parameter to <b class="identifier">true</b> to make it visible or <b class="identifier">false</b> to make it invisible.</li>
+      <li><b class="identifier">visible</b>: Set this parameter to <b class="constant">LE_TRUE</b> to make it visible or <b class="constant">LE_FALSE</b> to make it invisible.</li>
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#line" class="normalNav">Line</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="lSetZindexDiv" style="display: none;">
@@ -811,9 +868,52 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#line" class="normalNav">Line</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="lPrintBufferListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> linePrintBufferList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the line buffer list to the console. This doubly linked list contains all recently added lines, which will end up in the original line list after <b class="identifier">endFrame()</b> function has been called. If the list is empty nothing will be printed to the console.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="lPrintListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> linePrintList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the original line list to the console. This doubly linked list contains all lines, which have been created before. If the list is empty nothing will be printed to the console. This list will only contain any elements after <b class="identifier">lineCreate()</b> and <b class="identifier">endFrame()</b> have been called before.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="lUsingThreadDiv" style="display: none;">
+    <h1><b class="datatype">void</b> lineUsingThread(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>Use this function if you want to use any line function in one or more threads. This will indicate that changes can be made to a specific line in all threads you are running. You only have to call this function once before you start running threads and again after you finished running threads.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> if you start running threads or set this flag to <b class="constant">LE_FALSE</b> after you finished running threads.</li>
+    </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#line" class="normalNav">Line</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -825,8 +925,8 @@
   -->
 
   <div id="modelDiv" style="display: none;">
-    <h1>Model (44)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    <h1>Model (47)</h1>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#mAddCollisionRect">modelAddCollisionRect()</a>
@@ -859,6 +959,8 @@
     <a class="normalNavBlock" href="#mGetVisible">modelGetVisible()</a>
     <a class="normalNavBlock" href="#mGetZindex">modelGetZindex()</a>
     <a class="normalNavBlock" href="#mMoveDirection">modelMoveDirection()</a>
+    <a class="normalNavBlock" href="#mPrintBufferList"><b class="justAdded">New:</b> modelPrintBufferList()</a>
+    <a class="normalNavBlock" href="#mPrintList"><b class="justAdded">New:</b> modelPrintList()</a>
     <a class="normalNavBlock" href="#mRotate">modelRotate()</a>
     <a class="normalNavBlock" href="#mRotateDir">modelRotateDir()</a>
     <a class="normalNavBlock" href="#mRotateOnce">modelRotateOnce()</a>
@@ -873,6 +975,7 @@
     <a class="normalNavBlock" href="#mSetVisible">modelSetVisible()</a>
     <a class="normalNavBlock" href="#mSetZindex">modelSetZindex()</a>
     <a class="normalNavBlock" href="#mTextureExists">modelTextureExists()</a>
+    <a class="normalNavBlock" href="#mUsingThread"><b class="justAdded">New:</b> modelUsingThread()</a>
   </div>
 
   <div id="mAddCollisionRectDiv" style="display: none;">
@@ -887,9 +990,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mAddDirectionDiv" style="display: none;">
@@ -904,9 +1010,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mAddTextureSourceRectDiv" style="display: none;">
@@ -925,9 +1034,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mChangeDirectionDiv" style="display: none;">
@@ -942,9 +1054,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mCheckCollisionDiv" style="display: none;">
@@ -958,9 +1073,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return <b class="constant">LE_TRUE</b> if there is a collision or <b class="constant">LE_FALSE</b> if there is no collision.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mCheckFrameBoxCollisionDiv" style="display: none;">
@@ -974,9 +1092,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return <b class="constant">LE_TRUE</b> if there is a collision or <b class="constant">LE_FALSE</b> if there is no collision.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mClearClonesDiv" style="display: none;">
@@ -989,9 +1110,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mCreateDiv" style="display: none;">
@@ -1004,9 +1128,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mCreateCloneDiv" style="display: none;">
@@ -1020,9 +1147,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mCreateSurfaceDiv" style="display: none;">
@@ -1037,9 +1167,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mCreateTextureDiv" style="display: none;">
@@ -1054,9 +1187,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mDeleteDiv" style="display: none;">
@@ -1069,9 +1205,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mDeleteSurfaceDiv" style="display: none;">
@@ -1085,9 +1224,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mFadeTextureDiv" style="display: none;">
@@ -1102,9 +1244,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mFocusTextureSourceRectDiv" style="display: none;">
@@ -1119,9 +1264,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetAmountOfCollisionBoxesDiv" style="display: none;">
@@ -1134,9 +1282,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the amount of collision rectangles as <b class="datatype">uint32_t</b> type.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetAmountOfTextureSourceRectanglesDiv" style="display: none;">
@@ -1150,9 +1301,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the amount of texture areas as <b class="datatype">uint32_t</b> type.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetCollisionBoxDiv" style="display: none;">
@@ -1166,9 +1320,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the collision rectangle as <b class="datatype">LECollBox_d</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetDirectionDiv" style="display: none;">
@@ -1182,9 +1339,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the collision rectangle as <b class="datatype">glm::vec2</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetFrameBoxDiv" style="display: none;">
@@ -1197,9 +1357,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the main collision rectangle as <b class="datatype">LECollBox_d</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetPixelRGBADiv" style="display: none;">
@@ -1215,9 +1378,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the pixel data as <b class="datatype">Color</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetPositionDDiv" style="display: none;">
@@ -1230,9 +1396,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the position as <b class="datatype">glm::vec2</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetPositionDiv" style="display: none;">
@@ -1245,9 +1414,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the position as <b class="datatype">SDL_Point</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetSizeDiv" style="display: none;">
@@ -1260,9 +1432,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the size as <b class="datatype">SDL_Point</b> struct. <b class="identifier">x</b> contains the width of the model and <b class="identifier">y</b> contains the height of the model.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetSizeFactorDiv" style="display: none;">
@@ -1275,9 +1450,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the size factor as <b class="datatype">double</b> type.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetSurfaceDiv" style="display: none;">
@@ -1291,9 +1469,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the surface as <b class="datatype">SDL_Surface</b> pointer.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetTextureAlphaDiv" style="display: none;">
@@ -1307,9 +1488,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the alpha value as <b class="datatype">double</b> type.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mMoveDirectionDiv" style="display: none;">
@@ -1323,9 +1507,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mRotateDiv" style="display: none;">
@@ -1339,9 +1526,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mRotateDirDiv" style="display: none;">
@@ -1356,9 +1546,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mRotateOnceDiv" style="display: none;">
@@ -1372,9 +1565,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetClonePositionDiv" style="display: none;">
@@ -1389,9 +1585,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetCloneVisibleDiv" style="display: none;">
@@ -1406,9 +1605,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetVisibleDiv" style="display: none;">
@@ -1422,9 +1624,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetZindexDiv" style="display: none;">
@@ -1438,9 +1643,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetTextureZindexDiv" style="display: none;">
@@ -1455,9 +1663,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetTextureAlphaDiv" style="display: none;">
@@ -1472,9 +1683,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetTextureActiveDiv" style="display: none;">
@@ -1489,9 +1703,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetSizeFactorDiv" style="display: none;">
@@ -1505,9 +1722,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetSizeDiv" style="display: none;">
@@ -1522,6 +1742,10 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
     <hr style="color: white;">
     <h2 style="font-size: 1.5em;"><b class="datatype">double</b> modelSetSize(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> percent)</h1>
     <h2>Description</h2>
@@ -1533,9 +1757,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return a new resulting model size factor as <b class="datatype">double</b> type.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mSetPositionDiv" style="display: none;">
@@ -1550,9 +1777,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mTextureExistsDiv" style="display: none;">
@@ -1566,9 +1796,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return <b class="constant">LE_TRUE</b> if the texture does exist or <b class="constant">LE_FALSE</b> if the texture does not exist.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetZindexDiv" style="display: none;">
@@ -1581,9 +1814,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the z-index as <b class="datatype">uint32_t</b> type.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="mGetVisibleDiv" style="display: none;">
@@ -1596,9 +1832,52 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return <b class="constant">LE_TRUE</b> if the model is visible or <b class="constant">LE_FALSE</b> if the model is invisible.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#model" class="normalNav">Model</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="mPrintBufferListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> modelPrintBufferList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the model buffer list to the console. This doubly linked list contains all recently added models, which will end up in the original model list after <b class="identifier">endFrame()</b> function has been called. If the list is empty nothing will be printed to the console.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="mPrintListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> modelPrintList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the original model list to the console. This doubly linked list contains all models, which have been created before. If the list is empty nothing will be printed to the console. This list will only contain any elements after <b class="identifier">modelCreate()</b> and <b class="identifier">endFrame()</b> have been called before.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="mUsingThreadDiv" style="display: none;">
+    <h1><b class="datatype">void</b> modelUsingThread(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>Use this function if you want to use any model function in one or more threads. This will indicate that changes can be made to a specific model in all threads you are running. You only have to call this function once before you start running threads and again after you finished running threads.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> if you start running threads or set this flag to <b class="constant">LE_FALSE</b> after you finished running threads.</li>
+    </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#model" class="normalNav">Model</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -1610,8 +1889,8 @@
   -->
 
   <div id="pointDiv" style="display: none;">
-    <h1>Point (12)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    <h1>Point (15)</h1>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#pAddDirection">pointAddDirection()</a>
@@ -1621,11 +1900,14 @@
     <a class="normalNavBlock" href="#pGetColor">pointGetColor()</a>
     <a class="normalNavBlock" href="#pGetPosition">pointGetPosition()</a>
     <a class="normalNavBlock" href="#pMoveDirection">pointMoveDirection()</a>
+    <a class="normalNavBlock" href="#pPrintBufferList"><b class="justAdded">NEW:</b> pointPrintBufferList()</a>
+    <a class="normalNavBlock" href="#pPrintList"><b class="justAdded">NEW:</b> pointPrintList()</a>
     <a class="normalNavBlock" href="#pRotate">pointRotate()</a>
     <a class="normalNavBlock" href="#pSetColor">pointSetColor()</a>
     <a class="normalNavBlock" href="#pSetPosition">pointSetPosition()</a>
     <a class="normalNavBlock" href="#pSetVisible">pointSetVisible()</a>
     <a class="normalNavBlock" href="#pSetZindex">pointSetZindex()</a>
+    <a class="normalNavBlock" href="#pUsingThread"><b class="justAdded">NEW:</b> pointUsingThread()</a>
   </div>
 
   <div id="pAddDirectionDiv" style="display: none;">
@@ -1640,9 +1922,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pCreateDiv" style="display: none;">
@@ -1655,9 +1940,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pDeleteDiv" style="display: none;">
@@ -1670,9 +1958,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pFadeDiv" style="display: none;">
@@ -1686,9 +1977,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pGetColorDiv" style="display: none;">
@@ -1701,9 +1995,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the color as <b class="datatype">Color</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pGetPositionDiv" style="display: none;">
@@ -1716,9 +2013,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the position as <b class="datatype">SDL_Point</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pMoveDirectionDiv" style="display: none;">
@@ -1732,9 +2032,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pRotateDiv" style="display: none;">
@@ -1749,9 +2052,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pSetColorDiv" style="display: none;">
@@ -1768,9 +2074,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pSetPositionDiv" style="display: none;">
@@ -1785,9 +2094,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pSetVisibleDiv" style="display: none;">
@@ -1801,9 +2113,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="pSetZindexDiv" style="display: none;">
@@ -1817,9 +2132,52 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#point" class="normalNav">Point</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="pPrintBufferListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> pointPrintBufferList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the point buffer list to the console. This doubly linked list contains all recently added points, which will end up in the original point list after <b class="identifier">endFrame()</b> function has been called. If the list is empty nothing will be printed to the console.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="pPrintListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> pointPrintList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the original point list to the console. This doubly linked list contains all points, which have been created before. If the list is empty nothing will be printed to the console. This list will only contain any elements after <b class="identifier">pointCreate()</b> and <b class="identifier">endFrame()</b> have been called before.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="pUsingThreadDiv" style="display: none;">
+    <h1><b class="datatype">void</b> pointUsingThread(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>Use this function if you want to use any point function in one or more threads. This will indicate that changes can be made to a specific point in all threads you are running. You only have to call this function once before you start running threads and again after you finished running threads.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> if you start running threads or set this flag to <b class="constant">LE_FALSE</b> after you finished running threads.</li>
+    </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#point" class="normalNav">Point</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -1831,8 +2189,8 @@
   -->
 
   <div id="soundDiv" style="display: none;">
-    <h1>Sound (9)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    <h1>Sound (12)</h1>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#sCreate">soundCreate()</a>
@@ -1843,7 +2201,10 @@
     <a class="normalNavBlock" href="#sLock">soundLock()</a>
     <a class="normalNavBlock" href="#sPause">soundPause()</a>
     <a class="normalNavBlock" href="#sPlay">soundPlay()</a>
+    <a class="normalNavBlock" href="#sPrintBufferList"><b class="justAdded">NEW:</b> soundPrintBufferList()</a>
+    <a class="normalNavBlock" href="#sPrintList"><b class="justAdded">NEW:</b> soundPrintList()</a>
     <a class="normalNavBlock" href="#sSetVolume">soundSetVolume()</a>
+    <a class="normalNavBlock" href="#sUsingThread"><b class="justAdded">NEW:</b> soundUsingThread()</a>
   </div>
 
   <div id="sCreateDiv" style="display: none;">
@@ -1856,9 +2217,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sDeleteDiv" style="display: none;">
@@ -1871,9 +2235,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sFadeInDiv" style="display: none;">
@@ -1887,9 +2254,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sFadeOutDiv" style="display: none;">
@@ -1900,8 +2270,12 @@
     <ul>
       <li><b class="identifier">ms</b>: This is the duration of the fading in milliseconds.</li>
     </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sLoadWAVDiv" style="display: none;">
@@ -1915,9 +2289,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sLockDiv" style="display: none;">
@@ -1931,18 +2308,24 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sPauseDiv" style="display: none;">
     <h1><b class="datatype">void</b> soundPause()</h1>
     <h2>Description</h2>
     <p>This function will stop all sounds, which are currently playing.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sPlayDiv" style="display: none;">
@@ -1956,9 +2339,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="sSetVolumeDiv" style="display: none;">
@@ -1969,9 +2355,54 @@
     <ul>
       <li><b class="identifier">volume</b>: This is the master volume. This can be a value from 0 to 128 (<b class="constant">MIX_MAX_VOLUME</b>).</li>
     </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
     &laquo; <a href="#sound" class="normalNav">Sound</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
+
+  <div id="sPrintBufferListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> soundPrintBufferList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the sound buffer list to the console. This doubly linked list contains all recently added sounds, which will end up in the original sound list after <b class="identifier">endFrame()</b> function has been called. If the list is empty nothing will be printed to the console.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="sPrintListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> soundPrintList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the original sound list to the console. This doubly linked list contains all sounds, which have been created before. If the list is empty nothing will be printed to the console. This list will only contain any elements after <b class="identifier">soundCreate()</b> and <b class="identifier">endFrame()</b> have been called before.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="sUsingThreadDiv" style="display: none;">
+    <h1><b class="datatype">void</b> soundUsingThread(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>Use this function if you want to use any sound function in one or more threads. This will indicate that changes can be made to a specific sound in all threads you are running. You only have to call this function once before you start running threads and again after you finished running threads.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> if you start running threads or set this flag to <b class="constant">LE_FALSE</b> after you finished running threads.</li>
+    </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#sound" class="normalNav">Sound</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
   <!--
     /////////////////////////////////////
     /////////////////////////////////////
@@ -1981,8 +2412,8 @@
   -->
 
   <div id="textDiv" style="display: none;">
-    <h1>Text (20)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    <h1>Text (23)</h1>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#tAddDirection">textAddDirection()</a>
@@ -1998,6 +2429,8 @@
     <a class="normalNavBlock" href="#tGetVisible">textGetVisible()</a>
     <a class="normalNavBlock" href="#tMoveDirection">textMoveDirection()</a>
     <a class="normalNavBlock" href="#tPrepareForDrawing">textPrepareForDrawing()</a>
+    <a class="normalNavBlock" href="#tPrintBufferList"><b class="justAdded">NEW:</b> textPrintBufferList()</a>
+    <a class="normalNavBlock" href="#tPrintList"><b class="justAdded">NEW:</b> textPrintList()</a>
     <a class="normalNavBlock" href="#tRelateFont">textRelateFont()</a>
     <a class="normalNavBlock" href="#tSetAlpha">textSetAlpha()</a>
     <a class="normalNavBlock" href="#tSetColor">textSetColor()</a>
@@ -2005,6 +2438,7 @@
     <a class="normalNavBlock" href="#tSetVisible">textSetVisible()</a>
     <a class="normalNavBlock" href="#tSetZindex">textSetZindex()</a>
     <a class="normalNavBlock" href="#tSubmit">textSubmit()</a>
+    <a class="normalNavBlock" href="#tUsingThread"><b class="justAdded">NEW:</b> textUsingThread()</a>
   </div>
 
   <div id="tAddDirectionDiv" style="display: none;">
@@ -2019,9 +2453,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tAddLetterDiv" style="display: none;">
@@ -2035,9 +2472,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tAddStringDiv" style="display: none;">
@@ -2051,9 +2491,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tClearDiv" style="display: none;">
@@ -2066,9 +2509,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tCreateDiv" style="display: none;">
@@ -2081,9 +2527,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tDeleteDiv" style="display: none;">
@@ -2096,9 +2545,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tFadeDiv" style="display: none;">
@@ -2112,9 +2564,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tGetAlphaDiv" style="display: none;">
@@ -2127,9 +2582,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the alpha value as <b class="datatype">double</b> type.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tGetPositionDiv" style="display: none;">
@@ -2142,9 +2600,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the position as <b class="datatype">SDL_Point</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tGetSizeDiv" style="display: none;">
@@ -2157,9 +2618,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the size as <b class="datatype">SDL_Point</b> struct.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tGetVisibleDiv" style="display: none;">
@@ -2172,9 +2636,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return <b class="identifier">true</b> if the text is visible or <b class="identifier">false</b> if the text is invisible.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tMoveDirectionDiv" style="display: none;">
@@ -2188,9 +2655,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tPrepareForDrawingDiv" style="display: none;">
@@ -2203,9 +2673,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tRelateFontDiv" style="display: none;">
@@ -2219,9 +2692,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tSetAlphaDiv" style="display: none;">
@@ -2235,9 +2711,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tSetColorDiv" style="display: none;">
@@ -2254,9 +2733,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tSetPositionDiv" style="display: none;">
@@ -2271,9 +2753,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tSetVisibleDiv" style="display: none;">
@@ -2287,9 +2772,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tSetZindexDiv" style="display: none;">
@@ -2303,9 +2791,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="tSubmitDiv" style="display: none;">
@@ -2318,9 +2809,52 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#text" class="normalNav">Text</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="tPrintBufferListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> textPrintBufferList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the text buffer list to the console. This doubly linked list contains all recently added texts, which will end up in the original text list after <b class="identifier">endFrame()</b> function has been called. If the list is empty nothing will be printed to the console.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="tPrintListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> textPrintList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the original text list to the console. This doubly linked list contains all texts, which have been created before. If the list is empty nothing will be printed to the console. This list will only contain any elements after <b class="identifier">textCreate()</b> and <b class="identifier">endFrame()</b> have been called before.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="tUsingThreadDiv" style="display: none;">
+    <h1><b class="datatype">void</b> textUsingThread(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>Use this function if you want to use any text function in one or more threads. This will indicate that changes can be made to a specific text in all threads you are running. You only have to call this function once before you start running threads and again after you finished running threads.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> if you start running threads or set this flag to <b class="constant">LE_FALSE</b> after you finished running threads.</li>
+    </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#text" class="normalNav">Text</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -2332,17 +2866,20 @@
   -->
 
   <div id="timeEventDiv" style="display: none;">
-    <h1>Time Event (7)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    <h1>Time Event (10)</h1>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#teCreate">timeEventCreate()</a>
     <a class="normalNavBlock" href="#teDelete">timeEventDelete()</a>
     <a class="normalNavBlock" href="#teGetStamp">timeEventGetStamp()</a>
+    <a class="normalNavBlock" href="#tePrintBufferList"><b class="justAdded">NEW:</b> timeEventPrintBufferList()</a>
+    <a class="normalNavBlock" href="#tePrintList"><b class="justAdded">NEW:</b> timeEventPrintList()</a>
     <a class="normalNavBlock" href="#teReached">timeEventReached()</a>
     <a class="normalNavBlock" href="#teReset">timeEventReset()</a>
     <a class="normalNavBlock" href="#teUpdate">timeEventUpdate()</a>
     <a class="normalNavBlock" href="#teUpdateValidALL">timeEventUpdateValidALL()</a>
+    <a class="normalNavBlock" href="#teUsingThread"><b class="justAdded">NEW:</b> timeEventUsingThread()</a>
   </div>
 
   <div id="teCreateDiv" style="display: none;">
@@ -2356,9 +2893,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="teDeleteDiv" style="display: none;">
@@ -2371,9 +2911,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="teGetStampDiv" style="display: none;">
@@ -2386,9 +2929,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return the timestamp in milliseconds.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="teReachedDiv" style="display: none;">
@@ -2401,9 +2947,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function will return <b class="identifier">true</b> if the time event has been reached or <b class="identifier">false</b> if the event would still take place in the future.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="teResetDiv" style="display: none;">
@@ -2417,9 +2966,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="teUpdateDiv" style="display: none;">
@@ -2433,9 +2985,12 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="teUpdateValidALLDiv" style="display: none;">
@@ -2446,9 +3001,52 @@
     <ul>
       <li><b class="identifier">milliseconds</b>: This is the amount of milliseconds you'd like to add to the outstanding time events.</li>
     </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
     <br>
     &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="tePrintBufferListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> timeEventPrintBufferList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the time event buffer list to the console. This doubly linked list contains all recently added time events, which will end up in the original time event list after <b class="identifier">endFrame()</b> function has been called. If the list is empty nothing will be printed to the console.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="tePrintListDiv" style="display: none;">
+    <h1><b class="datatype">void</b> timeEventPrintList()</h1>
+    <h2>Description</h2>
+    <p>This function will print the original time event list to the console. This doubly linked list contains all time events, which have been created before. If the list is empty nothing will be printed to the console. This list will only contain any elements after <b class="identifier">timeEventCreate()</b> and <b class="identifier">endFrame()</b> have been called before.</p>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
+  </div>
+
+  <div id="teUsingThreadDiv" style="display: none;">
+    <h1><b class="datatype">void</b> timeEventUsingThread(<b class="datatype">bool</b> flag)</h1>
+    <h2>Description</h2>
+    <p>Use this function if you want to use any time event function in one or more threads. This will indicate that changes can be made to a specific time event in all threads you are running. You only have to call this function once before you start running threads and again after you finished running threads.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">flag</b>: Set this flag to <b class="constant">LE_TRUE</b> if you start running threads or set this flag to <b class="constant">LE_FALSE</b> after you finished running threads.</li>
+    </ul>
+    <h2>thread safe</h2>
+    yes
+    <br>
+    <br>
+    &laquo; <a href="#timeevent" class="normalNav">Time Event</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -2461,7 +3059,7 @@
 
   <div id="videoDiv" style="display: none;">
     <h1>Video (3)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#vCreate">videoCreate()</a>
@@ -2482,7 +3080,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#video" class="normalNav">Video</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="vDeleteDiv" style="display: none;">
@@ -2497,7 +3095,7 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <br>
     &laquo; <a href="#video" class="normalNav">Video</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <div id="vPlayDiv" style="display: none;">
@@ -2512,7 +3110,7 @@
     <p>This function will return <b class="identifier">true</b> when the video has finished playing.</p>
     <br>
     &laquo; <a href="#video" class="normalNav">Video</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 
   <!--
@@ -2525,7 +3123,7 @@
 
   <div id="windowDiv" style="display: none;">
     <h1>Window (1)</h1>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
     <br>
     <br>
     <a class="normalNavBlock" href="#wFocused">windowFocused()</a>
@@ -2539,7 +3137,7 @@
     <p>This function will return <b class="constant">LE_TRUE</b> if the window is focused or <b class="constant">LE_FALSE</b> if it's not focused.</p>
     <br>
     &laquo; <a href="#window" class="normalNav">Window</a>
-    &laquo; <a href="#index" class="normalNav">index</a>
+    &laquo; <script>document.write(linkDocMenu);</script>
   </div>
 </body>
 </html>
