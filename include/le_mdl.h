@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04, g++ Compiler
   date:               29.05.2017
-  updated:            11.04.2018
+  updated:            26.04.2018
 */
 
 #ifndef H_LE_MODEL
@@ -54,6 +54,16 @@ class LEMdl
 {
   private:
 
+    // thread
+
+    mutex mtxDirection;
+    mutex mtxClone;
+    mutex mtxCollisionRect;
+    mutex mtxSourceRectList;
+    mutex mtxTexture;
+
+    // members
+
     Texture * pTextureHead;
     SDL_Rect rectPosSize;                                                           // Bildschirm Koordinaten und Groesse in Pixel
     double sizeFactor;                                                              // ein Faktor, um die Bildgroesse zu veraendern, standardmaessig auf 1.0f
@@ -88,8 +98,6 @@ class LEMdl
     int mdlAddCollisionRect(uint32_t, SDL_Rect);                                    // diese Funktion fuegt einen Kollisionsbereich hinzu
     int mdlAddDirection(uint32_t, glm::vec2);                                       // diese Funktion fuegt eine Bewegungsrichtung hinzu
     int mdlAddTextureSourceRect(uint32_t, uint32_t, int, int, int, int);            // diese Funktion fuegt einen Texturbereich hinzu
-    int mdlAnimateTexture(uint32_t, int, int, uint32_t, double);                    // diese Funktion animiert eine Textur, indem es Texturbereiche nacheinander anzeigt
-    int mdlAnimateTextureRepeat(uint32_t, int, uint8_t, uint32_t, double);          // diese Funktion animiert eine Textur, indem es Texturbereiche nacheinander anzeigt, die Animation wird wiederholt
     int mdlChangeDirection(uint32_t, glm::vec2);                                    // diese Funktion aendert eine Bewegungsrichtung
     void mdlClearClones();                                                          // diese Funktion loescht alle Clones
     int mdlCreateClone(uint32_t);                                                   // diese Funktion erstellt einen Clone des Models
@@ -98,6 +106,7 @@ class LEMdl
     int mdlDeleteSurface(uint32_t);                                                 // diese Funktion loescht das Surface einer Textur wieder
     int mdlDrawActiveTexture(SDL_Renderer*);                                        // diese Funktion zeichnet alle aktiven Texturen
     int mdlFadeTexture(uint32_t, double, double);                                   // diese Funktion blendet eine Textur ein oder aus
+    bool mdlFinishedAllMutexes();                                                   // diese Funktion sagt aus, ob alle Mutexes auf unlock stehen
     int mdlFocusTextureSourceRect(uint32_t, uint32_t);                              // diese Funktion setzt den Fokus auf einen bestimmten Texturbereich, sodass nur dieser gezeichnet wird
     uint32_t mdlGetAmountOfCollisionBoxes();                                        // diese Funktion gibt die Anzahl an Kollisionsbereichen zurueck
     uint32_t mdlGetAmountOfTextureSourceRectangles(uint32_t);                       // diese Funktion gibt die Anzahl an Texturbereichen einer Textur zurueck
@@ -112,12 +121,10 @@ class LEMdl
     SDL_Surface * mdlGetSurface(uint32_t);                                          // diese Funktion gibt ein SDL_Surface einer Textur zurueck
     double mdlGetSizeFactor();                                                      // diese Funktion gibt den Faktor der Modelgroesse zurueck
     double mdlGetTextureAlpha(uint32_t);                                            // diese Funktion gibt den Alphawert einer Textur zurueck
-    bool mdlGetTextureAnimationState(uint32_t);                                     // diese Funktion gibt animationEnd zurueck
     int mdlMoveDirection(uint32_t, double);                                         // diese Funktion bewegt das Model in eine Bewegungsrichtung
     void mdlRotate(double, double);                                                 // diese Funktion rotiert das Model
     int mdlRotateDir(uint32_t, double, double);                                     // diese Funktion rotiert eine Bewegungsrichtung pro Sekunde
     void mdlRotateOnce(double);                                                     // diese Funktion rotiert ein Model einmalig
-    int mdlResetTextureAnimation(uint32_t);                                         // diese Funktion setzt die Animation einer Textur zurueck
     int mdlSetClonePosition(uint32_t, glm::vec2);                                   // diese Funktion setzt die Position des Clones
     int mdlSetCloneVisible(uint32_t, bool);                                         // diese Funktion macht einen Clone sichtbar
     void mdlSetPosition(double, double);                                            // diese Funktion setzt die Position eines Models anhand einer ID
