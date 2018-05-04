@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            18.04.2018
+  updated:            03.05.2018
 
   NOTES:              (TS) = thread safe
 */
@@ -26,6 +26,7 @@ typedef struct sLEMoonModel
   uint32_t id;
   uint32_t zindex;                                                                            // zindex, niedriger zindex wird zuerst gemalt 
   bool visible;
+  bool markedAsDelete;
   LEMdl * pModel;
 } LEModel;
 
@@ -36,6 +37,7 @@ typedef struct sLETimeEvent
   uint32_t id;
   uint32_t timestamp;
   bool reached;
+  bool markedAsDelete;
 } LETimeEvent;
 
 typedef struct sLEMouse
@@ -58,6 +60,8 @@ typedef struct sLEPoint
   double currentDegree;
   bool visible;
   uint32_t zindex;
+  bool markedAsDelete;
+  mutex direction;
   LinkedVec2 * pDirectionHead;
   sLEPoint * pLeft;
   sLEPoint * pRight;
@@ -68,6 +72,7 @@ typedef struct sLESound
   uint32_t id;
   Mix_Chunk * pSample;
   bool lock;
+  bool markedAsDelete;
   sLESound * pLeft;
   sLESound *pRight;
 } LESound;
@@ -104,6 +109,9 @@ typedef struct sLEText
   double alpha;
   LinkedVec2 * pDirectionHead;                                                                // Liste mit Richtungsvektoren
   glm::vec2 position;                                                                         // genauere Position fuer Bewegungsberechnungen
+  bool markedAsDelete;
+  mutex direction;
+  mutex letter;
   sLEText * pLeft;
   sLEText * pRight;
 } LEText;
@@ -123,6 +131,7 @@ typedef struct sLELine
   uint32_t zindex;
   Color color;
   bool visible;
+  bool markedAsDelete;
   sLELine * pLeft;
   sLELine * pRight;
 } LELine;
@@ -161,6 +170,20 @@ typedef class LEMoon
 
     LEMutexFont mtxFont;
     LEMutexGeneral mtxGeneral;
+    LEMutexLine mtxLine;
+    LEMutexModel mtxModel;
+    LEMutexPoint mtxPoint;
+    LEMutexSound mtxSound;
+    LEMutexText mtxText;
+    LEMutexTimeEvent mtxTimeEvent;
+
+    Notify notifyFont;                                                                        // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
+    Notify notifyLine;                                                                        // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
+    Notify notifyModel;                                                                       // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
+    Notify notifyPoint;                                                                       // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
+    Notify notifySound;                                                                       // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
+    Notify notifyText;                                                                        // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
+    Notify notifyTimeEvent;                                                                   // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
 
     //////////////////////////////
     // memory
@@ -180,7 +203,6 @@ typedef class LEMoon
     // font
     //////////////////////////////
 
-    Notify notifyFont;                                                                        // sagt aus, ob Listen sich veraendert haben, und die Engine das merkt, oder der Nutzer die Listen veraendern moechte
     LEFont * pFontHead;                                                                       // Liste mit Fonts
     LEFont * pFontHeadBuffer;                                                                 // Liste mit Fonts zum hinzufuegen (threadfaehig)
 
@@ -188,8 +210,9 @@ typedef class LEMoon
     void fontCleanBufferList();                                                               // diese Funktion loescht alle zum loeschen markierte Elemente aus der Bufferliste
     void fontConstructor();                                                                   // diese Funktion wird im LEMoon constructor aufgerufen
     void fontDeleteBufferList();                                                              // diese Funktion loescht die Bufferliste 
+    void fontDeleteOriginalList();                                                            // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     LEFont * fontGet(uint32_t);																																                               // (TS) diese Funktion gibt eine Referenz auf einen Font aus der Original Liste zurueck
-    LEFont * fontGetFromBuffer(uint32_t);                                                     // diese Funktion gibt eine Referenz auf einen Font aus der Buffer Liste zurueck
+    LEFont * fontGetFromBuffer(uint32_t);                                                     // (TS) diese Funktion gibt eine Referenz auf einen Font aus der Buffer Liste zurueck
     int fontMerge();                                                                          // diese Funktion fuegt alle Fonts zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn font Funktionen noch in Threads laufen!!!
     void fontMergeLists();                                                                    // diese Funktion fuegt die Original- und die Buffer Liste zusammen
 
@@ -220,65 +243,125 @@ typedef class LEMoon
     void handleKeyboard();                                                                    // diese Funktion haelt alle keyboard events fest
     void handleMouse();                                                                       // diese Funktion haelt alle Mouse events fest
     int merge();                                                                              // diese Funktion fuegt die Bufferlisten und die Originallisten zusammen und loescht zum loeschen markierte Elemente
-    void printErrorDialog(int, const char*);                                                  // diese Funktion gibt einen Fehler in einem Dialogfenster aus
+    void printErrorDialog(int, const char*);                                                  // (TS) diese Funktion gibt einen Fehler in einem Dialogfenster aus
 
     //////////////////////////////
     // line
     //////////////////////////////
 
-    LELine * pLineHead;                                                                       // Liste mit Linien
+    LELine * pLineHead;                                                                       // Originalliste
+    LELine * pLineHeadBuffer;                                                                 // Bufferliste
 
+    void lineCleanList();                                                                     // diese Funktion loescht alle zum loeschen markierte Elemente der Original Liste
+    void lineCleanBufferList();                                                               // diese Funktion loescht alle zum loeschen markierte Elemente aus der Bufferliste
+    void lineConstructor();                                                                   // diese Funktion wird im LEMoon constructor aufgerufen
+    void lineDeleteBufferList();                                                              // diese Funktion loescht die Bufferliste 
+    void lineDeleteOriginalList();                                                            // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int lineDraw(LELine*);                                                                    // diese Funktion malt eine Linie
-    LELine * lineGet(uint32_t);                                                               // diese Funktion gibt eine Referenz auf eine Linie zurueck
+    LELine * lineGet(uint32_t);                                                               // (TS) diese Funktion gibt eine Referenz auf eine Linie zurueck
+    LELine * lineGetFromBuffer(uint32_t);                                                     // (TS) diese Funktion gibt eine Referenz auf eine Linie aus der Buffer Liste zurueck
+    int lineMerge();                                                                          // diese Funktion fuegt alle Linien zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Linien Funktionen noch in Threads laufen!!!
+    void lineMergeLists();                                                                    // diese Funktion fuegt die Original- und die Buffer Liste zusammen
+    void lineSortZindex();                                                                    // diese Funktion sortiert die Elemente nach Z-Index
 
     //////////////////////////////
     // model
     //////////////////////////////
 
-    LEModel * pModelHead;
+    LEModel * pModelHead;                                                                     // original list
+    LEModel * pModelHeadBuffer;                                                               // buffer list
 
     bool modelCheckCollision(LEModel*, LEModel*);                                             // diese Funktion prueft anhand von Kollisionsbereichen zweier Models, ob sie kollidieren
     bool modelCheckFrameBoxCollision(LEModel*, LEModel*);                                     // diese Funktion prueft, ob zwei Models im groben Kollisionsbereich kollidieren
+    void modelCleanList();                                                                    // diese Funktion loescht alle zum loeschen markierte Elemente der Original Liste
+    void modelCleanBufferList();                                                              // diese Funktion loescht alle zum loeschen markierte Elemente aus der Bufferliste
+    void modelConstructor();                                                                  // diese Funktion wird im LEMoon constructor aufgerufen
+    void modelDeleteBufferList();                                                             // diese Funktion loescht die Bufferliste 
+    void modelDeleteOriginalList();                                                           // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int modelDraw(LEModel*);                                                                  // diese Funktion zeichnet ein Model
-    LEModel * modelGet(uint32_t);                                                             // diese Funktion gibt eine Modelreferenz anhand einer eindeutigen ID zurueck
+    LEModel * modelGet(uint32_t);                                                             // (TS) diese Funktion gibt eine Modelreferenz anhand einer eindeutigen ID zurueck
     uint32_t modelGetAmount();                                                                // diese Funktion gibt die Anzahl aller Modelle zurueck
+    LEModel * modelGetFromBuffer(uint32_t);                                                   // (TS) diese Funktion gibt eine Referenz auf ein Model aus der Buffer Liste zurueck
+    int modelMerge();                                                                         // diese Funktion fuegt alle Models zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Model Funktionen noch in Threads laufen!!!
+    void modelMergeLists();                                                                   // diese Funktion fuegt die Original- und die Buffer Liste zusammen
+    void modelSortZindex();                                                                   // diese Funktion sortiert die Elemente nach Z-Index
 
     //////////////////////////////
     // point
     //////////////////////////////
 
-    LEPoint * pPointHead;                                                                     // Liste mit Punkten
+    LEPoint * pPointHead;                                                                     // Originalliste
+    LEPoint * pPointHeadBuffer;                                                               // Bufferliste
 
+    void pointCleanList();                                                                    // diese Funktion loescht alle zum loeschen markierte Elemente der Original Liste
+    void pointCleanBufferList();                                                              // diese Funktion loescht alle zum loeschen markierte Elemente aus der Bufferliste
+    void pointConstructor();                                                                  // diese Funktion wird im LEMoon constructor aufgerufen
+    void pointDeleteBufferList();                                                             // diese Funktion loescht die Bufferliste 
+    void pointDeleteOriginalList();                                                           // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int pointDraw(LEPoint*);                                                                  // diese Funktion malt einen Punkt
-    LEPoint * pointGet(uint32_t);                                                             // diese Funktion gibt eine Referenz auf einen Punkt zurueck
+    bool pointFinishedAllMutexes(LEPoint*);                                                   // diese Funktion prueft, ob alle Mutexes momentan verfuegbar sind
+    LEPoint * pointGet(uint32_t);                                                             // (TS) diese Funktion gibt eine Referenz auf einen Punkt zurueck
     LinkedVec2 * pointGetDirection(LEPoint*, uint32_t);                                       // diese Funktion gibt eine Referenz auf eine Bewegungsrichtung zurueck
+    LEPoint * pointGetFromBuffer(uint32_t);                                                   // (TS) diese Funktion gibt eine Referenz auf einen Punkt aus der Buffer Liste zurueck
+    int pointMerge();                                                                         // diese Funktion fuegt alle Punkte zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Punkte Funktionen noch in Threads laufen!!!
+    void pointMergeLists();                                                                   // diese Funktion fuegt die Original- und die Buffer Liste zusammen
+    void pointSortZindex();                                                                   // diese Funktion sortiert die Elemente nach Z-Index
 
     //////////////////////////////
     // sound
     //////////////////////////////
 
-    LESound * pSoundHead;                                                                     // Liste mit Sounds
+    LESound * pSoundHead;                                                                     // Originalliste mit Sounds
+    LESound * pSoundHeadBuffer;                                                               // Bufferliste mit Sounds
 
-    LESound * soundGet(uint32_t);                                                             // diese Funktion gibt eine Referenz auf einen Sound zurueck
+    void soundCleanList();                                                                    // diese Funktion loescht alle zum loeschen markierte Elemente der Original Liste
+    void soundCleanBufferList();                                                              // diese Funktion loescht alle zum loeschen markierte Elemente aus der Bufferliste
+    void soundConstructor();                                                                  // diese Funktion wird im LEMoon constructor aufgerufen
+    void soundDeleteBufferList();                                                             // diese Funktion loescht die Bufferliste 
+    void soundDeleteOriginalList();                                                           // diese Funktion loescht die Originalliste, wenn keine Elemente mehr vorhanden sind
+    LESound * soundGet(uint32_t);                                                             // (TS) diese Funktion gibt eine Referenz auf einen Sound zurueck
+    LESound * soundGetFromBuffer(uint32_t);                                                   // (TS) diese Funktion gibt eine Referenz auf einen Sound aus der Buffer Liste zurueck
+    int soundMerge();                                                                         // diese Funktion fuegt alle Sounds zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Sound Funktionen noch in Threads laufen!!!
+    void soundMergeLists();                                                                   // diese Funktion fuegt die Original- und die Buffer Liste zusammen
 
     //////////////////////////////
     // text
     //////////////////////////////
 
     LEText * pTextHead;                                                                       // Liste mit Texten
+    LEText * pTextHeadBuffer;                                                                 // Buffer Liste
 
+    void textCleanList();                                                                     // diese Funktion loescht alle zum loeschen markierte Elemente der Original Liste
+    void textCleanBufferList();                                                               // diese Funktion loescht alle zum loeschen markierte Elemente aus der Bufferliste
+    void textConstructor();                                                                   // diese Funktion wird im LEMoon constructor aufgerufen
+    void textDeleteBufferList();                                                              // diese Funktion loescht die Bufferliste 
+    void textDeleteOriginalList();                                                            // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int textDraw(LEText*);                                                                    // diese Funktion zeichnet einen Text
-    LEText * textGet(uint32_t);                                                               // diese Funktion gibt eine Referenz auf einen Text zurueck
+    bool textFinishedAllMutexes(LEText*);                                                     // diese Funktion prueft, ob alle Mutexes momentan verfuegbar sind
+    LEText * textGet(uint32_t);                                                               // (TS) diese Funktion gibt eine Referenz auf einen Text zurueck
     uint32_t textGetAmount();                                                                 // diese Funktion gibt die Anzahl aller Texte zurueck
     LinkedVec2 * textGetDirection(LEText*, uint32_t);                                         // diese Funktion gibt die Referenz auf eine Bewegungsrichtung zurueck
+    LEText * textGetFromBuffer(uint32_t);                                                     // (TS) diese Funktion gibt eine Referenz auf einen Text aus der Buffer Liste zurueck
+    int textMerge();                                                                          // diese Funktion fuegt alle Texte zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Text Funktionen noch in Threads laufen!!!
+    void textMergeLists();                                                                    // diese Funktion fuegt die Original- und die Buffer Liste zusammen
+    void textSortZindex();                                                                    // diese Funktion sortiert die Elemente nach Z-Index
 
     //////////////////////////////
     // time event
     //////////////////////////////
 
-    LETimeEvent * pTimeEventHead;
+    LETimeEvent * pTimeEventHead;                                                             // Originalliste
+    LETimeEvent * pTimeEventHeadBuffer;                                                       // Bufferliste
 
-    LETimeEvent * timeEventGet(uint32_t);                                                     // diese Funktion gibt eine Referenz auf ein Zeitereignis zurueck
+    void timeEventCleanList();                                                                // diese Funktion loescht alle zum loeschen markierte Elemente der Original Liste
+    void timeEventCleanBufferList();                                                          // diese Funktion loescht alle zum loeschen markierte Elemente aus der Bufferliste
+    void timeEventConstructor();                                                              // diese Funktion wird im LEMoon constructor aufgerufen
+    void timeEventDeleteBufferList();                                                         // diese Funktion loescht die Bufferliste 
+    void timeEventDeleteOriginalList();                                                       // diese Funktion loescht die Originalliste, wenn keine Elemente mehr vorhanden sind
+    LETimeEvent * timeEventGet(uint32_t);                                                     // (TS) diese Funktion gibt eine Referenz auf ein Zeitereignis zurueck
+    LETimeEvent * timeEventGetFromBuffer(uint32_t);                                           // (TS) diese Funktion gibt eine Referenz auf ein Zeitereignis aus der Buffer Liste zurueck
+    int timeEventMerge();                                                                     // diese Funktion fuegt alle Zeitereignisse zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Zeitereignis Funktionen noch in Threads laufen!!!
+    void timeEventMergeLists();                                                               // diese Funktion fuegt die Original- und die Buffer Liste zusammen
 
     //////////////////////////////
     // video
@@ -355,130 +438,148 @@ typedef class LEMoon
     // line
     //////////////////////////////
 
-    int lineCreate(uint32_t);                                                                 // diese Funktion erstellt eine Linie
-    int lineDelete(uint32_t);                                                                 // diese Funktion loescht eine Linie
-    int lineSet(uint32_t, int, int, int, int);                                                // diese Funktion setzt die Linie
-    int lineSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                           // diese Funktion setzt die Farbe einer Linie
-    int lineSetVisible(uint32_t, bool);                                                       // diese Funktion setzt eine Linie auf sichtbar oder unsichtbar
-    int lineSetZindex(uint32_t, uint32_t);                                                    // diese Funktion setzt den Zindex fuer eine Linie, 0 nicht erlaubt
+    int lineCreate(uint32_t);                                                                 // (TS) diese Funktion erstellt eine Linie
+    int lineDelete(uint32_t);                                                                 // (TS) diese Funktion loescht eine Linie
+    void linePrintBufferList();                                                               // (TS) diese Funktion gibt die komplette Buffer Linien liste aus
+    void linePrintList();                                                                     // (TS) diese Funktion gibt die komplette original Linien liste aus
+    int lineSet(uint32_t, int, int, int, int);                                                // (TS) diese Funktion setzt die Linie
+    int lineSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                           // (TS) diese Funktion setzt die Farbe einer Linie
+    int lineSetVisible(uint32_t, bool);                                                       // (TS) diese Funktion setzt eine Linie auf sichtbar oder unsichtbar
+    int lineSetZindex(uint32_t, uint32_t);                                                    // (TS) diese Funktion setzt den Zindex fuer eine Linie, 0 nicht erlaubt
+    void lineUsingThread(bool);                                                               // (TS) diese Funktion sperrt die Listen, falls der User Linien Funktionen in einem Thread benutzen moechte
 
     //////////////////////////////
     // model
     //////////////////////////////
 
-    int modelAddCollisionRect(uint32_t, uint32_t, SDL_Rect);                                  // diese Funktion fuegt eine Kollisionsbereich in Form eines Rechteckes hinzu
-    int modelAddDirection(uint32_t, uint32_t, glm::vec2);                                     // diese Funktion legt eine Bewegungsrichtung fuer ein Model an
-    int modelAddTextureSourceRect(uint32_t, uint32_t, uint32_t, int, int, int, int);          // diese Funktion fuegt einen Texturbereich hinzu aus welchem ausschliesslich gezeichnet werden soll
-    int modelChangeDirection(uint32_t, uint32_t, glm::vec2);                                  // diese Funktion aendert eine Bewegungsrichtung
-    bool modelCheckCollision(uint32_t, uint32_t);                                             // diese Funktion prueft, ob zwei Models miteinander kollidieren
-    bool modelCheckFrameBoxCollision(uint32_t, uint32_t);                                     // diese Funktion prueft, ob die groben Kollisionsbereiche von zwei Models miteinander kollidieren
-    int modelClearClones(uint32_t);                                                           // diese Funktion loescht alle Clones des Models
-    int modelCreate(uint32_t);                                                                // diese Funktion erzeugt ein Model mit Hilfe einer eindeutigen ID
-    int modelCreateClone(uint32_t, uint32_t);                                                 // diese Funktion erstellt einen Clone fuer ein Model
-    int modelCreateSurface(uint32_t, uint32_t, const char*);                                  // diese Funktion erstellt ein Surface aus einem Bild, um mit den Pixeldaten direkt arbeiten zu koennen
-    int modelCreateTexture(uint32_t, uint32_t, const char*);                                  // diese Funktion erzeugt eine Textur, alle Texturen sollten die selbe Groesse haben, wegen des groben Kollisionsbereiches!
-    int modelDelete(uint32_t);                                                                // diese Funktion loescht ein Model wieder
-    int modelDeleteSurface(uint32_t, uint32_t);                                               // diese Funktion loescht das Surface einer Textur wieder
-    int modelFadeTexture(uint32_t, uint32_t, double);                                         // diese Funktion blendet eine Textur ein oder aus
-    int modelFocusTextureSourceRect(uint32_t, uint32_t, uint32_t);                            // diese Funktion setzt den Fokus auf einen Texturbereich, sodass nur dieser gezeichnet werden soll
-    uint32_t modelGetAmountOfCollisionBoxes(uint32_t);                                        // diese Funktion gibt die Anzahl an Kollisionsbereichen zurueck
-    uint32_t modelGetAmountOfTextureSourceRectangles(uint32_t, uint32_t);                     // diese Funktion gibt die Anzahl an Texturbereichen einer Textur zurueck
-    LECollBox_d modelGetCollisionBox(uint32_t, uint32_t);                                     // diese Funktion gibt einen bestimmten Kollisionsbereich zurueck
-    glm::vec2 modelGetDirection(uint32_t, uint32_t);                                          // diese Funktion gibt eine Bewegungsrichtung zurueck
-    LECollBox_d modelGetFrameBox(uint32_t);                                                   // diese Funktion gibt den groben Kollisionsbereich eines Models zurueck
-    Color modelGetPixelRGBA(uint32_t, uint32_t, uint32_t, uint32_t);                          // diese Funktion gibt einen Pixel einer Textur zurueck, modelCreateSurface() muss vorher aufgerufen worden sein
-    glm::vec2 modelGetPositionD(uint32_t);                                                    // diese Funktion gibt die genauen Positionswerte des Models zurueck
-    SDL_Point modelGetPosition(uint32_t);                                                     // diese Funktion gibt die Position eines Models zurueck
-    SDL_Point modelGetSize(uint32_t);                                                         // diese Funktion gibt die Groesse eines Models zurueck
-    double modelGetSizeFactor(uint32_t);                                                      // diese Funktion gibt den Faktor der Modelgroesse zurueck
-    SDL_Surface * modelGetSurface(uint32_t, uint32_t);                                        // diese Funktion gibt einen Zeiger auf ein erstelltes Surface zurueck
-    double modelGetTextureAlpha(uint32_t, uint32_t);                                          // diese Funktion gibt den Alphawert einer Textur zurueck
-    bool modelGetVisible(uint32_t);                                                           // diese Funktion gibt visible zurueck
-    uint32_t modelGetZindex(uint32_t);                                                        // diese Funktion gibt den Z-index des Models zurueck
-    int modelMoveDirection(uint32_t, uint32_t);                                               // diese Funktion bewegt ein Model in eine vorher angelegte Richtung
-    int modelRotate(uint32_t, double);                                                        // diese Funktion rotiert ein Model um die angegebene Gradzahl pro Sekunde
-    int modelRotateDir(uint32_t, uint32_t, double);                                           // diese Funktion rotiert eine Bewegungsrichtung um eine angegebene Gradzahl pro Sekunde
-    int modelRotateOnce(uint32_t, double);                                                    // diese Funktion rotiert ein Model einmalig
-    int modelSetClonePosition(uint32_t, uint32_t, glm::vec2);                                 // diese Funktion setzt die Position eines Model Clones
-    int modelSetCloneVisible(uint32_t, uint32_t, bool);                                       // diese Funktion macht einen Clone eines Models sichtbar oder unsichtbar
-    int modelSetPosition(uint32_t, double, double);                                           // diese Funktion setzt die Position eines Models in NDC
-    int modelSetSize(uint32_t, int, int);                                                     // diese Funktion legt die Groesse des Models fest
-    double modelSetSize(uint32_t, double);                                                    // diese Funktion legt die Groesse des Models in Prozent fest und gibt den Vergroesserungsfaktor zurueck, der dabei entsteht
-    int modelSetSizeFactor(uint32_t, double);                                                 // diese Funktion setzt den Faktor der Modelgroesse
-    int modelSetTextureActive(uint32_t, uint32_t, bool);                                      // diese Funktion left fest, ob eine Textur sichtbar ist, oder nicht
-    int modelSetTextureAlpha(uint32_t, uint32_t, uint8_t);                                    // diese Funktion setzt einen Alphawert fuer eine Textur
-    int modelSetTextureZindex(uint32_t, uint32_t, uint32_t);                                  // diese Funktion setzt den zindex einer Textur innerhalb eines Models
-    int modelSetVisible(uint32_t, bool);                                                      // diese Funktion setzt ein Model auf sichtbar oder unsichtbar
-    int modelSetZindex(uint32_t, uint32_t);                                                   // diese Funktion setzt den zindex eines Models, 0 nicht erlaubt
-    bool modelTextureExists(uint32_t, uint32_t);                                              // diese Funktion prueft, ob eine Modeltextur ID existiert
+    int modelAddCollisionRect(uint32_t, uint32_t, SDL_Rect);                                  // (TS) diese Funktion fuegt eine Kollisionsbereich in Form eines Rechteckes hinzu
+    int modelAddDirection(uint32_t, uint32_t, glm::vec2);                                     // (TS) diese Funktion legt eine Bewegungsrichtung fuer ein Model an
+    int modelAddTextureSourceRect(uint32_t, uint32_t, uint32_t, int, int, int, int);          // (TS) diese Funktion fuegt einen Texturbereich hinzu aus welchem ausschliesslich gezeichnet werden soll
+    int modelChangeDirection(uint32_t, uint32_t, glm::vec2);                                  // (TS) diese Funktion aendert eine Bewegungsrichtung
+    bool modelCheckCollision(uint32_t, uint32_t);                                             // (TS) diese Funktion prueft, ob zwei Models miteinander kollidieren
+    bool modelCheckFrameBoxCollision(uint32_t, uint32_t);                                     // (TS) diese Funktion prueft, ob die groben Kollisionsbereiche von zwei Models miteinander kollidieren
+    int modelClearClones(uint32_t);                                                           // (TS) diese Funktion loescht alle Clones des Models
+    int modelCreate(uint32_t);                                                                // (TS) diese Funktion erzeugt ein Model mit Hilfe einer eindeutigen ID
+    int modelCreateClone(uint32_t, uint32_t);                                                 // (TS) diese Funktion erstellt einen Clone fuer ein Model
+    int modelCreateSurface(uint32_t, uint32_t, const char*);                                  // (TS) diese Funktion erstellt ein Surface aus einem Bild, um mit den Pixeldaten direkt arbeiten zu koennen
+    int modelCreateTexture(uint32_t, uint32_t, const char*);                                  // (TS) diese Funktion erzeugt eine Textur, alle Texturen sollten die selbe Groesse haben, wegen des groben Kollisionsbereiches!
+    int modelDelete(uint32_t);                                                                // (TS) diese Funktion loescht ein Model wieder
+    int modelDeleteSurface(uint32_t, uint32_t);                                               // (TS) diese Funktion loescht das Surface einer Textur wieder
+    int modelFadeTexture(uint32_t, uint32_t, double);                                         // (TS) diese Funktion blendet eine Textur ein oder aus
+    int modelFocusTextureSourceRect(uint32_t, uint32_t, uint32_t);                            // (TS) diese Funktion setzt den Fokus auf einen Texturbereich, sodass nur dieser gezeichnet werden soll
+    uint32_t modelGetAmountOfCollisionBoxes(uint32_t);                                        // (TS) diese Funktion gibt die Anzahl an Kollisionsbereichen zurueck
+    uint32_t modelGetAmountOfTextureSourceRectangles(uint32_t, uint32_t);                     // (TS) diese Funktion gibt die Anzahl an Texturbereichen einer Textur zurueck
+    LECollBox_d modelGetCollisionBox(uint32_t, uint32_t);                                     // (TS) diese Funktion gibt einen bestimmten Kollisionsbereich zurueck
+    glm::vec2 modelGetDirection(uint32_t, uint32_t);                                          // (TS) diese Funktion gibt eine Bewegungsrichtung zurueck
+    LECollBox_d modelGetFrameBox(uint32_t);                                                   // (TS) diese Funktion gibt den groben Kollisionsbereich eines Models zurueck
+    Color modelGetPixelRGBA(uint32_t, uint32_t, uint32_t, uint32_t);                          // (TS) diese Funktion gibt einen Pixel einer Textur zurueck, modelCreateSurface() muss vorher aufgerufen worden sein
+    glm::vec2 modelGetPositionD(uint32_t);                                                    // (TS) diese Funktion gibt die genauen Positionswerte des Models zurueck
+    SDL_Point modelGetPosition(uint32_t);                                                     // (TS) diese Funktion gibt die Position eines Models zurueck
+    SDL_Point modelGetSize(uint32_t);                                                         // (TS) diese Funktion gibt die Groesse eines Models zurueck
+    double modelGetSizeFactor(uint32_t);                                                      // (TS) diese Funktion gibt den Faktor der Modelgroesse zurueck
+    SDL_Surface * modelGetSurface(uint32_t, uint32_t);                                        // (TS) diese Funktion gibt einen Zeiger auf ein erstelltes Surface zurueck
+    double modelGetTextureAlpha(uint32_t, uint32_t);                                          // (TS) diese Funktion gibt den Alphawert einer Textur zurueck
+    bool modelGetVisible(uint32_t);                                                           // (TS) diese Funktion gibt visible zurueck
+    uint32_t modelGetZindex(uint32_t);                                                        // (TS) diese Funktion gibt den Z-index des Models zurueck
+    int modelMoveDirection(uint32_t, uint32_t);                                               // (TS) diese Funktion bewegt ein Model in eine vorher angelegte Richtung
+    void modelPrintBufferList();                                                              // (TS) diese Funktion gibt die komplette Buffer Model liste aus
+    void modelPrintList();                                                                    // (TS) diese Funktion gibt die komplette original Model liste aus
+    int modelRotate(uint32_t, double);                                                        // (TS) diese Funktion rotiert ein Model um die angegebene Gradzahl pro Sekunde
+    int modelRotateDir(uint32_t, uint32_t, double);                                           // (TS) diese Funktion rotiert eine Bewegungsrichtung um eine angegebene Gradzahl pro Sekunde
+    int modelRotateOnce(uint32_t, double);                                                    // (TS) diese Funktion rotiert ein Model einmalig
+    int modelSetClonePosition(uint32_t, uint32_t, glm::vec2);                                 // (TS) diese Funktion setzt die Position eines Model Clones
+    int modelSetCloneVisible(uint32_t, uint32_t, bool);                                       // (TS) diese Funktion macht einen Clone eines Models sichtbar oder unsichtbar
+    int modelSetPosition(uint32_t, double, double);                                           // (TS) diese Funktion setzt die Position eines Models in NDC
+    int modelSetSize(uint32_t, int, int);                                                     // (TS) diese Funktion legt die Groesse des Models fest
+    double modelSetSize(uint32_t, double);                                                    // (TS) diese Funktion legt die Groesse des Models in Prozent fest und gibt den Vergroesserungsfaktor zurueck, der dabei entsteht
+    int modelSetSizeFactor(uint32_t, double);                                                 // (TS) diese Funktion setzt den Faktor der Modelgroesse
+    int modelSetTextureActive(uint32_t, uint32_t, bool);                                      // (TS) diese Funktion left fest, ob eine Textur sichtbar ist, oder nicht
+    int modelSetTextureAlpha(uint32_t, uint32_t, uint8_t);                                    // (TS) diese Funktion setzt einen Alphawert fuer eine Textur
+    int modelSetTextureZindex(uint32_t, uint32_t, uint32_t);                                  // (TS) diese Funktion setzt den zindex einer Textur innerhalb eines Models
+    int modelSetVisible(uint32_t, bool);                                                      // (TS) diese Funktion setzt ein Model auf sichtbar oder unsichtbar
+    int modelSetZindex(uint32_t, uint32_t);                                                   // (TS) diese Funktion setzt den zindex eines Models, 0 nicht erlaubt
+    bool modelTextureExists(uint32_t, uint32_t);                                              // (TS) diese Funktion prueft, ob eine Modeltextur ID existiert
+    void modelUsingThread(bool);                                                              // (TS) diese Funktion sperrt die Listen, falls der User Model Funktionen in einem Thread benutzen moechte
 
     //////////////////////////////
     // point
     //////////////////////////////
 
-    int pointAddDirection(uint32_t, uint32_t, glm::vec2);                                     // diese Funktion fuegt eine Bewegungsrichtung hinzu
-    int pointCreate(uint32_t);                                                                // diese Funktion fuegt einen Punkt hinzu
-    int pointDelete(uint32_t);                                                                // diese Funktion loescht einen Punkt
-    int pointFade(uint32_t, double);                                                          // diese Funktion blendet einen Punkt ein oder aus
-    Color pointGetColor(uint32_t);                                                            // diese Funktion gibt die Farbe eines Punktes zurueck
-    SDL_Point pointGetPosition(uint32_t);                                                     // diese Funktion gibt die Position eines Punktes zurueck
-    int pointMoveDirection(uint32_t, uint32_t);                                               // diese Funktion bewegt einen Punkt in eine zuvor erstelle Bewegungsrichtung
-    int pointRotate(uint32_t, double, SDL_Point);                                             // diese Funktion laesst einen Punkt um einen bestimmten Punkt rotieren
-    int pointSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                          // diese Funktion legt die Farbe eines Punktes fest
-    int pointSetPosition(uint32_t, int, int);                                                 // diese Funktion setzt die Position eines Punktes
-    int pointSetVisible(uint32_t, bool);                                                      // diese Funktion macht einen Punkt sichtbar oder unsichtbar
-    int pointSetZindex(uint32_t, uint32_t);                                                   // diese Funktion setzt den Z-index eines Punktes
+    int pointAddDirection(uint32_t, uint32_t, glm::vec2);                                     // (TS) diese Funktion fuegt eine Bewegungsrichtung hinzu
+    int pointCreate(uint32_t);                                                                // (TS) diese Funktion fuegt einen Punkt hinzu
+    int pointDelete(uint32_t);                                                                // (TS) diese Funktion loescht einen Punkt
+    int pointFade(uint32_t, double);                                                          // (TS) diese Funktion blendet einen Punkt ein oder aus
+    Color pointGetColor(uint32_t);                                                            // (TS) diese Funktion gibt die Farbe eines Punktes zurueck
+    SDL_Point pointGetPosition(uint32_t);                                                     // (TS) diese Funktion gibt die Position eines Punktes zurueck
+    int pointMoveDirection(uint32_t, uint32_t);                                               // (TS) diese Funktion bewegt einen Punkt in eine zuvor erstelle Bewegungsrichtung
+    void pointPrintBufferList();                                                              // (TS) diese Funktion gibt die komplette Buffer Punkte liste aus
+    void pointPrintList();                                                                    // (TS) diese Funktion gibt die komplette original Punkte liste aus
+    int pointRotate(uint32_t, double, SDL_Point);                                             // (TS) diese Funktion laesst einen Punkt um einen bestimmten Punkt rotieren
+    int pointSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                          // (TS) diese Funktion legt die Farbe eines Punktes fest
+    int pointSetPosition(uint32_t, int, int);                                                 // (TS) diese Funktion setzt die Position eines Punktes
+    int pointSetVisible(uint32_t, bool);                                                      // (TS) diese Funktion macht einen Punkt sichtbar oder unsichtbar
+    int pointSetZindex(uint32_t, uint32_t);                                                   // (TS) diese Funktion setzt den Z-index eines Punktes
+    void pointUsingThread(bool);                                                              // (TS) diese Funktion sperrt die Listen, falls der User Punkt Funktionen in einem Thread benutzen moechte
 
     //////////////////////////////
     // sound
     //////////////////////////////
 
-    int soundCreate(uint32_t);                                                                // diese Funktion fuegt einen Sound hinzu
-    int soundDelete(uint32_t);                                                                // diese Funktion loescht einen Sound
-    int soundFadeIn(uint32_t, int);                                                           // diese Funktion blendet einen Kanal oder alle Kanaele ein
-    void soundFadeOut(int);                                                                   // diese Funktion blendet einen Kanal oder alle Kanaele aus
-    int soundLoadWAV(uint32_t, const char*);                                                  // diese Funktion laedt eine WAV Datei fuer einen erstellten Sound
-    int soundLock(uint32_t, bool);                                                            // diese Funktion sperrt einen Sound, sodass er hier nach nicht wieder gespielt wird, bis er entsperrt ist
-    void soundPause();                                                                        // diese Funktion pausiert einen Sound
-    int soundPlay(uint32_t, int);                                                             // diese Funktion spielt einen Sound ab
-    void soundSetVolume(uint8_t);                                                             // diese Funktion setzt die Lautstaerke
+    int soundCreate(uint32_t);                                                                // (TS) diese Funktion fuegt einen Sound hinzu
+    int soundDelete(uint32_t);                                                                // (TS) diese Funktion loescht einen Sound
+    int soundFadeIn(uint32_t, int);                                                           // (TS) diese Funktion blendet einen Kanal oder alle Kanaele ein
+    void soundFadeOut(int);                                                                   // (TS) diese Funktion blendet einen Kanal oder alle Kanaele aus
+    int soundLoadWAV(uint32_t, const char*);                                                  // (TS) diese Funktion laedt eine WAV Datei fuer einen erstellten Sound
+    int soundLock(uint32_t, bool);                                                            // (TS) diese Funktion sperrt einen Sound, sodass er hier nach nicht wieder gespielt wird, bis er entsperrt ist
+    void soundPause();                                                                        // (TS) diese Funktion pausiert einen Sound
+    int soundPlay(uint32_t, int);                                                             // (TS) diese Funktion spielt einen Sound ab
+    void soundPrintBufferList();                                                              // (TS) diese Funktion gibt die komplette Buffer sound liste aus
+    void soundPrintList();                                                                    // (TS) diese Funktion gibt die komplette original sound liste aus
+    void soundSetVolume(uint8_t);                                                             // (TS) diese Funktion setzt die Lautstaerke
+    void soundUsingThread(bool);                                                              // (TS) diese Funktion sperrt die Listen, falls der User sound Funktionen in einem Thread benutzen moechte
 
     //////////////////////////////
     // text
     //////////////////////////////
 
-    int textAddDirection(uint32_t, uint32_t, glm::vec2);                                      // diese Funktion fuegt einem Text eine Bewegungsrichtung hinzu
-    int textAddLetter(uint32_t, uint8_t);                                                     // diese Funktion fuegt einen Buchstaben an das Ende hinzu
-    int textAddString(uint32_t, const char*);                                                 // diese Funktion fuegt einen kompletten String dem Text hinzu
-    int textClear(uint32_t);                                                                  // diese Funktion loescht den kompletten Text
-    int textCreate(uint32_t);                                                                 // diese Funktion fuegt einen UTF8 Text hinzu
-    int textDelete(uint32_t);                                                                 // diese Funktion loescht einen Text
-    int textFade(uint32_t, double);                                                           // diese Funktion blendet einen Text ein oder aus
-    double textGetAlpha(uint32_t);                                                            // diese Funktion gibt den Alpha Wert eines Textes zurueck
-    SDL_Point textGetPosition(uint32_t);                                                      // diese Funktion gibt die Position des Textes zurueck
-    SDL_Point textGetSize(uint32_t);                                                          // diese Funktion gibt die Dimensionen des Textes zurueck
-    bool textGetVisible(uint32_t);                                                            // diese Funktion prueft, ob ein Text sichtbar ist
-    int textMoveDirection(uint32_t, uint32_t);                                                // diese Funktion bewegt eine Text in eine zuvor erstellte Bewegungsrichtung
-    int textPrepareForDrawing(uint32_t);                                                      // diese Funktion bereitet einen Text auf das Zeichnen vor, ein Text kann anschliessend gezeichnet werden
-    int textRelateFont(uint32_t, uint32_t);                                                   // diese Funktion ordnet dem Text einen Font zu, muss vor textPrepareForDrawing() aufgerufen werden
-    int textSetAlpha(uint32_t, uint8_t);                                                      // diese Funktion setzt den Alphawert eines Textes, muss nach textPrepareForDrawing() aufgerufen werden!
-    int textSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                           // diese Funktion setzt die Farbe eines Textes, muss vor textPrepareForDrawing() aufgerufen werden
-    int textSetPosition(uint32_t, int, int);                                                  // diese Funktion setzt die Position eines Textes
-    int textSetVisible(uint32_t, bool);                                                       // diese Funktion sagt aus, ob ein Text sichtbar ist, oder nicht
-    int textSetZindex(uint32_t, uint32_t);                                                    // diese Funktion setzt den z-index fuer einen Text, 0 nicht erlaubt
-    int textSubmit(uint32_t);                                                                 // diese Funktion erstellt aus allen Buchstaben einen Text
+    int textAddDirection(uint32_t, uint32_t, glm::vec2);                                      // (TS) diese Funktion fuegt einem Text eine Bewegungsrichtung hinzu
+    int textAddLetter(uint32_t, uint8_t);                                                     // (TS) diese Funktion fuegt einen Buchstaben an das Ende hinzu
+    int textAddString(uint32_t, const char*);                                                 // (TS) diese Funktion fuegt einen kompletten String dem Text hinzu
+    int textClear(uint32_t);                                                                  // (TS) diese Funktion loescht den kompletten Text
+    int textCreate(uint32_t);                                                                 // (TS) diese Funktion fuegt einen UTF8 Text hinzu
+    int textDelete(uint32_t);                                                                 // (TS) diese Funktion loescht einen Text
+    int textFade(uint32_t, double);                                                           // (TS) diese Funktion blendet einen Text ein oder aus
+    double textGetAlpha(uint32_t);                                                            // (TS) diese Funktion gibt den Alpha Wert eines Textes zurueck
+    SDL_Point textGetPosition(uint32_t);                                                      // (TS) diese Funktion gibt die Position des Textes zurueck
+    SDL_Point textGetSize(uint32_t);                                                          // (TS) diese Funktion gibt die Dimensionen des Textes zurueck
+    bool textGetVisible(uint32_t);                                                            // (TS) diese Funktion prueft, ob ein Text sichtbar ist
+    int textMoveDirection(uint32_t, uint32_t);                                                // (TS) diese Funktion bewegt eine Text in eine zuvor erstellte Bewegungsrichtung
+    int textPrepareForDrawing(uint32_t);                                                      // (TS) diese Funktion bereitet einen Text auf das Zeichnen vor, ein Text kann anschliessend gezeichnet werden
+    void textPrintBufferList();                                                               // (TS) diese Funktion gibt die komplette Buffer text liste aus
+    void textPrintList();                                                                     // (TS) diese Funktion gibt die komplette original text liste aus
+    int textRelateFont(uint32_t, uint32_t);                                                   // (TS) diese Funktion ordnet dem Text einen Font zu, muss vor textPrepareForDrawing() aufgerufen werden
+    int textSetAlpha(uint32_t, uint8_t);                                                      // (TS) diese Funktion setzt den Alphawert eines Textes, muss nach textPrepareForDrawing() aufgerufen werden!
+    int textSetColor(uint32_t, uint8_t, uint8_t, uint8_t, uint8_t);                           // (TS) diese Funktion setzt die Farbe eines Textes, muss vor textPrepareForDrawing() aufgerufen werden
+    int textSetPosition(uint32_t, int, int);                                                  // (TS) diese Funktion setzt die Position eines Textes
+    int textSetVisible(uint32_t, bool);                                                       // (TS) diese Funktion sagt aus, ob ein Text sichtbar ist, oder nicht
+    int textSetZindex(uint32_t, uint32_t);                                                    // (TS) diese Funktion setzt den z-index fuer einen Text, 0 nicht erlaubt
+    int textSubmit(uint32_t);                                                                 // (TS) diese Funktion erstellt aus allen Buchstaben einen Text
+    void textUsingThread(bool);                                                               // (TS) diese Funktion sperrt die Listen, falls der User sound Funktionen in einem Thread benutzen moechte
 
     //////////////////////////////
     // time event
     //////////////////////////////
 
-    int timeEventCreate(uint32_t, uint32_t);                                                  // diese Funktion erstellt ein Zeitereignis
-    int timeEventDelete(uint32_t);                                                            // diese Funktion loescht ein Zeitereignis
-    uint32_t timeEventGetStamp(uint32_t);                                                     // diese Funktion gibt den Zeitstempel fuer das Zeitereignis zurueck
-    bool timeEventReached(uint32_t);                                                          // diese Funktion prueft, ob ein Zeitereignis bereits erreicht wurde
-    int timeEventReset(uint32_t, uint32_t);                                                   // diese Funktion setzt den Wert eines Zeitereignisses neu
-    int timeEventUpdate(uint32_t, uint32_t);                                                  // diese Funktion verlaengert ein Zeitereignis um eine Anzahl von Millisekunden
-    void timeEventUpdateValidALL(uint32_t);                                                   // diese Funktion verlaengert alle noch nicht erreichten Zeitereignisse um eine Anzahl von Millisekunden
+    int timeEventCreate(uint32_t, uint32_t);                                                  // (TS) diese Funktion erstellt ein Zeitereignis
+    int timeEventDelete(uint32_t);                                                            // (TS) diese Funktion loescht ein Zeitereignis
+    uint32_t timeEventGetStamp(uint32_t);                                                     // (TS) diese Funktion gibt den Zeitstempel fuer das Zeitereignis zurueck
+    void timeEventPrintBufferList();                                                          // (TS) diese Funktion gibt die komplette Buffer time event liste aus 
+    void timeEventPrintList();                                                                // (TS) diese Funktion gibt die komplette original time event liste aus 
+    bool timeEventReached(uint32_t);                                                          // (TS) diese Funktion prueft, ob ein Zeitereignis bereits erreicht wurde
+    int timeEventReset(uint32_t, uint32_t);                                                   // (TS) diese Funktion setzt den Wert eines Zeitereignisses neu
+    int timeEventUpdate(uint32_t, uint32_t);                                                  // (TS) diese Funktion verlaengert ein Zeitereignis um eine Anzahl von Millisekunden
+    void timeEventUpdateValidALL(uint32_t);                                                   // (TS) diese Funktion verlaengert alle noch nicht erreichten Zeitereignisse um eine Anzahl von Millisekunden
+    void timeEventUsingThread(bool);                                                          // (TS) diese Funktion sperrt die Listen, falls der User timeEvent Funktionen in einem Thread benutzen moechte
 
     //////////////////////////////
     // video

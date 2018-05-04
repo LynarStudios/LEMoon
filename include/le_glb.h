@@ -3,10 +3,11 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            13.04.2018
+  updated:            04.05.2018
 */
 
 #include <SDL.h>
+#include <iostream>
 #include <mutex>
 using namespace std;
 //#include "theoraplay.h"
@@ -107,7 +108,7 @@ struct SourceRect
 typedef struct SNotify
 {
   bool notifyByEngine;
-  bool notifyByUser;
+  bool notifyByUser;    // must be false to merge lists, otherwise the user is using lists at the current stage
 } Notify;
 
 #endif
