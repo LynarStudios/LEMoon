@@ -3,9 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               11.04.2018
-  updated:            18.04.2018
-
-  NOTES:              bufferHead muss beim mergen auch komplett zerlegt und auf nullptr gesetzt werden, pLast muss auch auf nullptr gesetzt werden
+  updated:            03.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -144,10 +142,8 @@ void LEMoon::fontCleanBufferList()
 
 void LEMoon::fontDeleteBufferList()
 {
-  if(this->pFontHeadBuffer != nullptr)
+  if(this->pFontHeadBuffer->pLeft == this->pFontHeadBuffer && this->pFontHeadBuffer->pRight == this->pFontHeadBuffer)
   {
-    this->pFontHeadBuffer->pLeft = this->pFontHeadBuffer;
-    this->pFontHeadBuffer->pRight = this->pFontHeadBuffer;
     delete this->pFontHeadBuffer;
     this->pFontHeadBuffer = nullptr;
   }
@@ -177,6 +173,7 @@ int LEMoon::fontMerge()
       this->fontCleanBufferList();
       this->fontMergeLists();
       this->fontDeleteBufferList();
+      this->fontDeleteOriginalList();
       this->memory.pLastFont = nullptr;
       this->notifyFont.notifyByEngine = LE_FALSE;
     }
@@ -219,12 +216,23 @@ void LEMoon::fontMergeLists()
     while(pCurrent != this->pFontHeadBuffer)
     {
       pNext = pCurrent->pRight;
+      pCurrent->pLeft->pRight = pCurrent->pRight;
+      pCurrent->pRight->pLeft = pCurrent->pLeft;
       pCurrent->pRight = this->pFontHead;
       pCurrent->pLeft = this->pFontHead->pLeft;
       this->pFontHead->pLeft->pRight = pCurrent;
       this->pFontHead->pLeft = pCurrent;
       pCurrent = pNext;
     }
+  }
+}
+
+void LEMoon::fontDeleteOriginalList()
+{
+  if(this->pFontHead->pLeft == this->pFontHead && this->pFontHead->pRight == this->pFontHead)
+  {
+    delete this->pFontHead;
+    this->pFontHead = nullptr;
   }
 }
 

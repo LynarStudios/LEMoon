@@ -3,10 +3,11 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            18.04.2018
+  updated:            04.05.2018
 */
 
 #include "../include/le_moon.h"
+#include "../include/le_glb.h"
 
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
@@ -32,6 +33,21 @@ void LEMoon::memoryClearTimeEvents()
 
     delete this->pTimeEventHead;
     this->pTimeEventHead = nullptr;
+  }
+
+  if(this->pTimeEventHeadBuffer != nullptr)
+  {
+    pCurrent = this->pTimeEventHeadBuffer->pRight;
+
+    while(pCurrent != this->pTimeEventHeadBuffer)
+    {
+      pNext = pCurrent->pRight;
+      delete pCurrent;
+      pCurrent = pNext;
+    }
+
+    delete this->pTimeEventHeadBuffer;
+    this->pTimeEventHeadBuffer = nullptr;
   }
 }
 
@@ -63,7 +79,24 @@ void LEMoon::memoryClearFonts()
 
   // buffer
 
-  this->fontDeleteBufferList();
+  if(this->pFontHeadBuffer != nullptr)
+  {
+    pCurrent = this->pFontHeadBuffer->pRight;
+
+    while(pCurrent != this->pFontHeadBuffer)
+    {
+      pNext = pCurrent->pRight;
+
+      if(pCurrent->pFont != nullptr)
+        {TTF_CloseFont(pCurrent->pFont);}
+
+      delete pCurrent;
+      pCurrent = pNext;
+    }
+
+    delete this->pFontHeadBuffer;
+    this->pFontHeadBuffer = nullptr;
+  }
 }
 
 void LEMoon::memoryClearSounds()
@@ -89,6 +122,25 @@ void LEMoon::memoryClearSounds()
     delete this->pSoundHead;
     this->pSoundHead = nullptr;
   }
+
+  if(this->pSoundHeadBuffer != nullptr)
+  {
+    pCurrent = this->pSoundHeadBuffer->pRight;
+
+    while(pCurrent != this->pSoundHeadBuffer)
+    {
+      pNext = pCurrent->pRight;
+
+      if(pCurrent->pSample != nullptr)
+        {Mix_FreeChunk(pCurrent->pSample);}
+
+      delete pCurrent;
+      pCurrent = pNext;
+    }
+
+    delete this->pSoundHeadBuffer;
+    this->pSoundHeadBuffer = nullptr;
+  }
 }
 
 void LEMoon::memoryClearTexts()
@@ -99,6 +151,8 @@ void LEMoon::memoryClearTexts()
   LinkedVec2 * pNextDirection = nullptr;
   LELetter * pCurrentLetter = nullptr;
   LELetter * pNextLetter = nullptr;
+
+  // original
 
   if(this->pTextHead != nullptr)
   {
@@ -167,6 +221,76 @@ void LEMoon::memoryClearTexts()
     delete this->pTextHead;
     this->pTextHead = nullptr;
   }
+
+  // buffer
+
+  if(this->pTextHeadBuffer != nullptr)
+  {
+    pCurrent = this->pTextHeadBuffer->pRight;
+
+    while(pCurrent != this->pTextHeadBuffer)
+    {
+      pNext = pCurrent->pRight;
+
+      // loesche Bewegungsrichtungen
+
+      if(pCurrent->pDirectionHead != nullptr)
+      {
+        pCurrentDirection = pCurrent->pDirectionHead->pRight;
+
+        while(pCurrentDirection != pCurrent->pDirectionHead)
+        {
+          pNextDirection = pCurrentDirection->pRight;
+          delete pCurrentDirection;
+          pCurrentDirection = pNextDirection;
+        }
+
+        delete pCurrent->pDirectionHead;
+        pCurrent->pDirectionHead = nullptr;
+      }
+
+      // loesche Buchstaben
+
+      if(pCurrent->pLetterHead != nullptr)
+      {
+        pCurrentLetter = pCurrent->pLetterHead->pRight;
+
+        while(pCurrentLetter != pCurrent->pLetterHead)
+        {
+          pNextLetter = pCurrentLetter->pRight;
+          delete pCurrentLetter;
+          pCurrentLetter = pNextLetter;
+        }
+
+        delete pCurrent->pLetterHead;
+        pCurrent->pLetterHead = nullptr;
+      }
+
+      // loesche Text
+
+      if(pCurrent->pText != nullptr)
+      {
+        delete [] pCurrent->pText;
+        pCurrent->pText = nullptr;
+      }
+
+      // loesche Textur
+
+      if(pCurrent->pTexture != nullptr)
+      {
+        SDL_DestroyTexture(pCurrent->pTexture);
+        pCurrent->pTexture = nullptr;
+      }
+
+      // loesche aktuellen Text
+
+      delete pCurrent;
+      pCurrent = pNext;
+    }
+
+    delete this->pTextHeadBuffer;
+    this->pTextHeadBuffer = nullptr;
+  }
 }
 
 void LEMoon::memoryClearPoints()
@@ -208,6 +332,41 @@ void LEMoon::memoryClearPoints()
     delete this->pPointHead;
     this->pPointHead = nullptr;
   }
+
+  // buffer
+
+  if(this->pPointHeadBuffer != nullptr)
+  {
+    pCurrent = this->pPointHeadBuffer->pRight;
+
+    while(pCurrent != this->pPointHeadBuffer)
+    {
+      pNext = pCurrent->pRight;
+
+      // loesche Bewegungsrichtungen
+
+      if(pCurrent->pDirectionHead != nullptr)
+      {
+        pCurrentDirection = pCurrent->pDirectionHead->pRight;
+
+        while(pCurrentDirection != pCurrent->pDirectionHead)
+        {
+          pNextDirection = pCurrentDirection->pRight;
+          delete pCurrentDirection;
+          pCurrentDirection = pNextDirection;
+        }
+
+        delete pCurrent->pDirectionHead;
+        pCurrent->pDirectionHead = nullptr;
+      }
+
+      delete pCurrent;
+      pCurrent = pNext;
+    }
+
+    delete this->pPointHeadBuffer;
+    this->pPointHeadBuffer = nullptr;
+  }
 }
 
 void LEMoon::memoryClearModels()
@@ -231,6 +390,25 @@ void LEMoon::memoryClearModels()
     delete this->pModelHead;
     this->pModelHead = nullptr;
   }
+
+  // buffer
+
+  if(this->pModelHeadBuffer != nullptr)
+  {
+    pCurrent = this->pModelHeadBuffer->pRight;
+
+    while(pCurrent != this->pModelHeadBuffer)
+    {
+      pNext = pCurrent->pRight;
+      delete pCurrent->pModel;
+      pCurrent->pModel = nullptr;
+      delete pCurrent;
+      pCurrent = pNext;
+    }
+
+    delete this->pModelHeadBuffer;
+    this->pModelHeadBuffer = nullptr;
+  }
 }
 
 void LEMoon::memoryClearLines()
@@ -251,6 +429,23 @@ void LEMoon::memoryClearLines()
 
     delete this->pLineHead;
     this->pLineHead = nullptr;
+  }
+
+  // buffer
+
+  if(this->pLineHeadBuffer != nullptr)
+  {
+    pCurrent = this->pLineHeadBuffer->pRight;
+
+    while(pCurrent != this->pLineHeadBuffer)
+    {
+      pNext = pCurrent->pRight;
+      delete pCurrent;
+      pCurrent = pNext;
+    }
+
+    delete this->pLineHeadBuffer;
+    this->pLineHeadBuffer = nullptr;
   }
 }
 
@@ -282,7 +477,7 @@ int LEMoon::drawWithZindex()
   if(this->pTextHead != nullptr)
   {
     pText = this->pTextHead->pRight;
-    zindex = mathMin(zindex, pModel->zindex);
+    zindex = mathMin(zindex, pText->zindex);
   }
 
   if(this->pLineHead != nullptr)
@@ -3008,6 +3203,19 @@ int LEMoon::merge()
 
   result = this->fontMerge();
 
+  if(!result)
+    {result = this->lineMerge();}
+  if(!result)
+    {result = this->modelMerge();}
+  if(!result)
+    {result = this->pointMerge();}
+  if(!result)
+    {result = this->soundMerge();}
+  if(!result)
+    {result = this->textMerge();}
+  if(!result)
+    {result = this->timeEventMerge();}
+
   return result;
 }
 
@@ -3024,12 +3232,15 @@ timestep(0.0f)
 {
   this->pWindow = nullptr;
   this->pRenderer = nullptr;
-  this->pTimeEventHead = nullptr;
-  this->pSoundHead = nullptr;
-  this->pTextHead = nullptr;
-  this->pPointHead = nullptr;
-  this->pModelHead = nullptr;
-  this->pLineHead = nullptr;
+
+  this->fontConstructor();
+  this->lineConstructor();
+  this->modelConstructor();
+  this->pointConstructor();
+  this->soundConstructor();
+  this->textConstructor();
+  this->timeEventConstructor();
+
   this->pVideoHead = nullptr;
 
   this->mouse.mouseX = 0;
@@ -3060,8 +3271,6 @@ timestep(0.0f)
 
   this->window.focusGained = LE_FALSE;
   this->prefPath = nullptr;
-
-  this->fontConstructor();
 }
 
 LEMoon::~LEMoon()
@@ -3199,14 +3408,22 @@ int LEMoon::init(const char * pAppName)
 
   if(!result)
   {
+    #ifdef LE_WINDOWS
+      system("cls");
+    #endif
+
+    #ifdef LE_LINUX
+      std::system("clear");
+    #endif
+
     printf("                        _..._\n");
     printf("                      .'   `::.\n");
     printf("                     :       :::\n");
     printf("Lynar Moon Engine    :       :::\n");
     printf("                     `.     .::'\n");
     printf("                       `-..:''\n\n\n");
-    printf("version:\t\t1.3.1\n");
-    printf("release-date:\t\t18.04.2018\n");
+    printf("version:\t\t1.4\n");
+    printf("release-date:\t\t04.05.2018\n");
     printf("website:\t\twww.lynarstudios.de\n");
     printf("\n");
     printf("author:\t\t\tPatrick-Christopher Mattulat\n");
