@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            04.05.2018
+  updated:            12.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -3422,8 +3422,8 @@ int LEMoon::init(const char * pAppName)
     printf("Lynar Moon Engine    :       :::\n");
     printf("                     `.     .::'\n");
     printf("                       `-..:''\n\n\n");
-    printf("version:\t\t1.4\n");
-    printf("release-date:\t\t04.05.2018\n");
+    printf("version:\t\t1.4.1\n");
+    printf("release-date:\t\t12.05.2018\n");
     printf("website:\t\twww.lynarstudios.de\n");
     printf("\n");
     printf("author:\t\t\tPatrick-Christopher Mattulat\n");
