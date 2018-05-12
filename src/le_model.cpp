@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            03.05.2018
+  updated:            12.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -704,6 +704,11 @@ int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
     
       result = LE_MDL_NOEXIST;
     }
+  }
+  else
+  {
+    if(pElem != nullptr)
+      {pElem->zindex = zindex;}
   }
 
   this->mtxModel.modelSetZindex.unlock();

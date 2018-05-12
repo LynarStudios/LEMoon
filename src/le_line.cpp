@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            03.05.2018
+  updated:            12.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -634,6 +634,11 @@ int LEMoon::lineSetZindex(uint32_t id, uint32_t zindex)
         delete [] pErrorString;
       #endif
     }
+  }
+  else
+  {
+    if(pLine != nullptr)
+      {pLine->zindex = zindex;}
   }
 
   this->mtxLine.lineSetZindex.unlock();
