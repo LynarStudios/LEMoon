@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04, g++ Compiler
   date:               29.05.2017
-  updated:            26.04.2018
+  updated:            12.05.2018
 */
 
 #include "../include/le_mdl.h"
@@ -488,8 +488,8 @@ int LEMdl::mdlDrawActiveTexture(SDL_Renderer * pRenderer)
   Texture * pElem = nullptr;
   SDL_Rect * pSourceRect = nullptr;
   SDL_Rect posSizeBuffer;
-  posSizeBuffer.w = this->rectPosSize.w * (int)this->sizeFactor;
-  posSizeBuffer.h = this->rectPosSize.h * (int)this->sizeFactor;
+  posSizeBuffer.w = (int)(this->rectPosSize.w * this->sizeFactor);
+  posSizeBuffer.h = (int)(this->rectPosSize.h * this->sizeFactor);
   posSizeBuffer.x = this->rectPosSize.x;
   posSizeBuffer.y = this->rectPosSize.y;
   Clone * pClone = nullptr;
@@ -664,8 +664,8 @@ double LEMdl::mdlSetSize(double percent, int screenWidth)
   CollisionRect * pCurrentCollRect = nullptr;
   double factor = percent / (((double) this->rectPosSize.w / (double) screenWidth) * 100.0f);
 
-  this->rectPosSize.w *= (int)factor;
-  this->rectPosSize.h *= (int)factor;
+  this->rectPosSize.w = (int)(this->rectPosSize.w * factor);
+  this->rectPosSize.h = (int)(this->rectPosSize.h * factor);
   this->updateFrameBox();
 
   this->mtxCollisionRect.lock();
@@ -920,8 +920,8 @@ int LEMdl::mdlRotateDir(uint32_t idDirection, double degree, double timestep)
 SDL_Point LEMdl::mdlGetSize()
 {
   SDL_Point size;
-  size.x = (int)this->sizeFactor * this->rectPosSize.w;
-  size.y = (int)this->sizeFactor * this->rectPosSize.h;
+  size.x = (int)(this->sizeFactor * this->rectPosSize.w);
+  size.y = (int)(this->sizeFactor * this->rectPosSize.h);
 
   return size;
 }
