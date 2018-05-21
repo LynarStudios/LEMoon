@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               11.04.2018
-  updated:            03.05.2018
+  updated:            21.05.2018
 */
 
 #ifndef H_LE_MUTEX
@@ -67,11 +67,6 @@ struct LEMutexLine
   bool lineCreateLockedByMerge;
   bool lineDeleteLockedByMerge;
   bool lineSetZindexLockedByMerge;
-
-  // locked by setZindex
-
-  bool originalLockedBySetZindex;
-  bool bufferLockedBySetZindex;
 };
 
 struct LEMutexModel
@@ -136,11 +131,6 @@ struct LEMutexModel
   bool modelCreateLockedByMerge;
   bool modelDeleteLockedByMerge;
   bool modelSetZindexLockedByMerge;
-
-  // locked by setZindex
-
-  bool originalLockedBySetZindex;
-  bool bufferLockedBySetZindex;
 };
 
 struct LEMutexPoint
@@ -173,11 +163,6 @@ struct LEMutexPoint
   bool pointCreateLockedByMerge;
   bool pointDeleteLockedByMerge;
   bool pointSetZindexLockedByMerge;
-
-  // locked by setZindex
-
-  bool originalLockedBySetZindex;
-  bool bufferLockedBySetZindex;
 };
 
 struct LEMutexSound
@@ -246,11 +231,6 @@ struct LEMutexText
   bool textCreateLockedByMerge;
   bool textDeleteLockedByMerge;
   bool textSetZindexLockedByMerge;
-
-  // locked by setZindex
-
-  bool originalLockedBySetZindex;
-  bool bufferLockedBySetZindex;
 };
 
 struct LEMutexTimeEvent
