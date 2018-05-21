@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            03.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -16,7 +16,7 @@
 
 LESound * LEMoon::soundGet(uint32_t id)
 {
-  this->mtxSound.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxSound.originalList);
   LESound * pRet = nullptr;
   LESound * pCurrent = nullptr;
 
@@ -42,13 +42,12 @@ LESound * LEMoon::soundGet(uint32_t id)
     }
   }
 
-  this->mtxSound.originalList.unlock();
   return pRet;
 }
 
 LESound * LEMoon::soundGetFromBuffer(uint32_t id)
 {
-  this->mtxSound.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxSound.bufferList);
   LESound * pRet = nullptr;
   LESound * pCurrent = nullptr;
 
@@ -74,7 +73,6 @@ LESound * LEMoon::soundGetFromBuffer(uint32_t id)
     }
   }
 
-  this->mtxSound.bufferList.unlock();
   return pRet;
 }
 
@@ -216,20 +214,119 @@ void LEMoon::soundCleanBufferList()
 
 void LEMoon::soundDeleteOriginalList()
 {
-  if(this->pSoundHead->pLeft == this->pSoundHead && this->pSoundHead->pRight == this->pSoundHead)
+  if(this->pSoundHead != nullptr)
   {
-    delete this->pSoundHead;
-    this->pSoundHead = nullptr;
+    if(this->pSoundHead->pLeft == this->pSoundHead && this->pSoundHead->pRight == this->pSoundHead)
+    {
+      delete this->pSoundHead;
+      this->pSoundHead = nullptr;
+    }
   }
 }
 
 void LEMoon::soundDeleteBufferList()
 {
-  if(this->pSoundHeadBuffer->pLeft == this->pSoundHeadBuffer && this->pSoundHeadBuffer->pRight == this->pSoundHeadBuffer)
+  if(this->pSoundHeadBuffer != nullptr)
   {
-    delete this->pSoundHeadBuffer;
-    this->pSoundHeadBuffer = nullptr;
+    if(this->pSoundHeadBuffer->pLeft == this->pSoundHeadBuffer && this->pSoundHeadBuffer->pRight == this->pSoundHeadBuffer)
+    {
+      delete this->pSoundHeadBuffer;
+      this->pSoundHeadBuffer = nullptr;
+    }
   }
+}
+
+uint32_t LEMoon::soundGenerateIDFromOriginalList()
+{
+  lock_guard<mutex> lockA(this->mtxSound.originalList);
+  uint32_t id = 0;
+  LESound * pStart = nullptr;
+  LESound * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pSoundHead != nullptr)
+  {
+    pStart = this->pSoundHead->pRight;
+
+    while(pStart != this->pSoundHead)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pSoundHead->pRight;
+
+      while(pCurrent != this->pSoundHead)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::soundGenerateIDFromBufferList()
+{
+  lock_guard<mutex> lockA(this->mtxSound.bufferList);
+  uint32_t id = 0;
+  LESound * pStart = nullptr;
+  LESound * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pSoundHeadBuffer != nullptr)
+  {
+    pStart = this->pSoundHeadBuffer->pRight;
+
+    while(pStart != this->pSoundHeadBuffer)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pSoundHeadBuffer->pRight;
+
+      while(pCurrent != this->pSoundHeadBuffer)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::soundGenerateID()
+{
+  uint32_t id;
+  id = this->soundGenerateIDFromOriginalList();
+
+  if(id == 0)
+    {id = this->soundGenerateIDFromBufferList();}
+  if(id == 0)
+    {id = 1;}
+
+  return id;
 }
 
 //////////////////////////////////////////////////////////
@@ -240,7 +337,7 @@ void LEMoon::soundDeleteBufferList()
 
 int LEMoon::soundCreate(uint32_t id)
 {
-  this->mtxSound.soundCreate.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundCreate);
   int result = LE_NO_ERROR;
   LESound * pNew = this->soundGet(id);
 
@@ -249,7 +346,7 @@ int LEMoon::soundCreate(uint32_t id)
 
   if(pNew == nullptr)
   {
-    this->mtxSound.originalList.lock();
+    lock_guard<mutex> lockB(this->mtxSound.originalList);
 
     if(this->pSoundHead == nullptr)
     {
@@ -259,8 +356,7 @@ int LEMoon::soundCreate(uint32_t id)
       this->pSoundHead->id = 1989;
     }
 
-    this->mtxSound.originalList.unlock();
-    this->mtxSound.bufferList.lock();
+    lock_guard<mutex> lockC(this->mtxSound.bufferList);
 
     if(this->pSoundHeadBuffer == nullptr)
     {
@@ -279,8 +375,6 @@ int LEMoon::soundCreate(uint32_t id)
     pNew->lock = LE_FALSE;
     pNew->markedAsDelete = LE_FALSE;
     pNew->pSample = nullptr;
-
-    this->mtxSound.bufferList.unlock();
   }
   else
   {
@@ -297,13 +391,51 @@ int LEMoon::soundCreate(uint32_t id)
   if(!result)
     {this->notifySound.notifyByEngine = LE_TRUE;}
 
-  this->mtxSound.soundCreate.unlock();
   return result;
+}
+
+uint32_t LEMoon::soundCreate()
+{
+  lock_guard<mutex> lockA(this->mtxSound.soundCreate);
+  uint32_t generatedID = this->soundGenerateID();
+  LESound * pNew = nullptr;
+
+  lock_guard<mutex> lockB(this->mtxSound.originalList);
+
+  if(this->pSoundHead == nullptr)
+  {
+    this->pSoundHead = new LESound;
+    this->pSoundHead->pLeft = this->pSoundHead;
+    this->pSoundHead->pRight = this->pSoundHead;
+    this->pSoundHead->id = 1989;
+  }
+
+  lock_guard<mutex> lockC(this->mtxSound.bufferList);
+
+  if(this->pSoundHeadBuffer == nullptr)
+  {
+    this->pSoundHeadBuffer = new LESound;
+    this->pSoundHeadBuffer->pLeft = this->pSoundHeadBuffer;
+    this->pSoundHeadBuffer->pRight = this->pSoundHeadBuffer;
+    this->pSoundHeadBuffer->id = 28092017;
+  }
+
+  pNew = new LESound;
+  pNew->pLeft = this->pSoundHeadBuffer->pLeft;
+  pNew->pRight = this->pSoundHeadBuffer;
+  this->pSoundHeadBuffer->pLeft->pRight = pNew;
+  this->pSoundHeadBuffer->pLeft = pNew;
+  pNew->id = generatedID;
+  pNew->lock = LE_FALSE;
+  pNew->markedAsDelete = LE_FALSE;
+  pNew->pSample = nullptr;
+
+  return generatedID;
 }
 
 int LEMoon::soundDelete(uint32_t id)
 {
-  this->mtxSound.soundDelete.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundDelete);
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
 
@@ -311,7 +443,10 @@ int LEMoon::soundDelete(uint32_t id)
     {pSound = this->soundGetFromBuffer(id);}
 
   if(pSound != nullptr)
-    {pSound->markedAsDelete = LE_TRUE;}
+  {
+    pSound->markedAsDelete = LE_TRUE;
+    this->notifySound.notifyByEngine = LE_TRUE;
+  }
   else
   {
     #ifdef LE_DEBUG
@@ -324,13 +459,12 @@ int LEMoon::soundDelete(uint32_t id)
     result = LE_SOUND_NOEXIST;
   }
 
-  this->mtxSound.soundDelete.unlock();
   return result;
 }
 
 int LEMoon::soundLoadWAV(uint32_t id, const char * pFile)
 {
-  this->mtxSound.soundLoadWAV.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundLoadWAV);
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
 
@@ -368,20 +502,18 @@ int LEMoon::soundLoadWAV(uint32_t id, const char * pFile)
     result = LE_SOUND_NOEXIST;
   }
 
-  this->mtxSound.soundLoadWAV.unlock();
   return result;
 }
 
 void LEMoon::soundSetVolume(uint8_t volume)
 {
-  this->mtxSound.soundSetVolume.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundSetVolume);
   Mix_Volume(-1, volume);
-  this->mtxSound.soundSetVolume.unlock();
 }
 
 int LEMoon::soundPlay(uint32_t id, int loops)
 {
-  this->mtxSound.soundPlay.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundPlay);
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
 
@@ -417,13 +549,12 @@ int LEMoon::soundPlay(uint32_t id, int loops)
     result = LE_SOUND_NOEXIST;
   }
 
-  this->mtxSound.soundPlay.unlock();
   return result;
 }
 
 int LEMoon::soundLock(uint32_t id, bool lock)
 {
-  this->mtxSound.soundLock.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundLock);
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
 
@@ -436,7 +567,7 @@ int LEMoon::soundLock(uint32_t id, bool lock)
   {
     #ifdef LE_DEBUG
       char * pErrorString = new char[256 + 1];
-      sprintf(pErrorString, "LEMoon::soundLock(%d)\n\n", id);
+      sprintf(pErrorString, "LEMoon::soundLock(%u)\n\n", id);
       this->printErrorDialog(LE_SOUND_NOEXIST, pErrorString);
       delete [] pErrorString;
     #endif
@@ -444,13 +575,12 @@ int LEMoon::soundLock(uint32_t id, bool lock)
     result = LE_SOUND_NOEXIST;
   }
 
-  this->mtxSound.soundLock.unlock();
   return result;
 }
 
 int LEMoon::soundFadeIn(uint32_t id, int ms)
 {
-  this->mtxSound.soundFadeIn.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundFadeIn);
   int result = LE_NO_ERROR;
   LESound * pSound = this->soundGet(id);
 
@@ -471,28 +601,25 @@ int LEMoon::soundFadeIn(uint32_t id, int ms)
     result = LE_SOUND_NOEXIST;
   }
 
-  this->mtxSound.soundFadeIn.unlock();
   return result;
 }
 
 void LEMoon::soundFadeOut(int ms)
 {
-  this->mtxSound.soundFadeOut.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundFadeOut);
   Mix_FadeOutChannel(-1, ms);
-  this->mtxSound.soundFadeOut.unlock();
 }
 
 void LEMoon::soundPause()
 {
-  this->mtxSound.soundPause.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundPause);
   Mix_HaltChannel(-1);
-  this->mtxSound.soundPause.unlock();
 }
 
 void LEMoon::soundPrintList()
 {
-  this->mtxSound.soundPrintList.lock();
-  this->mtxSound.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundPrintList);
+  lock_guard<mutex> lockB(this->mtxSound.originalList);
   LESound * pCurrent = nullptr;
 
   if(this->pSoundHead != nullptr)
@@ -501,26 +628,23 @@ void LEMoon::soundPrintList()
 
     if(pCurrent != nullptr)
     {
-      printf("ORIGINAL: Head: %d", this->pSoundHead->id);
+      printf("ORIGINAL: Head (Sound): %u", this->pSoundHead->id);
 
       while(pCurrent != this->pSoundHead)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pSoundHead->id);
+      printf(" <-> Head (Sound): %u\n\n", this->pSoundHead->id);
     }
   }
-
-  this->mtxSound.originalList.unlock();
-  this->mtxSound.soundPrintList.unlock();
 }
 
 void LEMoon::soundPrintBufferList()
 {
-  this->mtxSound.soundPrintBufferList.lock();
-  this->mtxSound.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundPrintBufferList);
+  lock_guard<mutex> lockB(this->mtxSound.bufferList);
   LESound * pCurrent = nullptr;
 
   if(this->pSoundHeadBuffer != nullptr)
@@ -529,25 +653,21 @@ void LEMoon::soundPrintBufferList()
 
     if(pCurrent != nullptr)
     {
-      printf("BUFFER: Head: %d", this->pSoundHeadBuffer->id);
+      printf("BUFFER: Head (Sound): %u", this->pSoundHeadBuffer->id);
 
       while(pCurrent != this->pSoundHeadBuffer)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pSoundHeadBuffer->id);
+      printf(" <-> Head (Sound): %u\n\n", this->pSoundHeadBuffer->id);
     }
   }
-
-  this->mtxSound.bufferList.unlock();
-  this->mtxSound.soundPrintBufferList.unlock();
 }
 
 void LEMoon::soundUsingThread(bool flag)
 {
-  this->mtxSound.soundUsingThread.lock();
+  lock_guard<mutex> lockA(this->mtxSound.soundUsingThread);
   this->notifySound.notifyByUser = flag;
-  this->mtxSound.soundUsingThread.unlock();
 }

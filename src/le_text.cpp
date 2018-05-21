@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            12.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -24,7 +24,7 @@ int LEMoon::textDraw(LEText * pText)
     {
       #ifdef LE_DEBUG
         char * pErrorString = new char[256 + 1];
-        sprintf(pErrorString, "LEMoon::textDraw(%d)\n\n", pText->id);
+        sprintf(pErrorString, "LEMoon::textDraw(%u)\n\n", pText->id);
         this->printErrorDialog(LE_SDL_RENDER_COPY_EX, pErrorString);
         delete [] pErrorString;
       #endif
@@ -38,7 +38,7 @@ int LEMoon::textDraw(LEText * pText)
 
 LEText * LEMoon::textGet(uint32_t id)
 {
-  this->mtxText.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxText.originalList);
   LEText * pRet = nullptr;
   LEText * pCurrent = nullptr;
 
@@ -64,13 +64,12 @@ LEText * LEMoon::textGet(uint32_t id)
     }
   }
 
-  this->mtxText.originalList.unlock();
   return pRet;
 }
 
 LEText * LEMoon::textGetFromBuffer(uint32_t id)
 {
-  this->mtxText.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxText.bufferList);
   LEText * pRet = nullptr;
   LEText * pCurrent = nullptr;
 
@@ -96,7 +95,6 @@ LEText * LEMoon::textGetFromBuffer(uint32_t id)
     }
   }
 
-  this->mtxText.bufferList.unlock();
   return pRet;
 }
 
@@ -121,7 +119,7 @@ uint32_t LEMoon::textGetAmount()
 
 LinkedVec2 * LEMoon::textGetDirection(LEText * pText, uint32_t idDirection)
 {
-  pText->direction.lock();
+  lock_guard<mutex> lockA(pText->direction);
   LinkedVec2 * pRet = nullptr;
   LinkedVec2 * pCurrent = nullptr;
 
@@ -141,7 +139,6 @@ LinkedVec2 * LEMoon::textGetDirection(LEText * pText, uint32_t idDirection)
     }
   }
 
-  pText->direction.unlock();
   return pRet;
 }
 
@@ -324,26 +321,29 @@ void LEMoon::textConstructor()
   this->mtxText.textCreateLockedByMerge = LE_FALSE;
   this->mtxText.textDeleteLockedByMerge = LE_FALSE;
   this->mtxText.textSetZindexLockedByMerge = LE_FALSE;
-
-  this->mtxText.originalLockedBySetZindex = LE_FALSE;
-  this->mtxText.bufferLockedBySetZindex = LE_FALSE;
 }
 
 void LEMoon::textDeleteOriginalList()
 {
-  if(this->pTextHead->pLeft == this->pTextHead && this->pTextHead->pRight == this->pTextHead)
+  if(this->pTextHead != nullptr)
   {
-    delete this->pTextHead;
-    this->pTextHead = nullptr;
+    if(this->pTextHead->pLeft == this->pTextHead && this->pTextHead->pRight == this->pTextHead)
+    {
+      delete this->pTextHead;
+      this->pTextHead = nullptr;
+    }
   }
 }
 
 void LEMoon::textDeleteBufferList()
 {
-  if(this->pTextHeadBuffer->pLeft == this->pTextHeadBuffer && this->pTextHeadBuffer->pRight == this->pTextHeadBuffer)
+  if(this->pTextHeadBuffer != nullptr)
   {
-    delete this->pTextHeadBuffer;
-    this->pTextHeadBuffer = nullptr;
+    if(this->pTextHeadBuffer->pLeft == this->pTextHeadBuffer && this->pTextHeadBuffer->pRight == this->pTextHeadBuffer)
+    {
+      delete this->pTextHeadBuffer;
+      this->pTextHeadBuffer = nullptr;
+    }
   }
 }
 
@@ -493,6 +493,99 @@ bool LEMoon::textFinishedAllMutexes(LEText * pText)
   return finished;
 }
 
+uint32_t LEMoon::textGenerateIDFromOriginalList()
+{
+  lock_guard<mutex> lockA(this->mtxText.originalList);
+  uint32_t id = 0;
+  LEText * pStart = nullptr;
+  LEText * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pTextHead != nullptr)
+  {
+    pStart = this->pTextHead->pRight;
+
+    while(pStart != this->pTextHead)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pTextHead->pRight;
+
+      while(pCurrent != this->pTextHead)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::textGenerateIDFromBufferList()
+{
+  lock_guard<mutex> lockA(this->mtxText.bufferList);
+  uint32_t id = 0;
+  LEText * pStart = nullptr;
+  LEText * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pTextHeadBuffer != nullptr)
+  {
+    pStart = this->pTextHeadBuffer->pRight;
+
+    while(pStart != this->pTextHeadBuffer)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pTextHeadBuffer->pRight;
+
+      while(pCurrent != this->pTextHeadBuffer)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::textGenerateID()
+{
+  uint32_t id;
+  id = this->textGenerateIDFromOriginalList();
+
+  if(id == 0)
+    {id = this->textGenerateIDFromBufferList();}
+  if(id == 0)
+    {id = 1;}
+
+  return id;
+}
+
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // public text
@@ -501,7 +594,7 @@ bool LEMoon::textFinishedAllMutexes(LEText * pText)
 
 int LEMoon::textCreate(uint32_t id)
 {
-  this->mtxText.textCreate.lock();
+  lock_guard<mutex> lockA(this->mtxText.textCreate);
   int result = LE_NO_ERROR;
   LEText * pNew = this->textGet(id);
 
@@ -510,7 +603,7 @@ int LEMoon::textCreate(uint32_t id)
 
   if(pNew == nullptr)
   {
-    this->mtxText.originalList.lock();
+    lock_guard<mutex> lockB(this->mtxText.originalList);
 
     if(this->pTextHead == nullptr)
     {
@@ -521,8 +614,7 @@ int LEMoon::textCreate(uint32_t id)
       this->pTextHead->id = 1989;
     }
 
-    this->mtxText.originalList.unlock();
-    this->mtxText.bufferList.lock();
+    lock_guard<mutex> lockC(this->mtxText.bufferList);
 
     if(this->pTextHeadBuffer == nullptr)
     {
@@ -552,8 +644,6 @@ int LEMoon::textCreate(uint32_t id)
     pNew->pDirectionHead = nullptr;
     pNew->position = glm::vec2(0.0f, 0.0f);
     pNew->markedAsDelete = LE_FALSE;
-
-    this->mtxText.bufferList.unlock();
   }
   else
   {
@@ -570,25 +660,74 @@ int LEMoon::textCreate(uint32_t id)
   if(!result)
     {this->notifyText.notifyByEngine = LE_TRUE;}
 
-  this->mtxText.textCreate.unlock();
   return result;
+}
+
+uint32_t LEMoon::textCreate()
+{
+  lock_guard<mutex> lockA(this->mtxText.textCreate);
+  uint32_t generatedID = this->textGenerateID();
+  LEText * pNew = nullptr;
+
+  lock_guard<mutex> lockB(this->mtxText.originalList);
+
+  if(this->pTextHead == nullptr)
+  {
+    this->pTextHead = new LEText;
+    this->pTextHead->pLeft = this->pTextHead;
+    this->pTextHead->pRight = this->pTextHead;
+    this->pTextHead->id = 1989;
+    this->pTextHead->zindex = 0;
+  }
+
+  lock_guard<mutex> lockC(this->mtxText.bufferList);
+
+  if(this->pTextHeadBuffer == nullptr)
+  {
+    this->pTextHeadBuffer = new LEText;
+    this->pTextHeadBuffer->pLeft = this->pTextHeadBuffer;
+    this->pTextHeadBuffer->pRight = this->pTextHeadBuffer;
+    this->pTextHeadBuffer->id = 28092017;
+    this->pTextHeadBuffer->zindex = 0;
+  }
+
+  pNew = new LEText;
+  pNew->pRight = this->pTextHeadBuffer;
+  pNew->pLeft = this->pTextHeadBuffer->pLeft;
+  this->pTextHeadBuffer->pLeft->pRight = pNew;
+  this->pTextHeadBuffer->pLeft = pNew;
+  pNew->id = generatedID;
+  pNew->pCurrentCursorPosition = nullptr;
+  pNew->pText = nullptr;
+  pNew->length = 0;
+  pNew->color = {255, 255, 255, 255};
+  pNew->zindex = 1;
+  pNew->visible = LE_TRUE;
+  pNew->pFont = nullptr;
+  pNew->pTexture = nullptr;
+  pNew->alpha = 255;
+  pNew->pLetterHead = nullptr;
+  pNew->pDirectionHead = nullptr;
+  pNew->position = glm::vec2(0.0f, 0.0f);
+  pNew->markedAsDelete = LE_FALSE;
+
+  return generatedID;
 }
 
 int LEMoon::textDelete(uint32_t id)
 {
-  this->mtxText.textDelete.lock();
+  lock_guard<mutex> lockA(this->mtxText.textDelete);
   int result = LE_NO_ERROR;
-  LinkedVec2 * pCurrentDirection = nullptr;
-  LinkedVec2 * pNextDirection = nullptr;
-  LELetter * pCurrentLetter = nullptr;
-  LELetter * pNextLetter = nullptr;
   LEText * pText = this->textGet(id);
 
   if(pText == nullptr)
     {pText = this->textGetFromBuffer(id);}
 
   if(pText != nullptr)
-    {pText->markedAsDelete = LE_TRUE;}
+  {
+    pText->markedAsDelete = LE_TRUE;
+    this->notifyText.notifyByEngine = LE_TRUE;
+  }
   else
   {
     #ifdef LE_DEBUG
@@ -601,13 +740,12 @@ int LEMoon::textDelete(uint32_t id)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textDelete.unlock();
   return result;
 }
 
 int LEMoon::textAddLetter(uint32_t id, uint8_t letter)
 {
-  this->mtxText.textAddLetter.lock();
+  lock_guard<mutex> lockA(this->mtxText.textAddLetter);
   int result = LE_NO_ERROR;
   LELetter * pLetter = nullptr;
   LEText * pText = this->textGet(id);
@@ -617,7 +755,7 @@ int LEMoon::textAddLetter(uint32_t id, uint8_t letter)
 
   if(pText != nullptr)
   {
-    pText->letter.lock();
+    lock_guard<mutex> lockB(pText->letter);
 
     if(pText->pLetterHead == nullptr)
     {
@@ -633,7 +771,6 @@ int LEMoon::textAddLetter(uint32_t id, uint8_t letter)
     pText->pLetterHead->pLeft = pLetter;
     pLetter->letter = letter;
     pText->length += 1;
-    pText->letter.unlock();
   }
   else
   {
@@ -647,13 +784,12 @@ int LEMoon::textAddLetter(uint32_t id, uint8_t letter)
     result = LE_TEXT_NOEXIST;	
   }
 
-  this->mtxText.textAddLetter.unlock();
   return result;
 }
 
 int LEMoon::textSubmit(uint32_t id)
 {
-  this->mtxText.textSubmit.lock();
+  lock_guard<mutex> lockA(this->mtxText.textSubmit);
   int result = LE_NO_ERROR;
   uint32_t index = 0;
   LELetter * pLetter = nullptr;
@@ -672,7 +808,7 @@ int LEMoon::textSubmit(uint32_t id)
       pText->pText = nullptr;
     }
 
-    pText->letter.lock();
+    lock_guard<mutex> lockB(pText->letter);
     pText->pText = new unsigned char[pText->length + 1];
     pLetter = pText->pLetterHead->pRight;
 
@@ -688,7 +824,6 @@ int LEMoon::textSubmit(uint32_t id)
     // null terminieren!
 
     pText->pText[index] = '\0';
-    pText->letter.unlock();
   }
   else
   {
@@ -702,13 +837,12 @@ int LEMoon::textSubmit(uint32_t id)
     result = LE_TEXT_NOEXIST;	
   }
 
-  this->mtxText.textSubmit.unlock();
   return result;
 }
 
 int LEMoon::textSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-  this->mtxText.textSetColor.lock();
+  lock_guard<mutex> lockA(this->mtxText.textSetColor);
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
 
@@ -729,13 +863,12 @@ int LEMoon::textSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a
     result = LE_TEXT_NOEXIST;	
   }
 
-  this->mtxText.textSetColor.unlock();
   return result;
 }
 
 int LEMoon::textSetVisible(uint32_t id, bool visible)
 {
-  this->mtxText.textSetVisible.lock();
+  lock_guard<mutex> lockA(this->mtxText.textSetVisible);
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
 
@@ -756,82 +889,25 @@ int LEMoon::textSetVisible(uint32_t id, bool visible)
     result = LE_TEXT_NOEXIST;	
   }
 
-  this->mtxText.textSetVisible.unlock();
   return result;
 }
 
 int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
 {
-  this->mtxText.textSetZindex.lock();
+  lock_guard<mutex> lockA(this->mtxText.textSetZindex);
   int result = LE_NO_ERROR;
   LEText * pCurrent = nullptr;
-  bool moreThanOneElement = this->pTextHead->pLeft->id != this->pTextHead->pRight->id;
-  LEText * pText = this->textGet(id);
+  bool moreThanOneElement = LE_FALSE;
+  LEText * pElem = this->textGet(id);
 
-  if(pText == nullptr)
+  // not in original list! in buffer list?
+
+  if(pElem == nullptr)
   {
-    pText = this->textGetFromBuffer(id);
+    pElem = this->textGetFromBuffer(id);
 
-    if(pText != nullptr)
-      {this->mtxText.bufferLockedBySetZindex = LE_TRUE;}
-  }
-  else
-    {this->mtxText.originalLockedBySetZindex = LE_TRUE;}
-
-  if(zindex == 0)
-  {
-    #ifdef LE_DEBUG
-      char * pErrorString = new char[256 + 1];
-      sprintf(pErrorString, "LEMoon::textSetZindex(%u, %u)\n\n", id, zindex);
-      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
-      delete [] pErrorString;
-    #endif
-
-    result = LE_INVALID_ZINDEX;
-  }
-
-  if(moreThanOneElement)
-  {
-    if(!result && pText != nullptr)
-    {
-      pText->zindex = zindex;
-
-      if(this->mtxText.originalLockedBySetZindex)
-        {this->mtxText.originalList.lock();}
-      if(this->mtxText.bufferLockedBySetZindex)
-        {this->mtxText.bufferList.lock();}
-
-      // auskoppeln
-    
-      pText->pLeft->pRight = pText->pRight;
-      pText->pRight->pLeft = pText->pLeft;
-    
-      // neu einordnen
-    
-      pCurrent = this->pTextHead->pRight;
-    
-      while(pText->zindex > pCurrent->zindex && pCurrent != this->pTextHead)
-        {pCurrent = pCurrent->pRight;}
-
-      // include at right postion
-    
-      pText->pLeft = pCurrent->pLeft;
-      pText->pRight = pCurrent;
-      pCurrent->pLeft->pRight = pText;
-      pCurrent->pLeft = pText;
-
-      if(this->mtxText.originalLockedBySetZindex)
-      {
-        this->mtxText.originalList.unlock();
-        this->mtxText.originalLockedBySetZindex = LE_FALSE;
-      }
-
-      if(this->mtxText.bufferLockedBySetZindex)
-      {
-        this->mtxText.bufferList.unlock();
-        this->mtxText.bufferLockedBySetZindex = LE_FALSE;
-      }
-    }
+    if(pElem != nullptr)
+      {pElem->zindex = zindex;}
     else
     {
       #ifdef LE_DEBUG
@@ -840,23 +916,72 @@ int LEMoon::textSetZindex(uint32_t id, uint32_t zindex)
         this->printErrorDialog(LE_TEXT_NOEXIST, pErrorString);
         delete [] pErrorString;
       #endif
-    
-      result = LE_TEXT_NOEXIST;	
+      
+      result = LE_TEXT_NOEXIST;
     }
   }
   else
   {
-    if(pText != nullptr)
-      {pText->zindex = zindex;}
+    // in original list! valid z-index?
+
+    if(zindex == 0)
+    {
+      #ifdef LE_DEBUG
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::textSetZindex(%u, %u)\n\n", id, zindex);
+        this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+        delete [] pErrorString;
+      #endif
+
+      result = LE_INVALID_ZINDEX;
+    }
+
+    // text head not nullptr?
+
+    if(!result && this->pTextHead != nullptr)
+    {
+      moreThanOneElement = this->pTextHead->pLeft->id != this->pTextHead->pRight->id;
+
+      // more than one element in original list?
+
+      if(moreThanOneElement)
+      {
+        pElem->zindex = zindex;
+        lock_guard<mutex> lockB(this->mtxText.originalList);
+        
+        // exclude from list
+        
+        pElem->pLeft->pRight = pElem->pRight;
+        pElem->pRight->pLeft = pElem->pLeft;
+        
+        // search right place for zindex
+        
+        pCurrent = this->pTextHead->pRight;
+        
+        while(pElem->zindex > pCurrent->zindex && pCurrent != this->pTextHead)
+          {pCurrent = pCurrent->pRight;}
+        
+        // include at right postion
+        
+        pElem->pLeft = pCurrent->pLeft;
+        pElem->pRight = pCurrent;
+        pCurrent->pLeft->pRight = pElem;
+        pCurrent->pLeft = pElem;
+      }
+      else
+      {
+        if(pElem != nullptr)
+          {pElem->zindex = zindex;}
+      }
+    }
   }
 
-  this->mtxText.textSetZindex.unlock();
   return result;
 }
 
 int LEMoon::textRelateFont(uint32_t id, uint32_t idFont)
 {
-  this->mtxText.textRelateFont.lock();
+  lock_guard<mutex> lockA(this->mtxText.textRelateFont);
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
   LEFont * pFont = this->fontGet(idFont);
@@ -894,13 +1019,12 @@ int LEMoon::textRelateFont(uint32_t id, uint32_t idFont)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textRelateFont.unlock();
   return result;
 }
 
 int LEMoon::textPrepareForDrawing(uint32_t id)
 {
-  this->mtxText.textPrepareForDrawing.lock();
+  lock_guard<mutex> lockA(this->mtxText.textPrepareForDrawing);
   int result = LE_NO_ERROR;
   SDL_Surface * pSurface = nullptr;
   SDL_Color color;
@@ -1016,13 +1140,12 @@ int LEMoon::textPrepareForDrawing(uint32_t id)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textPrepareForDrawing.unlock();
   return result;
 }
 
 int LEMoon::textSetPosition(uint32_t id, int x, int y)
 {
-  this->mtxText.textSetPosition.lock();
+  lock_guard<mutex> lockA(this->mtxText.textSetPosition);
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
 
@@ -1048,13 +1171,12 @@ int LEMoon::textSetPosition(uint32_t id, int x, int y)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textSetPosition.unlock();
   return result;
 }
 
 int LEMoon::textAddString(uint32_t id, const char * pString)
 {
-  this->mtxText.textAddString.lock();
+  lock_guard<mutex> lockA(this->mtxText.textAddString);
   int result = LE_NO_ERROR;
   uint32_t index = 0;
   LELetter * pLetter = nullptr;
@@ -1065,7 +1187,7 @@ int LEMoon::textAddString(uint32_t id, const char * pString)
 
   if(pText != nullptr)
   {
-    pText->letter.lock();
+    lock_guard<mutex> lockB(pText->letter);
 
     while(pString[index] != '\0')
     {
@@ -1085,8 +1207,6 @@ int LEMoon::textAddString(uint32_t id, const char * pString)
       pText->length += 1;
       index++;
     }
-
-    pText->letter.unlock();
   }
   else
   {
@@ -1100,13 +1220,12 @@ int LEMoon::textAddString(uint32_t id, const char * pString)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textAddString.unlock();
   return result;
 }
 
 int LEMoon::textSetAlpha(uint32_t id, uint8_t alpha)
 {
-  this->mtxText.textSetAlpha.lock();
+  lock_guard<mutex> lockA(this->mtxText.textSetAlpha);
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
 
@@ -1141,13 +1260,12 @@ int LEMoon::textSetAlpha(uint32_t id, uint8_t alpha)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textSetAlpha.unlock();
   return result;
 }
 
 int LEMoon::textFade(uint32_t id, double alphaPerSecond)
 {
-  this->mtxText.textFade.lock();
+  lock_guard<mutex> lockA(this->mtxText.textFade);
   int result = LE_NO_ERROR;
   LEText * pText = this->textGet(id);
 
@@ -1188,13 +1306,12 @@ int LEMoon::textFade(uint32_t id, double alphaPerSecond)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textFade.unlock();
   return result;
 }
 
 int LEMoon::textClear(uint32_t id)
 {
-  this->mtxText.textClear.lock();
+  lock_guard<mutex> lockA(this->mtxText.textClear);
   int result = LE_NO_ERROR;
   LELetter * pLetter = nullptr;
   LELetter * pNextLetter = nullptr;
@@ -1215,7 +1332,7 @@ int LEMoon::textClear(uint32_t id)
 
     // loesche Buchstaben
 
-    pText->letter.lock();
+    lock_guard<mutex> lockB(pText->letter);
     pLetter = pText->pLetterHead->pRight;
 
     while(pLetter != pText->pLetterHead)
@@ -1227,7 +1344,6 @@ int LEMoon::textClear(uint32_t id)
 
     pText->pLetterHead->pLeft = pText->pLetterHead;
     pText->pLetterHead->pRight = pText->pLetterHead;
-    pText->letter.unlock();
   }
   else
   {
@@ -1241,13 +1357,12 @@ int LEMoon::textClear(uint32_t id)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textClear.unlock();
   return result;
 }
 
 double LEMoon::textGetAlpha(uint32_t id)
 {
-  this->mtxText.textGetAlpha.lock();
+  lock_guard<mutex> lockA(this->mtxText.textGetAlpha);
   double alpha = 0.0f;
   LEText * pText = this->textGet(id);
 
@@ -1266,13 +1381,12 @@ double LEMoon::textGetAlpha(uint32_t id)
     #endif
   }
 
-  this->mtxText.textGetAlpha.unlock();
   return alpha;
 }
 
 int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direction)
 {
-  this->mtxText.textAddDirection.lock();
+  lock_guard<mutex> lockA(this->mtxText.textAddDirection);
   int result = LE_NO_ERROR;
   LinkedVec2 * pNew = nullptr;
   LEText * pText = this->textGet(id);
@@ -1286,7 +1400,7 @@ int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direct
 
     if(pNew == nullptr)
     {
-      pText->direction.lock();
+      lock_guard<mutex> lockB(pText->direction);
 
       if(pText->pDirectionHead == nullptr)
       {
@@ -1303,7 +1417,6 @@ int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direct
       pNew->id = idDirection;
       pNew->currentDegree = 0.0f;
       pNew->data = direction;
-      pText->direction.unlock();
     }
     else
     {
@@ -1329,13 +1442,12 @@ int LEMoon::textAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direct
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textAddDirection.unlock();
   return result;
 }
 
 int LEMoon::textMoveDirection(uint32_t id, uint32_t idDirection)
 {
-  this->mtxText.textMoveDirection.lock();
+  lock_guard<mutex> lockA(this->mtxText.textMoveDirection);
   int result = LE_NO_ERROR;
   LinkedVec2 * pDirection = nullptr;
   LEText * pText = this->textGet(id);
@@ -1378,13 +1490,12 @@ int LEMoon::textMoveDirection(uint32_t id, uint32_t idDirection)
     result = LE_TEXT_NOEXIST;
   }
 
-  this->mtxText.textMoveDirection.unlock();
   return result;
 }
 
 SDL_Point LEMoon::textGetPosition(uint32_t id)
 {
-  this->mtxText.textGetPosition.lock();
+  lock_guard<mutex> lockA(this->mtxText.textGetPosition);
   SDL_Point pos;
   LEText * pText = this->textGet(id);
 
@@ -1406,13 +1517,12 @@ SDL_Point LEMoon::textGetPosition(uint32_t id)
     #endif
   }
 
-  this->mtxText.textGetPosition.unlock();
   return pos;
 }
 
 SDL_Point LEMoon::textGetSize(uint32_t id)
 {
-  this->mtxText.textGetSize.lock();
+  lock_guard<mutex> lockA(this->mtxText.textGetSize);
   SDL_Point size;
   LEText * pText = this->textGet(id);
 
@@ -1434,13 +1544,12 @@ SDL_Point LEMoon::textGetSize(uint32_t id)
     #endif
   }
 
-  this->mtxText.textGetSize.unlock();
   return size;
 }
 
 bool LEMoon::textGetVisible(uint32_t id)
 {
-  this->mtxText.textGetVisible.lock();
+  lock_guard<mutex> lockA(this->mtxText.textGetVisible);
   bool visible = LE_FALSE;
   LEText * pText = this->textGet(id);
 
@@ -1450,21 +1559,19 @@ bool LEMoon::textGetVisible(uint32_t id)
   if(pText != nullptr)
     {visible = pText->visible;}
 
-  this->mtxText.textGetVisible.unlock();
   return visible;
 }
 
 void LEMoon::textUsingThread(bool flag)
 {
-  this->mtxText.textUsingThread.lock();
+  lock_guard<mutex> lockA(this->mtxText.textUsingThread);
   this->notifyText.notifyByUser = flag;
-  this->mtxText.textUsingThread.unlock();
 }
 
 void LEMoon::textPrintList()
 {
-  this->mtxText.textPrintList.lock();
-  this->mtxText.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxText.textPrintList);
+  lock_guard<mutex> lockB(this->mtxText.originalList);
   LEText * pCurrent = nullptr;
 
   if(this->pTextHead != nullptr)
@@ -1473,46 +1580,40 @@ void LEMoon::textPrintList()
 
     if(pCurrent != nullptr)
     {
-      printf("ORIGINAL: Head: %d", this->pTextHead->id);
+      printf("ORIGINAL: Head (Text): %u", this->pTextHead->id);
 
       while(pCurrent != this->pTextHead)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pTextHead->id);
+      printf(" <-> Head (Text): %u\n\n", this->pTextHead->id);
     }
   }
-
-  this->mtxText.originalList.unlock();
-  this->mtxText.textPrintList.unlock();
 }
 
 void LEMoon::textPrintBufferList()
 {
-  this->mtxText.textPrintBufferList.lock();
-  this->mtxText.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxText.textPrintBufferList);
+  lock_guard<mutex> lockB(this->mtxText.bufferList);
   LEText * pCurrent = nullptr;
 
-  if(this->pTextHead != nullptr)
+  if(this->pTextHeadBuffer != nullptr)
   {
-    pCurrent = this->pTextHead->pRight;
+    pCurrent = this->pTextHeadBuffer->pRight;
 
     if(pCurrent != nullptr)
     {
-      printf("BUFFER: Head: %d", this->pTextHead->id);
+      printf("BUFFER: Head (Text): %u", this->pTextHeadBuffer->id);
 
-      while(pCurrent != this->pTextHead)
+      while(pCurrent != this->pTextHeadBuffer)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pTextHead->id);
+      printf(" <-> Head (Text): %u\n\n", this->pTextHeadBuffer->id);
     }
   }
-
-  this->mtxText.bufferList.unlock();
-  this->mtxText.textPrintBufferList.unlock();
 }

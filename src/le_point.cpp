@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            12.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -31,7 +31,7 @@ int LEMoon::pointDraw(LEPoint * pPoint)
     {
       #ifdef LE_DEBUG
         pErrorString = new char[256 + 1];
-        sprintf(pErrorString, "LEMoon::pointDraw(%d)\n\n", pPoint->id);
+        sprintf(pErrorString, "LEMoon::pointDraw(%u)\n\n", pPoint->id);
         this->printErrorDialog(LE_SDL_DRAW_COLOR, pErrorString);
         delete [] pErrorString;
       #endif
@@ -47,7 +47,7 @@ int LEMoon::pointDraw(LEPoint * pPoint)
       {
         #ifdef LE_DEBUG
           pErrorString = new char[256 + 1];
-          sprintf(pErrorString, "LEMoon::pointDraw(%d)\n\n", pPoint->id);
+          sprintf(pErrorString, "LEMoon::pointDraw(%u)\n\n", pPoint->id);
           this->printErrorDialog(LE_DRAW_BLEND_MODE, pErrorString);
           delete [] pErrorString;
         #endif
@@ -64,7 +64,7 @@ int LEMoon::pointDraw(LEPoint * pPoint)
       {
         #ifdef LE_DEBUG
           pErrorString = new char[256 + 1];
-          sprintf(pErrorString, "LEMoon::pointDraw(%d)\n\n", pPoint->id);
+          sprintf(pErrorString, "LEMoon::pointDraw(%u)\n\n", pPoint->id);
           this->printErrorDialog(LE_DRAW_POINT, pErrorString);
           delete [] pErrorString;
         #endif
@@ -79,7 +79,7 @@ int LEMoon::pointDraw(LEPoint * pPoint)
 
 LEPoint * LEMoon::pointGet(uint32_t id)
 {
-  this->mtxPoint.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.originalList);
   LEPoint * pRet = nullptr;
   LEPoint * pCurrent = nullptr;
 
@@ -105,13 +105,12 @@ LEPoint * LEMoon::pointGet(uint32_t id)
     }
   }
 
-  this->mtxPoint.originalList.unlock();
   return pRet;
 }
 
 LEPoint * LEMoon::pointGetFromBuffer(uint32_t id)
 {
-  this->mtxPoint.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.bufferList);
   LEPoint * pRet = nullptr;
   LEPoint * pCurrent = nullptr;
 
@@ -137,13 +136,12 @@ LEPoint * LEMoon::pointGetFromBuffer(uint32_t id)
     }
   }
 
-  this->mtxPoint.bufferList.unlock();
   return pRet;
 }
 
 LinkedVec2 * LEMoon::pointGetDirection(LEPoint * pPoint, uint32_t idDirection)
 {
-  pPoint->direction.lock();
+  lock_guard<mutex> lockA(pPoint->direction);
   LinkedVec2 * pRet = nullptr;
   LinkedVec2 * pCurrent = nullptr;
 
@@ -163,7 +161,6 @@ LinkedVec2 * LEMoon::pointGetDirection(LEPoint * pPoint, uint32_t idDirection)
     }
   }
 
-  pPoint->direction.unlock();
   return pRet;
 }
 
@@ -256,26 +253,29 @@ void LEMoon::pointConstructor()
   this->mtxPoint.pointCreateLockedByMerge = LE_FALSE;
   this->mtxPoint.pointDeleteLockedByMerge = LE_FALSE;
   this->mtxPoint.pointSetZindexLockedByMerge = LE_FALSE;
-
-  this->mtxPoint.originalLockedBySetZindex = LE_FALSE;
-  this->mtxPoint.bufferLockedBySetZindex = LE_FALSE;
 }
 
 void LEMoon::pointDeleteOriginalList()
 {
-  if(this->pPointHead->pLeft == this->pPointHead && this->pPointHead->pRight == this->pPointHead)
+  if(this->pPointHead != nullptr)
   {
-    delete this->pPointHead;
-    this->pPointHead = nullptr;
+    if(this->pPointHead->pLeft == this->pPointHead && this->pPointHead->pRight == this->pPointHead)
+    {
+      delete this->pPointHead;
+      this->pPointHead = nullptr;
+    }
   }
 }
 
 void LEMoon::pointDeleteBufferList()
 {
-  if(this->pPointHeadBuffer->pLeft == this->pPointHeadBuffer && this->pPointHeadBuffer->pRight == this->pPointHeadBuffer)
+  if(this->pPointHeadBuffer != nullptr)
   {
-    delete this->pPointHeadBuffer;
-    this->pPointHeadBuffer = nullptr;
+    if(this->pPointHeadBuffer->pLeft == this->pPointHeadBuffer && this->pPointHeadBuffer->pRight == this->pPointHeadBuffer)
+    {
+      delete this->pPointHeadBuffer;
+      this->pPointHeadBuffer = nullptr;
+    }
   }
 }
 
@@ -414,6 +414,99 @@ bool LEMoon::pointFinishedAllMutexes(LEPoint * pPoint)
   return finished;
 }
 
+uint32_t LEMoon::pointGenerateIDFromOriginalList()
+{
+  lock_guard<mutex> lockA(this->mtxPoint.originalList);
+  uint32_t id = 0;
+  LEPoint * pStart = nullptr;
+  LEPoint * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pPointHead != nullptr)
+  {
+    pStart = this->pPointHead->pRight;
+
+    while(pStart != this->pPointHead)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pPointHead->pRight;
+
+      while(pCurrent != this->pPointHead)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::pointGenerateIDFromBufferList()
+{
+  lock_guard<mutex> lockA(this->mtxPoint.bufferList);
+  uint32_t id = 0;
+  LEPoint * pStart = nullptr;
+  LEPoint * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pPointHeadBuffer != nullptr)
+  {
+    pStart = this->pPointHeadBuffer->pRight;
+
+    while(pStart != this->pPointHeadBuffer)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pPointHeadBuffer->pRight;
+
+      while(pCurrent != this->pPointHeadBuffer)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::pointGenerateID()
+{
+  uint32_t id;
+  id = this->pointGenerateIDFromOriginalList();
+
+  if(id == 0)
+    {id = this->pointGenerateIDFromBufferList();}
+  if(id == 0)
+    {id = 1;}
+
+  return id;
+}
+
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // public point
@@ -422,7 +515,7 @@ bool LEMoon::pointFinishedAllMutexes(LEPoint * pPoint)
 
 int LEMoon::pointCreate(uint32_t id)
 {
-  this->mtxPoint.pointCreate.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointCreate);
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -431,7 +524,7 @@ int LEMoon::pointCreate(uint32_t id)
 
   if(pPoint == nullptr)
   {
-    this->mtxPoint.originalList.lock();
+    lock_guard<mutex> lockB(this->mtxPoint.originalList);
 
     if(this->pPointHead == nullptr)
     {
@@ -442,8 +535,7 @@ int LEMoon::pointCreate(uint32_t id)
       this->pPointHead->zindex = 0;
     }
 
-    this->mtxPoint.originalList.unlock();
-    this->mtxPoint.bufferList.lock();
+    lock_guard<mutex> lockC(this->mtxPoint.bufferList);
 
     if(this->pPointHeadBuffer == nullptr)
     {
@@ -469,8 +561,6 @@ int LEMoon::pointCreate(uint32_t id)
     pPoint->pointBuffer = {0, 0};
     pPoint->zindex = 1;
     pPoint->markedAsDelete = LE_FALSE;
-
-    this->mtxPoint.bufferList.unlock();
   }
   else
   {
@@ -487,23 +577,70 @@ int LEMoon::pointCreate(uint32_t id)
   if(!result)
     {this->notifyPoint.notifyByEngine = LE_TRUE;}
 
-  this->mtxPoint.pointCreate.unlock();
   return result;
+}
+
+uint32_t LEMoon::pointCreate()
+{
+  lock_guard<mutex> lockA(this->mtxPoint.pointCreate);
+  uint32_t generatedID = this->pointGenerateID();
+  LEPoint * pNew = nullptr;
+
+  lock_guard<mutex> lockB(this->mtxPoint.originalList);
+
+  if(this->pPointHead == nullptr)
+  {
+    this->pPointHead = new LEPoint;
+    this->pPointHead->pLeft = this->pPointHead;
+    this->pPointHead->pRight = this->pPointHead;
+    this->pPointHead->id = 1989;
+    this->pPointHead->zindex = 0;
+  }
+
+  lock_guard<mutex> lockC(this->mtxPoint.bufferList);
+
+  if(this->pPointHeadBuffer == nullptr)
+  {
+    this->pPointHeadBuffer = new LEPoint;
+    this->pPointHeadBuffer->pLeft = this->pPointHeadBuffer;
+    this->pPointHeadBuffer->pRight = this->pPointHeadBuffer;
+    this->pPointHeadBuffer->id = 28092017;
+    this->pPointHeadBuffer->zindex = 0;
+  }
+
+  pNew = new LEPoint;
+  pNew->pLeft = this->pPointHeadBuffer->pLeft;
+  pNew->pRight = this->pPointHeadBuffer;
+  this->pPointHeadBuffer->pLeft->pRight = pNew;
+  this->pPointHeadBuffer->pLeft = pNew;
+  pNew->id = generatedID;
+  pNew->currentDegree = 0.0f;
+  pNew->visible = LE_TRUE;
+  pNew->pDirectionHead = nullptr;
+  pNew->posX = 0.0f;
+  pNew->posY = 0.0f;
+  pNew->point = {0, 0};
+  pNew->pointBuffer = {0, 0};
+  pNew->zindex = 1;
+  pNew->markedAsDelete = LE_FALSE;
+
+  return generatedID;
 }
 
 int LEMoon::pointDelete(uint32_t id)
 {
-  this->mtxPoint.pointDelete.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointDelete);
   int result = LE_NO_ERROR;
-  LinkedVec2 * pCurrentDirection = nullptr;
-  LinkedVec2 * pNextDirection = nullptr;
   LEPoint * pPoint = this->pointGet(id);
 
   if(pPoint == nullptr)
     {pPoint = this->pointGetFromBuffer(id);}
 
   if(pPoint != nullptr)
-    {pPoint->markedAsDelete = LE_TRUE;}
+  {
+    pPoint->markedAsDelete = LE_TRUE;
+    this->notifyPoint.notifyByEngine = LE_TRUE;
+  }
   else
   {
     #ifdef LE_DEBUG
@@ -516,13 +653,12 @@ int LEMoon::pointDelete(uint32_t id)
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointDelete.unlock();
   return result;
 }
 
 int LEMoon::pointSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-  this->mtxPoint.pointSetColor.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointSetColor);
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -549,13 +685,12 @@ int LEMoon::pointSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t 
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointSetColor.unlock();
   return result;
 }
 
 int LEMoon::pointSetPosition(uint32_t id, int x, int y)
 {
-  this->mtxPoint.pointSetPosition.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointSetPosition);
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -583,13 +718,12 @@ int LEMoon::pointSetPosition(uint32_t id, int x, int y)
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointSetPosition.unlock();
   return result;
 }
 
 Color LEMoon::pointGetColor(uint32_t id)
 {
-  this->mtxPoint.pointGetColor.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointGetColor);
   Color color;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -608,13 +742,12 @@ Color LEMoon::pointGetColor(uint32_t id)
     #endif
   }
 
-  this->mtxPoint.pointGetColor.unlock();
   return color;
 }
 
 int LEMoon::pointFade(uint32_t id, double alphaPerSecond)
 {
-  this->mtxPoint.pointFade.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointFade);
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -645,13 +778,12 @@ int LEMoon::pointFade(uint32_t id, double alphaPerSecond)
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointFade.unlock();
   return result;
 }
 
 int LEMoon::pointRotate(uint32_t id, double degreePerSecond, SDL_Point rotationPoint)
 {
-  this->mtxPoint.pointRotate.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointRotate);
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -676,13 +808,12 @@ int LEMoon::pointRotate(uint32_t id, double degreePerSecond, SDL_Point rotationP
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointRotate.unlock();
   return result;
 }
 
 int LEMoon::pointSetVisible(uint32_t id, bool visible)
 {
-  this->mtxPoint.pointSetVisible.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointSetVisible);
   int result = LE_NO_ERROR;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -703,13 +834,12 @@ int LEMoon::pointSetVisible(uint32_t id, bool visible)
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointSetVisible.unlock();
   return result;
 }
 
 int LEMoon::pointAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direction)
 {
-  this->mtxPoint.pointAddDirection.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointAddDirection);
   int result = LE_NO_ERROR;
   LinkedVec2 * pDirection = nullptr;
   LEPoint * pPoint = this->pointGet(id);
@@ -723,7 +853,7 @@ int LEMoon::pointAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direc
 
     if(pDirection == nullptr)
     {
-      pPoint->direction.lock();
+      lock_guard<mutex> lockB(pPoint->direction);
 
       // wurde schon einmal eine Bewegungsrichtung hinzugefuegt? Wenn nicht: fuege Kopf hinzu
 
@@ -744,7 +874,6 @@ int LEMoon::pointAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direc
       pDirection->id = idDirection;
       pDirection->data = direction;
       pDirection->currentDegree = 0.0f;
-      pPoint->direction.unlock();
     }
     else
     {
@@ -770,13 +899,12 @@ int LEMoon::pointAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direc
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointAddDirection.unlock();
   return result;
 }
 
 int LEMoon::pointMoveDirection(uint32_t id, uint32_t idDirection)
 {
-  this->mtxPoint.pointMoveDirection.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointMoveDirection);
   int result = LE_NO_ERROR;
   LinkedVec2 * pDirection = nullptr;
   LEPoint * pPoint = this->pointGet(id);
@@ -819,13 +947,12 @@ int LEMoon::pointMoveDirection(uint32_t id, uint32_t idDirection)
     result = LE_POINT_NOEXIST;
   }
 
-  this->mtxPoint.pointMoveDirection.unlock();
   return result;
 }
 
 SDL_Point LEMoon::pointGetPosition(uint32_t id)
 {
-  this->mtxPoint.pointGetPosition.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointGetPosition);
   SDL_Point position;
   LEPoint * pPoint = this->pointGet(id);
 
@@ -847,82 +974,25 @@ SDL_Point LEMoon::pointGetPosition(uint32_t id)
     #endif
   }
 
-  this->mtxPoint.pointGetPosition.unlock();
   return position;
 }
 
 int LEMoon::pointSetZindex(uint32_t id, uint32_t zindex)
 {
-  this->mtxPoint.pointSetZindex.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointSetZindex);
   int result = LE_NO_ERROR;
   LEPoint * pCurrent = nullptr;
-  bool moreThanOneElement = this->pPointHead->pLeft->id != this->pPointHead->pRight->id;
+  bool moreThanOneElement = LE_FALSE;
   LEPoint * pElem = this->pointGet(id);
+
+  // not in original list! in buffer list?
 
   if(pElem == nullptr)
   {
     pElem = this->pointGetFromBuffer(id);
 
     if(pElem != nullptr)
-      {this->mtxPoint.bufferLockedBySetZindex = LE_TRUE;}
-  }
-  else
-    {this->mtxPoint.originalLockedBySetZindex = LE_TRUE;}
-
-  if(zindex == 0)
-  {
-    #ifdef LE_DEBUG
-      char * pErrorString = new char[256 + 1];
-      sprintf(pErrorString, "LEMoon::pointSetZindex(%u, %u)\n\n", id, zindex);
-      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
-      delete [] pErrorString;
-    #endif
-
-    result = LE_INVALID_ZINDEX;
-  }
-
-  if(moreThanOneElement)
-  {
-    if(!result && pElem != nullptr)
-    {
-      pElem->zindex = zindex;
-
-      if(this->mtxPoint.originalLockedBySetZindex)
-        {this->mtxPoint.originalList.lock();}
-      if(this->mtxPoint.bufferLockedBySetZindex)
-        {this->mtxPoint.bufferList.lock();}
-
-      // exclude from list
-    
-      pElem->pLeft->pRight = pElem->pRight;
-      pElem->pRight->pLeft = pElem->pLeft;
-    
-      // search right place for zindex
-    
-      pCurrent = this->pPointHead->pRight;
-    
-      while(pElem->zindex > pCurrent->zindex && pCurrent != this->pPointHead)
-        {pCurrent = pCurrent->pRight;}
-    
-      // include at right postion
-    
-      pElem->pLeft = pCurrent->pLeft;
-      pElem->pRight = pCurrent;
-      pCurrent->pLeft->pRight = pElem;
-      pCurrent->pLeft = pElem;
-
-      if(this->mtxPoint.originalLockedBySetZindex)
-      {
-        this->mtxPoint.originalList.unlock();
-        this->mtxPoint.originalLockedBySetZindex = LE_FALSE;
-      }
-
-      if(this->mtxPoint.bufferLockedBySetZindex)
-      {
-        this->mtxPoint.bufferList.unlock();
-        this->mtxPoint.bufferLockedBySetZindex = LE_FALSE;
-      }
-    }
+      {pElem->zindex = zindex;}
     else
     {
       #ifdef LE_DEBUG
@@ -931,31 +1001,79 @@ int LEMoon::pointSetZindex(uint32_t id, uint32_t zindex)
         this->printErrorDialog(LE_POINT_NOEXIST, pErrorString);
         delete [] pErrorString;
       #endif
-    
+      
       result = LE_POINT_NOEXIST;
     }
   }
   else
   {
-    if(pElem != nullptr)
-      {pElem->zindex = zindex;}
+    // in original list! valid z-index?
+
+    if(zindex == 0)
+    {
+      #ifdef LE_DEBUG
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::pointSetZindex(%u, %u)\n\n", id, zindex);
+        this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+        delete [] pErrorString;
+      #endif
+
+      result = LE_INVALID_ZINDEX;
+    }
+
+    // point head not nullptr?
+
+    if(!result && this->pPointHead != nullptr)
+    {
+      moreThanOneElement = this->pPointHead->pLeft->id != this->pPointHead->pRight->id;
+
+      // more than one element in original list?
+
+      if(moreThanOneElement)
+      {
+        pElem->zindex = zindex;
+        lock_guard<mutex> lockB(this->mtxPoint.originalList);
+        
+        // exclude from list
+        
+        pElem->pLeft->pRight = pElem->pRight;
+        pElem->pRight->pLeft = pElem->pLeft;
+        
+        // search right place for zindex
+        
+        pCurrent = this->pPointHead->pRight;
+        
+        while(pElem->zindex > pCurrent->zindex && pCurrent != this->pPointHead)
+          {pCurrent = pCurrent->pRight;}
+        
+        // include at right postion
+        
+        pElem->pLeft = pCurrent->pLeft;
+        pElem->pRight = pCurrent;
+        pCurrent->pLeft->pRight = pElem;
+        pCurrent->pLeft = pElem;
+      }
+      else
+      {
+        if(pElem != nullptr)
+          {pElem->zindex = zindex;}
+      }
+    }
   }
 
-  this->mtxPoint.pointSetZindex.unlock();
   return result;
 }
 
 void LEMoon::pointUsingThread(bool flag)
 {
-  this->mtxPoint.pointUsingThread.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointUsingThread);
   this->notifyPoint.notifyByUser = flag;
-  this->mtxPoint.pointUsingThread.unlock();
 }
 
 void LEMoon::pointPrintList()
 {
-  this->mtxPoint.pointPrintList.lock();
-  this->mtxPoint.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointPrintList);
+  lock_guard<mutex> lockB(this->mtxPoint.originalList);
   LEPoint * pCurrent = nullptr;
 
   if(this->pPointHead != nullptr)
@@ -964,26 +1082,23 @@ void LEMoon::pointPrintList()
 
     if(pCurrent != nullptr)
     {
-      printf("ORIGINAL: Head: %d", this->pPointHead->id);
+      printf("ORIGINAL: Head (Point): %u", this->pPointHead->id);
 
       while(pCurrent != this->pPointHead)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pPointHead->id);
+      printf(" <-> Head (Point): %u\n\n", this->pPointHead->id);
     }
   }
-
-  this->mtxPoint.originalList.unlock();
-  this->mtxPoint.pointPrintList.unlock();
 }
 
 void LEMoon::pointPrintBufferList()
 {
-  this->mtxPoint.pointPrintBufferList.lock();
-  this->mtxPoint.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxPoint.pointPrintBufferList);
+  lock_guard<mutex> lockB(this->mtxPoint.bufferList);
   LEPoint * pCurrent = nullptr;
 
   if(this->pPointHeadBuffer != nullptr)
@@ -992,18 +1107,15 @@ void LEMoon::pointPrintBufferList()
 
     if(pCurrent != nullptr)
     {
-      printf("BUFFER: Head: %d", this->pPointHeadBuffer->id);
+      printf("BUFFER: Head (Point): %u", this->pPointHeadBuffer->id);
 
       while(pCurrent != this->pPointHeadBuffer)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pPointHeadBuffer->id);
+      printf(" <-> Head (Point): %u\n\n", this->pPointHeadBuffer->id);
     }
   }
-
-  this->mtxPoint.bufferList.unlock();
-  this->mtxPoint.pointPrintBufferList.unlock();
 }

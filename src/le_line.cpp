@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            12.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -29,7 +29,7 @@ int LEMoon::lineDraw(LELine * pLine)
 
       #ifdef LE_DEBUG
         pErrorString = new char[256 + 1];
-        sprintf(pErrorString, "LEMoon::lineDraw(%d)\n\n", pLine->id);
+        sprintf(pErrorString, "LEMoon::lineDraw(%u)\n\n", pLine->id);
         this->printErrorDialog(result, pErrorString);
         delete [] pErrorString;
       #endif
@@ -43,7 +43,7 @@ int LEMoon::lineDraw(LELine * pLine)
 
         #ifdef LE_DEBUG
           pErrorString = new char[256 + 1];
-          sprintf(pErrorString, "LEMoon::lineDraw(%d)\n\n", pLine->id);
+          sprintf(pErrorString, "LEMoon::lineDraw(%u)\n\n", pLine->id);
           this->printErrorDialog(result, pErrorString);
           delete [] pErrorString;
         #endif
@@ -56,7 +56,7 @@ int LEMoon::lineDraw(LELine * pLine)
 
 LELine * LEMoon::lineGet(uint32_t id)
 {
-  this->mtxLine.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxLine.originalList);
   LELine * pRet = nullptr;
   LELine * pCurrent = nullptr;
 
@@ -82,13 +82,12 @@ LELine * LEMoon::lineGet(uint32_t id)
     }
   }
 
-  this->mtxLine.originalList.unlock();
   return pRet;
 }
 
 LELine * LEMoon::lineGetFromBuffer(uint32_t id)
 {
-  this->mtxLine.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxLine.bufferList);
   LELine * pRet = nullptr;
   LELine * pCurrent = nullptr;
 
@@ -114,7 +113,6 @@ LELine * LEMoon::lineGetFromBuffer(uint32_t id)
     }
   }
 
-  this->mtxLine.bufferList.unlock();
   return pRet;
 }
 
@@ -179,26 +177,29 @@ void LEMoon::lineConstructor()
   this->mtxLine.lineCreateLockedByMerge = LE_FALSE;
   this->mtxLine.lineDeleteLockedByMerge = LE_FALSE;
   this->mtxLine.lineSetZindexLockedByMerge = LE_FALSE;
-
-  this->mtxLine.originalLockedBySetZindex = LE_FALSE;
-  this->mtxLine.bufferLockedBySetZindex = LE_FALSE;
 }
 
 void LEMoon::lineDeleteOriginalList()
 {
-  if(this->pLineHead->pLeft == this->pLineHead && this->pLineHead->pRight == this->pLineHead)
+  if(this->pLineHead != nullptr)
   {
-    delete this->pLineHead;
-    this->pLineHead = nullptr;
+    if(this->pLineHead->pLeft == this->pLineHead && this->pLineHead->pRight == this->pLineHead)
+    {
+      delete this->pLineHead;
+      this->pLineHead = nullptr;
+    }
   }
 }
 
 void LEMoon::lineDeleteBufferList()
 {
-  if(this->pLineHeadBuffer->pLeft == this->pLineHeadBuffer && this->pLineHeadBuffer->pRight == this->pLineHeadBuffer)
+  if(this->pLineHeadBuffer != nullptr)
   {
-    delete this->pLineHeadBuffer;
-    this->pLineHeadBuffer = nullptr;
+    if(this->pLineHeadBuffer->pLeft == this->pLineHeadBuffer && this->pLineHeadBuffer->pRight == this->pLineHeadBuffer)
+    {
+      delete this->pLineHeadBuffer;
+      this->pLineHeadBuffer = nullptr;
+    }
   }
 }
 
@@ -314,6 +315,100 @@ void LEMoon::lineSortZindex()
   }
 }
 
+uint32_t LEMoon::lineGenerateIDFromOriginalList()
+{
+  lock_guard<mutex> lockA(this->mtxLine.originalList);
+  uint32_t id = 0;
+  LELine * pStart = nullptr;
+  LELine * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pLineHead != nullptr)
+  {
+    pStart = this->pLineHead->pRight;
+
+    while(pStart != this->pLineHead)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pLineHead->pRight;
+
+      while(pCurrent != this->pLineHead)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::lineGenerateIDFromBufferList()
+{
+  lock_guard<mutex> lockA(this->mtxLine.bufferList);
+
+  uint32_t id = 0;
+  LELine * pStart = nullptr;
+  LELine * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pLineHeadBuffer != nullptr)
+  {
+    pStart = this->pLineHeadBuffer->pRight;
+
+    while(pStart != this->pLineHeadBuffer)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pLineHeadBuffer->pRight;
+
+      while(pCurrent != this->pLineHeadBuffer)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::lineGenerateID()
+{
+  uint32_t id;
+  id = this->lineGenerateIDFromOriginalList();
+
+  if(id == 0)
+    {id = this->lineGenerateIDFromBufferList();}
+  if(id == 0)
+    {id = 1;}
+
+  return id;
+}
+
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // public line
@@ -322,7 +417,7 @@ void LEMoon::lineSortZindex()
 
 int LEMoon::lineCreate(uint32_t id)
 {
-  this->mtxLine.lineCreate.lock();
+  lock_guard<mutex> lockA(this->mtxLine.lineCreate);
   int result = LE_NO_ERROR;
   LELine * pNew = this->lineGet(id);
 
@@ -331,7 +426,7 @@ int LEMoon::lineCreate(uint32_t id)
 
   if(pNew == nullptr)
   {
-    this->mtxLine.originalList.lock();
+    lock_guard<mutex> lockB(this->mtxLine.originalList);
 
     if(this->pLineHead == nullptr)
     {
@@ -342,8 +437,7 @@ int LEMoon::lineCreate(uint32_t id)
       this->pLineHead->zindex = 0;
     }
 
-    this->mtxLine.originalList.unlock();
-    this->mtxLine.bufferList.lock();
+    lock_guard<mutex> lockC(this->mtxLine.bufferList);
 
     if(this->pLineHeadBuffer == nullptr)
     {
@@ -366,8 +460,6 @@ int LEMoon::lineCreate(uint32_t id)
     pNew->color = {255, 255, 255, 255};
     pNew->visible = LE_TRUE;
     pNew->markedAsDelete = LE_FALSE;
-
-    this->mtxLine.bufferList.unlock();
   }
   else
   {
@@ -384,13 +476,56 @@ int LEMoon::lineCreate(uint32_t id)
   if(!result)
     {this->notifyLine.notifyByEngine = LE_TRUE;}
 
-  this->mtxLine.lineCreate.unlock();
   return result;
+}
+
+uint32_t LEMoon::lineCreate()
+{
+  lock_guard<mutex> lockA(this->mtxLine.lineCreate);
+  uint32_t generatedID = this->lineGenerateID();
+  LELine * pNew = nullptr;
+
+  lock_guard<mutex> lockB(this->mtxLine.originalList);
+
+  if(this->pLineHead == nullptr)
+  {
+    this->pLineHead = new LELine;
+    this->pLineHead->pLeft = this->pLineHead;
+    this->pLineHead->pRight = this->pLineHead;
+    this->pLineHead->id = 1989;
+    this->pLineHead->zindex = 0;
+  }
+
+  lock_guard<mutex> lockC(this->mtxLine.bufferList);
+
+  if(this->pLineHeadBuffer == nullptr)
+  {
+    this->pLineHeadBuffer = new LELine;
+    this->pLineHeadBuffer->pLeft = this->pLineHeadBuffer;
+    this->pLineHeadBuffer->pRight = this->pLineHeadBuffer;
+    this->pLineHeadBuffer->id = 28092017;
+    this->pLineHeadBuffer->zindex = 0;
+  }
+
+  pNew = new LELine;
+  pNew->pRight = this->pLineHeadBuffer;
+  pNew->pLeft = this->pLineHeadBuffer->pLeft;
+  this->pLineHeadBuffer->pLeft->pRight = pNew;
+  this->pLineHeadBuffer->pLeft = pNew;
+  pNew->id = generatedID;
+  pNew->line.pointA = {0, 0};
+  pNew->line.pointB = {0, 0};
+  pNew->zindex = 0;
+  pNew->color = {255, 255, 255, 255};
+  pNew->visible = LE_TRUE;
+  pNew->markedAsDelete = LE_FALSE;
+
+  return generatedID;
 }
 
 int LEMoon::lineDelete(uint32_t id)
 {
-  this->mtxLine.lineDelete.lock();
+  lock_guard<mutex> lockA(this->mtxLine.lineDelete);
   int result = LE_NO_ERROR;
   LELine * pLine = this->lineGet(id);
 
@@ -398,7 +533,10 @@ int LEMoon::lineDelete(uint32_t id)
     {pLine = this->lineGetFromBuffer(id);}
 
   if(pLine != nullptr)
-    {pLine->markedAsDelete = LE_TRUE;}
+  {
+    pLine->markedAsDelete = LE_TRUE;
+    this->notifyLine.notifyByEngine = LE_TRUE;
+  }
   else
   {
     result = LE_LINE_NOEXIST;
@@ -411,14 +549,13 @@ int LEMoon::lineDelete(uint32_t id)
     #endif
   }
 
-  this->mtxLine.lineDelete.unlock();
   return result;
 }
 
 void LEMoon::linePrintList()
 {
-  this->mtxLine.linePrintList.lock();
-  this->mtxLine.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxLine.linePrintList);
+  lock_guard<mutex> lockB(this->mtxLine.originalList);
   LELine * pCurrent = nullptr;
 
   if(this->pLineHead != nullptr)
@@ -427,26 +564,23 @@ void LEMoon::linePrintList()
 
     if(pCurrent != nullptr)
     {
-      printf("ORIGINAL: Head: %d", this->pLineHead->id);
+      printf("ORIGINAL: Head (Line): %u", this->pLineHead->id);
 
       while(pCurrent != this->pLineHead)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pLineHead->id);
+      printf(" <-> Head (Line): %u\n\n", this->pLineHead->id);
     }
   }
-
-  this->mtxLine.originalList.unlock();
-  this->mtxLine.linePrintList.unlock();
 }
 
 void LEMoon::linePrintBufferList()
 {
-  this->mtxLine.linePrintBufferList.lock();
-  this->mtxLine.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxLine.linePrintBufferList);
+  lock_guard<mutex> lockB(this->mtxLine.bufferList);
   LELine * pCurrent = nullptr;
 
   if(this->pLineHeadBuffer != nullptr)
@@ -455,25 +589,22 @@ void LEMoon::linePrintBufferList()
 
     if(pCurrent != nullptr)
     {
-      printf("BUFFER: Head: %d", this->pLineHeadBuffer->id);
+      printf("BUFFER: Head (Line): %u", this->pLineHeadBuffer->id);
 
       while(pCurrent != this->pLineHeadBuffer)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pLineHeadBuffer->id);
+      printf(" <-> Head (Line): %u\n\n", this->pLineHeadBuffer->id);
     }
   }
-
-  this->mtxLine.bufferList.unlock();
-  this->mtxLine.linePrintBufferList.unlock();
 }
 
 int LEMoon::lineSet(uint32_t id, int x1, int y1, int x2, int y2)
 {
-  this->mtxLine.lineSet.lock();
+  lock_guard<mutex> lockA(this->mtxLine.lineSet);
   int result = LE_NO_ERROR;
   LELine * pLine = this->lineGet(id);
 
@@ -499,13 +630,12 @@ int LEMoon::lineSet(uint32_t id, int x1, int y1, int x2, int y2)
     #endif
   }
 
-  this->mtxLine.lineSet.unlock();
   return result;
 }
 
 int LEMoon::lineSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-  this->mtxLine.lineSetColor.lock();
+  lock_guard<mutex> lockA(this->mtxLine.lineSetColor);
   int result = LE_NO_ERROR;
   LELine * pLine = this->lineGet(id);
 
@@ -531,13 +661,12 @@ int LEMoon::lineSetColor(uint32_t id, uint8_t r, uint8_t g, uint8_t b, uint8_t a
     #endif
   }
 
-  this->mtxLine.lineSetColor.unlock();
   return result;
 }
 
 int LEMoon::lineSetVisible(uint32_t id, bool visible)
 {
-  this->mtxLine.lineSetVisible.lock();
+  lock_guard<mutex> lockA(this->mtxLine.lineSetVisible);
   int result = LE_NO_ERROR;
   LELine * pLine = this->lineGet(id);
 
@@ -547,107 +676,98 @@ int LEMoon::lineSetVisible(uint32_t id, bool visible)
   if(pLine != nullptr)
     {pLine->visible = visible;}
 
-  this->mtxLine.lineSetVisible.unlock();
   return result;
 }
 
 int LEMoon::lineSetZindex(uint32_t id, uint32_t zindex)
 {
-  this->mtxLine.lineSetZindex.lock();
+  lock_guard<mutex> lockA(this->mtxLine.lineSetZindex);
   int result = LE_NO_ERROR;
   LELine * pCurrent = nullptr;
-  bool moreThanOneElement = this->pLineHead->pLeft->id != this->pLineHead->pRight->id;
-  LELine * pLine = this->lineGet(id);
+  bool moreThanOneElement = LE_FALSE;
+  LELine * pElem = this->lineGet(id);
 
-  if(pLine == nullptr)
+  // not in original list! in buffer list?
+
+  if(pElem == nullptr)
   {
-    pLine = this->lineGetFromBuffer(id);
+    pElem = this->lineGetFromBuffer(id);
 
-    if(pLine != nullptr)
-      {this->mtxLine.bufferLockedBySetZindex = LE_TRUE;}
-  }
-  else
-    {this->mtxLine.originalLockedBySetZindex = LE_TRUE;}
-
-  if(zindex == 0)
-  {
-    #ifdef LE_DEBUG
-      char * pErrorString = new char[256 + 1];
-      sprintf(pErrorString, "LEMoon::lineSetZindex(%u, %u)\n\n", id, zindex);
-      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
-      delete [] pErrorString;
-    #endif
-
-    result = LE_INVALID_ZINDEX;
-  }
-
-  if(moreThanOneElement)
-  {
-    if(!result && pLine != nullptr)
-    {
-      pLine->zindex = zindex;
-
-      if(this->mtxLine.originalLockedBySetZindex)
-        {this->mtxLine.originalList.lock();}
-      if(this->mtxLine.bufferLockedBySetZindex)
-        {this->mtxLine.bufferList.lock();}
-
-      // exclude from list
-    
-      pLine->pLeft->pRight = pLine->pRight;
-      pLine->pRight->pLeft = pLine->pLeft;
-    
-      // search right place for zindex
-    
-      pCurrent = this->pLineHead->pRight;
-    
-      while(pLine->zindex > pCurrent->zindex && pCurrent != this->pLineHead)
-        {pCurrent = pCurrent->pRight;}
-    
-      // include at right postion
-    
-      pLine->pLeft = pCurrent->pLeft;
-      pLine->pRight = pCurrent;
-      pCurrent->pLeft->pRight = pLine;
-      pCurrent->pLeft = pLine;
-
-      if(this->mtxLine.originalLockedBySetZindex)
-      {
-        this->mtxLine.originalList.unlock();
-        this->mtxLine.originalLockedBySetZindex = LE_FALSE;
-      }
-
-      if(this->mtxLine.bufferLockedBySetZindex)
-      {
-        this->mtxLine.bufferList.unlock();
-        this->mtxLine.bufferLockedBySetZindex = LE_FALSE;
-      }
-    }
+    if(pElem != nullptr)
+      {pElem->zindex = zindex;}
     else
     {
-      result = LE_LINE_NOEXIST;
-    
       #ifdef LE_DEBUG
         char * pErrorString = new char[256 + 1];
         sprintf(pErrorString, "LEMoon::lineSetZindex(%u)\n\n", id);
-        this->printErrorDialog(result, pErrorString);
+        this->printErrorDialog(LE_LINE_NOEXIST, pErrorString);
         delete [] pErrorString;
       #endif
+      
+      result = LE_LINE_NOEXIST;
     }
   }
   else
   {
-    if(pLine != nullptr)
-      {pLine->zindex = zindex;}
+    // in original list! valid z-index?
+
+    if(zindex == 0)
+    {
+      #ifdef LE_DEBUG
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::lineSetZindex(%u, %u)\n\n", id, zindex);
+        this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+        delete [] pErrorString;
+      #endif
+
+      result = LE_INVALID_ZINDEX;
+    }
+
+    // line head not nullptr?
+
+    if(!result && this->pLineHead != nullptr)
+    {
+      moreThanOneElement = this->pLineHead->pLeft->id != this->pLineHead->pRight->id;
+
+      // more than one element in original list?
+
+      if(moreThanOneElement)
+      {
+        pElem->zindex = zindex;
+        lock_guard<mutex> lockB(this->mtxLine.originalList);
+        
+        // exclude from list
+        
+        pElem->pLeft->pRight = pElem->pRight;
+        pElem->pRight->pLeft = pElem->pLeft;
+        
+        // search right place for zindex
+        
+        pCurrent = this->pLineHead->pRight;
+        
+        while(pElem->zindex > pCurrent->zindex && pCurrent != this->pLineHead)
+          {pCurrent = pCurrent->pRight;}
+        
+        // include at right postion
+        
+        pElem->pLeft = pCurrent->pLeft;
+        pElem->pRight = pCurrent;
+        pCurrent->pLeft->pRight = pElem;
+        pCurrent->pLeft = pElem;
+      }
+      else
+      {
+        if(pElem != nullptr)
+          {pElem->zindex = zindex;}
+      }
+    }
   }
 
-  this->mtxLine.lineSetZindex.unlock();
   return result;
 }
 
 void LEMoon::lineUsingThread(bool flag)
 {
-  this->mtxLine.lineUsingThread.lock();
+  lock_guard<mutex> lockA(this->mtxLine.lineUsingThread);
   this->notifyLine.notifyByUser = flag;
-  this->mtxLine.lineUsingThread.unlock();
 }
