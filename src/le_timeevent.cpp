@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            03.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -16,7 +16,7 @@
 
 LETimeEvent * LEMoon::timeEventGet(uint32_t id)
 {
-  this->mtxTimeEvent.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.originalList);
   LETimeEvent * pRet = nullptr;
   LETimeEvent * pCurrent = nullptr;
 
@@ -42,13 +42,12 @@ LETimeEvent * LEMoon::timeEventGet(uint32_t id)
     }
   }
 
-  this->mtxTimeEvent.originalList.unlock();
   return pRet;
 }
 
 LETimeEvent * LEMoon::timeEventGetFromBuffer(uint32_t id)
 {
-  this->mtxTimeEvent.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.bufferList);
   LETimeEvent * pRet = nullptr;
   LETimeEvent * pCurrent = nullptr;
 
@@ -74,7 +73,6 @@ LETimeEvent * LEMoon::timeEventGetFromBuffer(uint32_t id)
     }
   }
 
-  this->mtxTimeEvent.bufferList.unlock();
   return pRet;
 }
 
@@ -142,19 +140,25 @@ void LEMoon::timeEventConstructor()
 
 void LEMoon::timeEventDeleteBufferList()
 {
-  if(this->pTimeEventHeadBuffer->pLeft == this->pTimeEventHeadBuffer && this->pTimeEventHeadBuffer->pRight == this->pTimeEventHeadBuffer)
+  if(this->pTimeEventHeadBuffer != nullptr)
   {
-    delete this->pTimeEventHeadBuffer;
-    this->pTimeEventHeadBuffer = nullptr;
+    if(this->pTimeEventHeadBuffer->pLeft == this->pTimeEventHeadBuffer && this->pTimeEventHeadBuffer->pRight == this->pTimeEventHeadBuffer)
+    {
+      delete this->pTimeEventHeadBuffer;
+      this->pTimeEventHeadBuffer = nullptr;
+    }
   }
 }
 
 void LEMoon::timeEventDeleteOriginalList()
 {
-  if(this->pTimeEventHead->pLeft == this->pTimeEventHead && this->pTimeEventHead->pRight == this->pTimeEventHead)
+  if(this->pTimeEventHead != nullptr)
   {
-    delete this->pTimeEventHead;
-    this->pTimeEventHead = nullptr;
+    if(this->pTimeEventHead->pLeft == this->pTimeEventHead && this->pTimeEventHead->pRight == this->pTimeEventHead)
+    {
+      delete this->pTimeEventHead;
+      this->pTimeEventHead = nullptr;
+    }
   }
 }
 
@@ -224,6 +228,99 @@ int LEMoon::timeEventMerge()
   return result;
 }
 
+uint32_t LEMoon::timeEventGenerateIDFromOriginalList()
+{
+  lock_guard<mutex> lockA(this->mtxTimeEvent.originalList);
+  uint32_t id = 0;
+  LETimeEvent * pStart = nullptr;
+  LETimeEvent * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pTimeEventHead != nullptr)
+  {
+    pStart = this->pTimeEventHead->pRight;
+
+    while(pStart != this->pTimeEventHead)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pTimeEventHead->pRight;
+
+      while(pCurrent != this->pTimeEventHead)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::timeEventGenerateIDFromBufferList()
+{
+  lock_guard<mutex> lockA(this->mtxTimeEvent.bufferList);
+  uint32_t id = 0;
+  LETimeEvent * pStart = nullptr;
+  LETimeEvent * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pTimeEventHeadBuffer != nullptr)
+  {
+    pStart = this->pTimeEventHeadBuffer->pRight;
+
+    while(pStart != this->pTimeEventHeadBuffer)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pTimeEventHeadBuffer->pRight;
+
+      while(pCurrent != this->pTimeEventHeadBuffer)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::timeEventGenerateID()
+{
+  uint32_t id;
+  id = this->timeEventGenerateIDFromOriginalList();
+
+  if(id == 0)
+    {id = this->timeEventGenerateIDFromBufferList();}
+  if(id == 0)
+    {id = 1;}
+
+  return id;
+}
+
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // public time event
@@ -232,7 +329,7 @@ int LEMoon::timeEventMerge()
 
 int LEMoon::timeEventCreate(uint32_t id, uint32_t ntimestamp)
 {
-  this->mtxTimeEvent.timeEventCreate.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventCreate);
   int result = LE_NO_ERROR;
   LETimeEvent * pNew = this->timeEventGet(id);
 
@@ -241,7 +338,7 @@ int LEMoon::timeEventCreate(uint32_t id, uint32_t ntimestamp)
 
   if(pNew == nullptr)
   {
-    this->mtxTimeEvent.originalList.lock();
+    lock_guard<mutex> lockB(this->mtxTimeEvent.originalList);
 
     if(this->pTimeEventHead == nullptr)
     {
@@ -251,8 +348,7 @@ int LEMoon::timeEventCreate(uint32_t id, uint32_t ntimestamp)
       this->pTimeEventHead->id = 1989;
     }
 
-    this->mtxTimeEvent.originalList.unlock();
-    this->mtxTimeEvent.bufferList.lock();
+    lock_guard<mutex> lockC(this->mtxTimeEvent.bufferList);
 
     if(this->pTimeEventHeadBuffer == nullptr)
     {
@@ -271,8 +367,6 @@ int LEMoon::timeEventCreate(uint32_t id, uint32_t ntimestamp)
     pNew->timestamp = ntimestamp;
     pNew->reached = LE_FALSE;
     pNew->markedAsDelete = LE_FALSE;
-
-    this->mtxTimeEvent.bufferList.unlock();
   }
   else
   {
@@ -289,13 +383,51 @@ int LEMoon::timeEventCreate(uint32_t id, uint32_t ntimestamp)
   if(!result)
     {this->notifyTimeEvent.notifyByEngine = LE_TRUE;}
 
-  this->mtxTimeEvent.timeEventCreate.unlock();
   return result;
+}
+
+uint32_t LEMoon::timeEventCreate(uint32_t ntimestamp)
+{
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventCreate);
+  uint32_t generatedID = this->timeEventGenerateID();
+  LETimeEvent * pNew = nullptr;
+
+  lock_guard<mutex> lockB(this->mtxTimeEvent.originalList);
+
+  if(this->pTimeEventHead == nullptr)
+  {
+    this->pTimeEventHead = new LETimeEvent;
+    this->pTimeEventHead->pLeft = this->pTimeEventHead;
+    this->pTimeEventHead->pRight = this->pTimeEventHead;
+    this->pTimeEventHead->id = 1989;
+  }
+
+  lock_guard<mutex> lockC(this->mtxTimeEvent.bufferList);
+
+  if(this->pTimeEventHeadBuffer == nullptr)
+  {
+    this->pTimeEventHeadBuffer = new LETimeEvent;
+    this->pTimeEventHeadBuffer->pLeft = this->pTimeEventHeadBuffer;
+    this->pTimeEventHeadBuffer->pRight = this->pTimeEventHeadBuffer;
+    this->pTimeEventHeadBuffer->id = 28092017;
+  }
+
+  pNew = new LETimeEvent;
+  pNew->pRight = this->pTimeEventHeadBuffer;
+  pNew->pLeft = this->pTimeEventHeadBuffer->pLeft;
+  this->pTimeEventHeadBuffer->pLeft->pRight = pNew;
+  this->pTimeEventHeadBuffer->pLeft = pNew;
+  pNew->id = generatedID;
+  pNew->timestamp = ntimestamp;
+  pNew->reached = LE_FALSE;
+  pNew->markedAsDelete = LE_FALSE;
+
+  return generatedID;
 }
 
 int LEMoon::timeEventDelete(uint32_t id)
 {
-  this->mtxTimeEvent.timeEventDelete.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventDelete);
   int result = LE_NO_ERROR;
   LETimeEvent * pElem = this->timeEventGet(id);
 
@@ -303,7 +435,10 @@ int LEMoon::timeEventDelete(uint32_t id)
     {pElem = this->timeEventGetFromBuffer(id);}
 
   if(pElem != nullptr)
-    {pElem->markedAsDelete = LE_TRUE;}
+  {
+    pElem->markedAsDelete = LE_TRUE;
+    this->notifyTimeEvent.notifyByEngine = LE_TRUE;
+  }
   else
   {
     #ifdef LE_DEBUG
@@ -316,13 +451,12 @@ int LEMoon::timeEventDelete(uint32_t id)
     result = LE_TIMEEVENT_NOEXIST;
   }
 
-  this->mtxTimeEvent.timeEventDelete.unlock();
   return result;
 }
 
 bool LEMoon::timeEventReached(uint32_t id)
 {
-  this->mtxTimeEvent.timeEventReached.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventReached);
   LETimeEvent * pElem = this->timeEventGet(id);
 
   if(pElem == nullptr)
@@ -343,13 +477,12 @@ bool LEMoon::timeEventReached(uint32_t id)
     #endif
   }
 
-  this->mtxTimeEvent.timeEventReached.unlock();
   return pElem->reached;
 }
 
 int LEMoon::timeEventReset(uint32_t id, uint32_t ntimestamp)
 {
-  this->mtxTimeEvent.timeEventReset.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventReset);
   int result = LE_NO_ERROR;
   LETimeEvent * pElem = this->timeEventGet(id);
 
@@ -373,13 +506,12 @@ int LEMoon::timeEventReset(uint32_t id, uint32_t ntimestamp)
     result = LE_TIMEEVENT_NOEXIST;
   }
 
-  this->mtxTimeEvent.timeEventReset.unlock();
   return result;
 }
 
 int LEMoon::timeEventUpdate(uint32_t id, uint32_t milliseconds)
 {
-  this->mtxTimeEvent.timeEventUpdate.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventUpdate);
   int result = LE_NO_ERROR;
   LETimeEvent * pElem = this->timeEventGet(id);
 
@@ -400,13 +532,12 @@ int LEMoon::timeEventUpdate(uint32_t id, uint32_t milliseconds)
     result = LE_TIMEEVENT_NOEXIST;
   }
 
-  this->mtxTimeEvent.timeEventUpdate.unlock();
   return result;
 }
 
 void LEMoon::timeEventUpdateValidALL(uint32_t milliseconds)
 {
-  this->mtxTimeEvent.timeEventUpdateValidALL.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventUpdateValidALL);
   LETimeEvent * pCurrent = nullptr;
 
   if(this->pTimeEventHead != nullptr)
@@ -421,13 +552,11 @@ void LEMoon::timeEventUpdateValidALL(uint32_t milliseconds)
       pCurrent = pCurrent->pRight;
     }
   }
-
-  this->mtxTimeEvent.timeEventUpdateValidALL.unlock();
 }
 
 uint32_t LEMoon::timeEventGetStamp(uint32_t id)
 {
-  this->mtxTimeEvent.timeEventGetStamp.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventGetStamp);
   uint32_t ts = 0;
   LETimeEvent * pElem = this->timeEventGet(id);
 
@@ -437,21 +566,19 @@ uint32_t LEMoon::timeEventGetStamp(uint32_t id)
   if(pElem != nullptr)
     {ts = pElem->timestamp;}
 
-  this->mtxTimeEvent.timeEventGetStamp.unlock();
   return ts;
 }
 
 void LEMoon::timeEventUsingThread(bool flag)
 {
-  this->mtxTimeEvent.timeEventUsingThread.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventUsingThread);
   this->notifyTimeEvent.notifyByUser = flag;
-  this->mtxTimeEvent.timeEventUsingThread.unlock();
 }
 
 void LEMoon::timeEventPrintList()
 {
-  this->mtxTimeEvent.timeEventPrintList.lock();
-  this->mtxTimeEvent.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventPrintList);
+  lock_guard<mutex> lockB(this->mtxTimeEvent.originalList);
   LETimeEvent * pCurrent = nullptr;
 
   if(this->pTimeEventHead != nullptr)
@@ -460,26 +587,23 @@ void LEMoon::timeEventPrintList()
 
     if(pCurrent != nullptr)
     {
-      printf("ORIGINAL: Head: %d", this->pTimeEventHead->id);
+      printf("ORIGINAL: Head (Time Event): %u", this->pTimeEventHead->id);
 
       while(pCurrent != this->pTimeEventHead)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pTimeEventHead->id);
+      printf(" <-> Head (Time Event): %u\n\n", this->pTimeEventHead->id);
     }
   }
-
-  this->mtxTimeEvent.originalList.unlock();
-  this->mtxTimeEvent.timeEventPrintList.unlock();
 }
 
 void LEMoon::timeEventPrintBufferList()
 {
-  this->mtxTimeEvent.timeEventPrintBufferList.lock();
-  this->mtxTimeEvent.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxTimeEvent.timeEventPrintBufferList);
+  lock_guard<mutex> lockB(this->mtxTimeEvent.bufferList);
   LETimeEvent * pCurrent = nullptr;
 
   if(this->pTimeEventHeadBuffer != nullptr)
@@ -488,18 +612,15 @@ void LEMoon::timeEventPrintBufferList()
 
     if(pCurrent != nullptr)
     {
-      printf("BUFFER: Head: %d", this->pTimeEventHeadBuffer->id);
+      printf("BUFFER: Head (Time Event): %u", this->pTimeEventHeadBuffer->id);
 
       while(pCurrent != this->pTimeEventHeadBuffer)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pTimeEventHeadBuffer->id);
+      printf(" <-> Head (Time Event): %u\n\n", this->pTimeEventHeadBuffer->id);
     }
   }
-
-  this->mtxTimeEvent.bufferList.unlock();
-  this->mtxTimeEvent.timeEventPrintBufferList.unlock();
 }

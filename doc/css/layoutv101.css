@@ -155,6 +155,7 @@ img.center
 
 a.button
 {
+  display:                          block;
   color:                            #cccccc;
   text-decoration:                  none;
   border-radius:                    15px;
@@ -162,6 +163,9 @@ a.button
   background:                       rgba(0, 0, 0, 0.4);
   padding:                          0.5em;
   text-align:                       center;
+  float:                            left;
+  margin-right:                     1em;
+  margin-bottom:                    1em;
 }
 
 a.button:hover
@@ -318,4 +322,14 @@ a.underline
 a.underline:hover
 {
   color:                            #830000;
+}
+
+hr.content_line
+{
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #dddddd;
+  margin: 1em 0;
+  padding: 0;
 }

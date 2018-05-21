@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               12.04.2018
-  updated:            12.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -25,7 +25,7 @@ int LEMoon::modelDraw(LEModel * pModel)
   {
     #ifdef LE_DEBUG
       char * pErrorString = new char[256 + 1];
-      sprintf(pErrorString, "LEMoon::modelDraw(%d)\n\n", pModel->id);
+      sprintf(pErrorString, "LEMoon::modelDraw(%u)\n\n", pModel->id);
       this->printErrorDialog(result, pErrorString);
       delete [] pErrorString;
     #endif
@@ -36,7 +36,7 @@ int LEMoon::modelDraw(LEModel * pModel)
 
 LEModel * LEMoon::modelGet(uint32_t id)
 {
-  this->mtxModel.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxModel.originalList);
   LEModel * pRet = nullptr;
   LEModel * pCurrent = nullptr;
 
@@ -62,13 +62,12 @@ LEModel * LEMoon::modelGet(uint32_t id)
     }
   }
 
-  this->mtxModel.originalList.unlock();
   return pRet;
 }
 
 LEModel * LEMoon::modelGetFromBuffer(uint32_t id)
 {
-  this->mtxModel.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxModel.bufferList);
   LEModel * pRet = nullptr;
   LEModel * pCurrent = nullptr;
 
@@ -94,7 +93,6 @@ LEModel * LEMoon::modelGetFromBuffer(uint32_t id)
     }
   }
 
-  this->mtxModel.bufferList.unlock();
   return pRet;
 }
 
@@ -212,26 +210,29 @@ void LEMoon::modelConstructor()
   this->mtxModel.modelCreateLockedByMerge = LE_FALSE;
   this->mtxModel.modelDeleteLockedByMerge = LE_FALSE;
   this->mtxModel.modelSetZindexLockedByMerge = LE_FALSE;
-
-  this->mtxModel.originalLockedBySetZindex = LE_FALSE;
-  this->mtxModel.bufferLockedBySetZindex = LE_FALSE;
 }
 
 void LEMoon::modelDeleteOriginalList()
 {
-  if(this->pModelHead->pLeft == this->pModelHead && this->pModelHead->pRight == this->pModelHead)
+  if(this->pModelHead != nullptr)
   {
-    delete this->pModelHead;
-    this->pModelHead = nullptr;
+    if(this->pModelHead->pLeft == this->pModelHead && this->pModelHead->pRight == this->pModelHead)
+    {
+      delete this->pModelHead;
+      this->pModelHead = nullptr;
+    }
   }
 }
 
 void LEMoon::modelDeleteBufferList()
 {
-  if(this->pModelHeadBuffer->pLeft == this->pModelHeadBuffer && this->pModelHeadBuffer->pRight == this->pModelHeadBuffer)
+  if(this->pModelHeadBuffer != nullptr)
   {
-    delete this->pModelHeadBuffer;
-    this->pModelHeadBuffer = nullptr;
+    if(this->pModelHeadBuffer->pLeft == this->pModelHeadBuffer && this->pModelHeadBuffer->pRight == this->pModelHeadBuffer)
+    {
+      delete this->pModelHeadBuffer;
+      this->pModelHeadBuffer = nullptr;
+    }
   }
 }
 
@@ -347,6 +348,100 @@ void LEMoon::modelSortZindex()
   }
 }
 
+uint32_t LEMoon::modelGenerateIDFromOriginalList()
+{
+  lock_guard<mutex> lockA(this->mtxModel.originalList);
+  uint32_t id = 0;
+  LEModel * pStart = nullptr;
+  LEModel * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pModelHead != nullptr)
+  {
+    pStart = this->pModelHead->pRight;
+
+    while(pStart != this->pModelHead)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pModelHead->pRight;
+
+      while(pCurrent != this->pModelHead)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::modelGenerateIDFromBufferList()
+{
+  lock_guard<mutex> lockA(this->mtxModel.bufferList);
+
+  uint32_t id = 0;
+  LEModel * pStart = nullptr;
+  LEModel * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pModelHeadBuffer != nullptr)
+  {
+    pStart = this->pModelHeadBuffer->pRight;
+
+    while(pStart != this->pModelHeadBuffer)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pModelHeadBuffer->pRight;
+
+      while(pCurrent != this->pModelHeadBuffer)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::modelGenerateID()
+{
+  uint32_t id;
+  id = this->modelGenerateIDFromOriginalList();
+
+  if(id == 0)
+    {id = this->modelGenerateIDFromBufferList();}
+  if(id == 0)
+    {id = 1;}
+
+  return id;
+}
+
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // public model
@@ -355,7 +450,7 @@ void LEMoon::modelSortZindex()
 
 int LEMoon::modelCreate(uint32_t id)
 {
-  this->mtxModel.modelCreate.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelCreate);
   int result = LE_NO_ERROR;
   LEModel * pNew = this->modelGet(id);
 
@@ -366,7 +461,7 @@ int LEMoon::modelCreate(uint32_t id)
 
   if(pNew == nullptr)
   {
-    this->mtxModel.originalList.lock();
+    lock_guard<mutex> lockB(this->mtxModel.originalList);
 
     if(this->pModelHead == nullptr)
     {
@@ -378,8 +473,7 @@ int LEMoon::modelCreate(uint32_t id)
       this->pModelHead->zindex = 0;
     }
 
-    this->mtxModel.originalList.unlock();
-    this->mtxModel.bufferList.lock();
+    lock_guard<mutex> lockC(this->mtxModel.bufferList);
 
     if(this->pModelHeadBuffer == nullptr)
     {
@@ -400,8 +494,6 @@ int LEMoon::modelCreate(uint32_t id)
     pNew->visible = LE_TRUE;
     pNew->markedAsDelete = LE_FALSE;
     pNew->pModel = new LEMdl();
-
-    this->mtxModel.bufferList.unlock();
   }
   else
   {
@@ -418,13 +510,56 @@ int LEMoon::modelCreate(uint32_t id)
   if(!result)
     {this->notifyModel.notifyByEngine = LE_TRUE;}
 
-  this->mtxModel.modelCreate.unlock();
   return result;
+}
+
+uint32_t LEMoon::modelCreate()
+{
+  lock_guard<mutex> lockA(this->mtxModel.modelCreate);
+  uint32_t generatedID = this->modelGenerateID();
+  LEModel * pNew = nullptr;
+
+  lock_guard<mutex> lockB(this->mtxModel.originalList);
+
+  if(this->pModelHead == nullptr)
+  {
+    this->pModelHead = new LEModel;
+    this->pModelHead->pLeft = this->pModelHead;
+    this->pModelHead->pRight = this->pModelHead;
+    this->pModelHead->pModel = nullptr;
+    this->pModelHead->id = 1989;
+    this->pModelHead->zindex = 0;
+  }
+
+  lock_guard<mutex> lockC(this->mtxModel.bufferList);
+
+  if(this->pModelHeadBuffer == nullptr)
+  {
+    this->pModelHeadBuffer = new LEModel;
+    this->pModelHeadBuffer->pLeft = this->pModelHeadBuffer;
+    this->pModelHeadBuffer->pRight = this->pModelHeadBuffer;
+    this->pModelHeadBuffer->id = 28092017;
+    this->pModelHeadBuffer->zindex = 0;
+  }
+
+  pNew = new LEModel;
+  pNew->pLeft = this->pModelHeadBuffer;
+  pNew->pRight = this->pModelHeadBuffer->pRight;
+  this->pModelHeadBuffer->pRight->pLeft = pNew;
+  this->pModelHeadBuffer->pRight = pNew;
+  pNew->id = generatedID;
+  pNew->zindex = 1;
+  pNew->visible = LE_TRUE;
+  pNew->markedAsDelete = LE_FALSE;
+  pNew->pModel = new LEMdl();
+  this->notifyModel.notifyByEngine = LE_TRUE;
+
+  return generatedID;
 }
 
 int LEMoon::modelDelete(uint32_t id)
 {
-  this->mtxModel.modelDelete.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelDelete);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -432,7 +567,10 @@ int LEMoon::modelDelete(uint32_t id)
     {pElem = this->modelGetFromBuffer(id);}
 
   if(pElem != nullptr)
-    {pElem->markedAsDelete = LE_TRUE;}
+  {
+    pElem->markedAsDelete = LE_TRUE;
+    this->notifyModel.notifyByEngine = LE_TRUE;
+  }
   else
   {
     #ifdef LE_DEBUG
@@ -445,13 +583,12 @@ int LEMoon::modelDelete(uint32_t id)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelDelete.unlock();
   return result;
 }
 
 int LEMoon::modelCreateTexture(uint32_t id, uint32_t idTexture, const char * pFile)
 {
-  this->mtxModel.modelCreateTexture.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelCreateTexture);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -485,13 +622,12 @@ int LEMoon::modelCreateTexture(uint32_t id, uint32_t idTexture, const char * pFi
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelCreateTexture.unlock();
   return result;
 }
 
 int LEMoon::modelAddTextureSourceRect(uint32_t id, uint32_t idTexture, uint32_t idSrcRect, int x, int y, int w, int h)
 {
-  this->mtxModel.modelAddTextureSourceRect.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelAddTextureSourceRect);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -525,13 +661,12 @@ int LEMoon::modelAddTextureSourceRect(uint32_t id, uint32_t idTexture, uint32_t 
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelAddTextureSourceRect.unlock();
   return result;
 }
 
 int LEMoon::modelFocusTextureSourceRect(uint32_t id, uint32_t idTexture, uint32_t idSrcRect)
 {
-  this->mtxModel.modelFocusTextureSourceRect.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelFocusTextureSourceRect);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -565,13 +700,12 @@ int LEMoon::modelFocusTextureSourceRect(uint32_t id, uint32_t idTexture, uint32_
     delete [] pErrorString;
   #endif
 
-  this->mtxModel.modelFocusTextureSourceRect.unlock();
   return result;
 }
 
 int LEMoon::modelSetSize(uint32_t id, int w, int h)
 {
-  this->mtxModel.modelSetSize.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetSize);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -592,13 +726,12 @@ int LEMoon::modelSetSize(uint32_t id, int w, int h)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetSize.unlock();
   return result;
 }
 
 double LEMoon::modelSetSize(uint32_t id, double percent)
 {
-  this->mtxModel.modelSetSize.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetSize);
   double factor = 0.0f;
   LEModel * pElem = this->modelGet(id);
 
@@ -617,82 +750,25 @@ double LEMoon::modelSetSize(uint32_t id, double percent)
     #endif
   }
 
-  this->mtxModel.modelSetSize.unlock();
   return factor;
 }
 
 int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
 {
-  this->mtxModel.modelSetZindex.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetZindex);
   int result = LE_NO_ERROR;
   LEModel * pCurrent = nullptr;
-  bool moreThanOneElement = this->pModelHead->pLeft->id != this->pModelHead->pRight->id;
+  bool moreThanOneElement = LE_FALSE;
   LEModel * pElem = this->modelGet(id);
+
+  // not in original list! in buffer list?
 
   if(pElem == nullptr)
   {
     pElem = this->modelGetFromBuffer(id);
 
     if(pElem != nullptr)
-      {this->mtxModel.bufferLockedBySetZindex = LE_TRUE;}
-  }
-  else
-    {this->mtxModel.originalLockedBySetZindex = LE_TRUE;}
-
-  if(zindex == 0)
-  {
-    #ifdef LE_DEBUG
-      char * pErrorString = new char[256 + 1];
-      sprintf(pErrorString, "LEMoon::modelSetZindex(%u, %u)\n\n", id, zindex);
-      this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
-      delete [] pErrorString;
-    #endif
-
-    result = LE_INVALID_ZINDEX;
-  }
-
-  if(moreThanOneElement)
-  {
-    if(!result && pElem != nullptr)
-    {
-      pElem->zindex = zindex;
-
-      if(this->mtxModel.originalLockedBySetZindex)
-        {this->mtxModel.originalList.lock();}
-      if(this->mtxModel.bufferLockedBySetZindex)
-        {this->mtxModel.bufferList.lock();}
-    
-      // exclude from list
-    
-      pElem->pLeft->pRight = pElem->pRight;
-      pElem->pRight->pLeft = pElem->pLeft;
-    
-      // search right place for zindex
-    
-      pCurrent = this->pModelHead->pRight;
-    
-      while(pElem->zindex > pCurrent->zindex && pCurrent != this->pModelHead)
-        {pCurrent = pCurrent->pRight;}
-    
-      // include at right postion
-    
-      pElem->pLeft = pCurrent->pLeft;
-      pElem->pRight = pCurrent;
-      pCurrent->pLeft->pRight = pElem;
-      pCurrent->pLeft = pElem;
-
-      if(this->mtxModel.originalLockedBySetZindex)
-      {
-        this->mtxModel.originalList.unlock();
-        this->mtxModel.originalLockedBySetZindex = LE_FALSE;
-      }
-
-      if(this->mtxModel.bufferLockedBySetZindex)
-      {
-        this->mtxModel.bufferList.unlock();
-        this->mtxModel.bufferLockedBySetZindex = LE_FALSE;
-      }
-    }
+      {pElem->zindex = zindex;}
     else
     {
       #ifdef LE_DEBUG
@@ -701,23 +777,72 @@ int LEMoon::modelSetZindex(uint32_t id, uint32_t zindex)
         this->printErrorDialog(LE_MDL_NOEXIST, pErrorString);
         delete [] pErrorString;
       #endif
-    
+      
       result = LE_MDL_NOEXIST;
     }
   }
   else
   {
-    if(pElem != nullptr)
-      {pElem->zindex = zindex;}
+    // in original list! valid z-index?
+
+    if(zindex == 0)
+    {
+      #ifdef LE_DEBUG
+        char * pErrorString = new char[256 + 1];
+        sprintf(pErrorString, "LEMoon::modelSetZindex(%u, %u)\n\n", id, zindex);
+        this->printErrorDialog(LE_INVALID_ZINDEX, pErrorString);
+        delete [] pErrorString;
+      #endif
+
+      result = LE_INVALID_ZINDEX;
+    }
+
+    // model head not nullptr?
+
+    if(!result && this->pModelHead != nullptr)
+    {
+      moreThanOneElement = this->pModelHead->pLeft->id != this->pModelHead->pRight->id;
+
+      // more than one element in original list?
+
+      if(moreThanOneElement)
+      {
+        pElem->zindex = zindex;
+        lock_guard<mutex> lockB(this->mtxModel.originalList);
+        
+        // exclude from list
+        
+        pElem->pLeft->pRight = pElem->pRight;
+        pElem->pRight->pLeft = pElem->pLeft;
+        
+        // search right place for zindex
+        
+        pCurrent = this->pModelHead->pRight;
+        
+        while(pElem->zindex > pCurrent->zindex && pCurrent != this->pModelHead)
+          {pCurrent = pCurrent->pRight;}
+        
+        // include at right postion
+        
+        pElem->pLeft = pCurrent->pLeft;
+        pElem->pRight = pCurrent;
+        pCurrent->pLeft->pRight = pElem;
+        pCurrent->pLeft = pElem;
+      }
+      else
+      {
+        if(pElem != nullptr)
+          {pElem->zindex = zindex;}
+      }
+    }
   }
 
-  this->mtxModel.modelSetZindex.unlock();
   return result;
 }
 
 int LEMoon::modelSetTextureZindex(uint32_t id, uint32_t idTexture, uint32_t zindex)
 {
-  this->mtxModel.modelSetTextureZindex.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetTextureZindex);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -747,13 +872,12 @@ int LEMoon::modelSetTextureZindex(uint32_t id, uint32_t idTexture, uint32_t zind
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetTextureZindex.unlock();
   return result;
 }
 
 int LEMoon::modelSetTextureActive(uint32_t id, uint32_t idTexture, bool active)
 {
-  this->mtxModel.modelSetTextureActive.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetTextureActive);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -783,13 +907,12 @@ int LEMoon::modelSetTextureActive(uint32_t id, uint32_t idTexture, bool active)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetTextureActive.unlock();
   return result;
 }
 
 int LEMoon::modelSetPosition(uint32_t id, double x, double y)
 {
-  this->mtxModel.modelSetPosition.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetPosition);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -810,13 +933,12 @@ int LEMoon::modelSetPosition(uint32_t id, double x, double y)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetPosition.unlock();
   return result;
 }
 
 int LEMoon::modelAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direction)
 {
-  this->mtxModel.modelAddDirection.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelAddDirection);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -846,13 +968,12 @@ int LEMoon::modelAddDirection(uint32_t id, uint32_t idDirection, glm::vec2 direc
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelAddDirection.unlock();
   return result;
 }
 
 int LEMoon::modelMoveDirection(uint32_t id, uint32_t idDirection)
 {
-  this->mtxModel.modelMoveDirection.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelMoveDirection);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -882,13 +1003,12 @@ int LEMoon::modelMoveDirection(uint32_t id, uint32_t idDirection)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelMoveDirection.unlock();
   return result;
 }
 
 int LEMoon::modelRotate(uint32_t id, double ndegree)
 {
-  this->mtxModel.modelRotate.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelRotate);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -909,13 +1029,12 @@ int LEMoon::modelRotate(uint32_t id, double ndegree)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelRotate.unlock();
   return result;
 }
 
 int LEMoon::modelRotateOnce(uint32_t id, double ndegree)
 {
-  this->mtxModel.modelRotateOnce.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelRotateOnce);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -936,13 +1055,12 @@ int LEMoon::modelRotateOnce(uint32_t id, double ndegree)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelRotateOnce.unlock();
   return result;
 }
 
 int LEMoon::modelSetTextureAlpha(uint32_t id, uint32_t idTexture, uint8_t alpha)
 {
-  this->mtxModel.modelSetTextureAlpha.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetTextureAlpha);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -972,13 +1090,12 @@ int LEMoon::modelSetTextureAlpha(uint32_t id, uint32_t idTexture, uint8_t alpha)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetTextureAlpha.unlock();
   return result;
 }
 
 int LEMoon::modelFadeTexture(uint32_t id, uint32_t idTexture, double alphaPerSecond)
 {
-  this->mtxModel.modelFadeTexture.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelFadeTexture);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1008,13 +1125,12 @@ int LEMoon::modelFadeTexture(uint32_t id, uint32_t idTexture, double alphaPerSec
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelFadeTexture.unlock();
   return result;
 }
 
 int LEMoon::modelRotateDir(uint32_t id, uint32_t idDirection, double degree)
 {
-  this->mtxModel.modelRotateDir.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelRotateDir);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1044,13 +1160,12 @@ int LEMoon::modelRotateDir(uint32_t id, uint32_t idDirection, double degree)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelRotateDir.unlock();
   return result;
 }
 
 SDL_Point LEMoon::modelGetSize(uint32_t id)
 {
-  this->mtxModel.modelGetSize.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetSize);
   SDL_Point size;
   size.x = 0;
   size.y = 0;
@@ -1071,13 +1186,12 @@ SDL_Point LEMoon::modelGetSize(uint32_t id)
     #endif
   }
 
-  this->mtxModel.modelGetSize.unlock();
   return size;
 }
 
 SDL_Point LEMoon::modelGetPosition(uint32_t id)
 {
-  this->mtxModel.modelGetPosition.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetPosition);
   SDL_Point position;
   position.x = 0;
   position.y = 0;
@@ -1098,13 +1212,12 @@ SDL_Point LEMoon::modelGetPosition(uint32_t id)
     #endif
   }
 
-  this->mtxModel.modelGetPosition.unlock();
   return position;
 }
 
 glm::vec2 LEMoon::modelGetPositionD(uint32_t id)
 {
-  this->mtxModel.modelGetPositionD.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetPositionD);
   glm::vec2 position;
   LEModel * pElem = this->modelGet(id);
 
@@ -1123,13 +1236,12 @@ glm::vec2 LEMoon::modelGetPositionD(uint32_t id)
     #endif
   }
 
-  this->mtxModel.modelGetPositionD.unlock();
   return position;
 }
 
 double LEMoon::modelGetTextureAlpha(uint32_t id, uint32_t idTexture)
 {
-  this->mtxModel.modelGetTextureAlpha.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetTextureAlpha);
   double alpha = 0;
   LEModel * pElem = this->modelGet(id);
 
@@ -1148,13 +1260,12 @@ double LEMoon::modelGetTextureAlpha(uint32_t id, uint32_t idTexture)
     #endif
   }
 
-  this->mtxModel.modelGetTextureAlpha.unlock();
   return alpha;
 }
 
 int LEMoon::modelSetSizeFactor(uint32_t id, double nsizeFactor)
 {
-  this->mtxModel.modelSetSizeFactor.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetSizeFactor);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1175,13 +1286,12 @@ int LEMoon::modelSetSizeFactor(uint32_t id, double nsizeFactor)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetSizeFactor.unlock();
   return result;
 }
 
 double LEMoon::modelGetSizeFactor(uint32_t id)
 {
-  this->mtxModel.modelGetSizeFactor.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetSizeFactor);
   double sizeFactor = 0.0f;
   LEModel * pElem = this->modelGet(id);
 
@@ -1200,13 +1310,12 @@ double LEMoon::modelGetSizeFactor(uint32_t id)
     #endif
   }
 
-  this->mtxModel.modelGetSizeFactor.unlock();
   return sizeFactor;
 }
 
 int LEMoon::modelCreateSurface(uint32_t id, uint32_t idTexture, const char * pFile)
 {
-  this->mtxModel.modelCreateSurface.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelCreateSurface);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1236,13 +1345,12 @@ int LEMoon::modelCreateSurface(uint32_t id, uint32_t idTexture, const char * pFi
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelCreateSurface.unlock();
   return result;
 }
 
 int LEMoon::modelDeleteSurface(uint32_t id, uint32_t idTexture)
 {
-  this->mtxModel.modelDeleteSurface.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelDeleteSurface);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1272,13 +1380,12 @@ int LEMoon::modelDeleteSurface(uint32_t id, uint32_t idTexture)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelDeleteSurface.unlock();
   return result;
 }
 
 SDL_Surface * LEMoon::modelGetSurface(uint32_t id, uint32_t idTexture)
 {
-  this->mtxModel.modelGetSurface.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetSurface);
   SDL_Surface * pSurface = nullptr;
   LEModel * pElem = this->modelGet(id);
 
@@ -1297,13 +1404,12 @@ SDL_Surface * LEMoon::modelGetSurface(uint32_t id, uint32_t idTexture)
     #endif
   }
 
-  this->mtxModel.modelGetSurface.unlock();
   return pSurface;
 }
 
 Color LEMoon::modelGetPixelRGBA(uint32_t id, uint32_t idTexture, uint32_t x, uint32_t y)
 {
-  this->mtxModel.modelGetPixelRGBA.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetPixelRGBA);
   Color pixel;
   LEModel * pElem = this->modelGet(id);
 
@@ -1322,13 +1428,12 @@ Color LEMoon::modelGetPixelRGBA(uint32_t id, uint32_t idTexture, uint32_t x, uin
     #endif
   }
 
-  this->mtxModel.modelGetPixelRGBA.unlock();
   return pixel;
 }
 
 glm::vec2 LEMoon::modelGetDirection(uint32_t id, uint32_t idDirection)
 {
-  this->mtxModel.modelGetDirection.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetDirection);
   glm::vec2 direction = {0.0f, 0.0f};
   LEModel * pElem = this->modelGet(id);
 
@@ -1347,13 +1452,12 @@ glm::vec2 LEMoon::modelGetDirection(uint32_t id, uint32_t idDirection)
     #endif
   }
 
-  this->mtxModel.modelGetDirection.unlock();
   return direction;
 }
 
 LECollBox_d LEMoon::modelGetFrameBox(uint32_t id)
 {
-  this->mtxModel.modelGetFrameBox.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetFrameBox);
   LECollBox_d frameBox;
   LEModel * pElem = this->modelGet(id);
 
@@ -1372,13 +1476,12 @@ LECollBox_d LEMoon::modelGetFrameBox(uint32_t id)
     #endif
   }
 
-  this->mtxModel.modelGetFrameBox.unlock();
   return frameBox;
 }
 
 LECollBox_d LEMoon::modelGetCollisionBox(uint32_t id, uint32_t idCollRect)
 {
-  this->mtxModel.modelGetCollisionBox.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetCollisionBox);
   LECollBox_d collisionBox;
   LEModel * pElem = this->modelGet(id);
 
@@ -1397,13 +1500,12 @@ LECollBox_d LEMoon::modelGetCollisionBox(uint32_t id, uint32_t idCollRect)
     #endif
   }
 
-  this->mtxModel.modelGetCollisionBox.unlock();
   return collisionBox;
 }
 
 int LEMoon::modelChangeDirection(uint32_t id, uint32_t idDirection, glm::vec2 dir)
 {
-  this->mtxModel.modelChangeDirection.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelChangeDirection);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1433,13 +1535,12 @@ int LEMoon::modelChangeDirection(uint32_t id, uint32_t idDirection, glm::vec2 di
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelChangeDirection.unlock();
   return result;
 }
 
 int LEMoon::modelSetVisible(uint32_t id, bool visible)
 {
-  this->mtxModel.modelSetVisible.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetVisible);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1460,13 +1561,12 @@ int LEMoon::modelSetVisible(uint32_t id, bool visible)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetVisible.unlock();
   return result;
 }
 
 int LEMoon::modelCreateClone(uint32_t id, uint32_t idClone)
 {
-  this->mtxModel.modelCreateClone.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelCreateClone);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1496,13 +1596,12 @@ int LEMoon::modelCreateClone(uint32_t id, uint32_t idClone)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelCreateClone.unlock();
   return result;
 }
 
 int LEMoon::modelSetClonePosition(uint32_t id, uint32_t idClone, glm::vec2 position)
 {
-  this->mtxModel.modelSetClonePosition.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetClonePosition);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1532,13 +1631,12 @@ int LEMoon::modelSetClonePosition(uint32_t id, uint32_t idClone, glm::vec2 posit
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetClonePosition.unlock();
   return result;
 }
 
 int LEMoon::modelClearClones(uint32_t id)
 {
-  this->mtxModel.modelClearClones.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelClearClones);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1559,13 +1657,12 @@ int LEMoon::modelClearClones(uint32_t id)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelClearClones.unlock();
   return result;
 }
 
 int LEMoon::modelSetCloneVisible(uint32_t id, uint32_t idClone, bool visible)
 {
-  this->mtxModel.modelSetCloneVisible.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelSetCloneVisible);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1595,13 +1692,12 @@ int LEMoon::modelSetCloneVisible(uint32_t id, uint32_t idClone, bool visible)
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelSetCloneVisible.unlock();
   return result;
 }
 
 int LEMoon::modelAddCollisionRect(uint32_t id, uint32_t idCollRect, SDL_Rect collRect)
 {
-  this->mtxModel.modelAddCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelAddCollisionRect);
   int result = LE_NO_ERROR;
   LEModel * pElem = this->modelGet(id);
 
@@ -1631,13 +1727,12 @@ int LEMoon::modelAddCollisionRect(uint32_t id, uint32_t idCollRect, SDL_Rect col
     result = LE_MDL_NOEXIST;
   }
 
-  this->mtxModel.modelAddCollisionRect.unlock();
   return result;
 }
 
 bool LEMoon::modelCheckFrameBoxCollision(uint32_t idModel, uint32_t idForeignModel)
 {
-  this->mtxModel.modelCheckFrameBoxCollision.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelCheckFrameBoxCollision);
   bool collided = LE_FALSE;
   LEModel * pModel = this->modelGet(idModel);
   LEModel * pForeignModel = this->modelGet(idForeignModel);
@@ -1659,13 +1754,12 @@ bool LEMoon::modelCheckFrameBoxCollision(uint32_t idModel, uint32_t idForeignMod
     #endif
   }
 
-  this->mtxModel.modelCheckFrameBoxCollision.unlock();
   return collided;
 }
 
 bool LEMoon::modelCheckCollision(uint32_t idModel, uint32_t idForeignModel)
 {
-  this->mtxModel.modelCheckCollision.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelCheckCollision);
   bool collided = LE_FALSE;
   LEModel * pModel = this->modelGet(idModel);
   LEModel * pForeignModel = this->modelGet(idForeignModel);
@@ -1687,13 +1781,12 @@ bool LEMoon::modelCheckCollision(uint32_t idModel, uint32_t idForeignModel)
     #endif
   }
 
-  this->mtxModel.modelCheckCollision.unlock();
   return collided;
 }
 
 uint32_t LEMoon::modelGetAmountOfCollisionBoxes(uint32_t id)
 {
-  this->mtxModel.modelGetAmountOfCollisionBoxes.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetAmountOfCollisionBoxes);
   uint32_t amount = 0;
   LEModel * pModel = this->modelGet(id);
 
@@ -1712,13 +1805,12 @@ uint32_t LEMoon::modelGetAmountOfCollisionBoxes(uint32_t id)
     #endif
   }
 
-  this->mtxModel.modelGetAmountOfCollisionBoxes.unlock();
   return amount;
 }
 
 uint32_t LEMoon::modelGetAmountOfTextureSourceRectangles(uint32_t id, uint32_t idTexture)
 {
-  this->mtxModel.modelGetAmountOfTextureSourceRectangles.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetAmountOfTextureSourceRectangles);
   uint32_t amount = 0;
   LEModel * pModel = this->modelGet(id);
 
@@ -1737,13 +1829,12 @@ uint32_t LEMoon::modelGetAmountOfTextureSourceRectangles(uint32_t id, uint32_t i
     #endif
   }
 
-  this->mtxModel.modelGetAmountOfTextureSourceRectangles.unlock();
   return amount;
 }
 
 uint32_t LEMoon::modelGetZindex(uint32_t id)
 {
-  this->mtxModel.modelGetZindex.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetZindex);
   uint32_t zindex = 0;
   LEModel * pModel = this->modelGet(id);
 
@@ -1753,13 +1844,12 @@ uint32_t LEMoon::modelGetZindex(uint32_t id)
   if(pModel != nullptr)
     {zindex = pModel->zindex;}
 
-  this->mtxModel.modelGetZindex.unlock();
   return zindex;
 }
 
 bool LEMoon::modelTextureExists(uint32_t id, uint32_t idTexture)
 {
-  this->mtxModel.modelTextureExists.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelTextureExists);
   bool textureExist = LE_FALSE;
   LEModel * pModel = this->modelGet(id);
 
@@ -1769,13 +1859,12 @@ bool LEMoon::modelTextureExists(uint32_t id, uint32_t idTexture)
   if(pModel != nullptr)
     {textureExist = pModel->pModel->mdlTextureExist(idTexture);}
 
-  this->mtxModel.modelTextureExists.unlock();
   return textureExist;
 }
 
 bool LEMoon::modelGetVisible(uint32_t id)
 {
-  this->mtxModel.modelGetVisible.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelGetVisible);
   bool visible = LE_FALSE;
   LEModel * pModel = this->modelGet(id);
 
@@ -1785,21 +1874,19 @@ bool LEMoon::modelGetVisible(uint32_t id)
   if(pModel != nullptr)
     {visible = pModel->visible;}
 
-  this->mtxModel.modelGetVisible.unlock();
   return visible;
 }
 
 void LEMoon::modelUsingThread(bool flag)
 {
-  this->mtxModel.modelUsingThread.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelUsingThread);
   this->notifyModel.notifyByUser = flag;
-  this->mtxModel.modelUsingThread.unlock();
 }
 
 void LEMoon::modelPrintList()
 {
-  this->mtxModel.modelPrintList.lock();
-  this->mtxModel.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelPrintList);
+  lock_guard<mutex> lockB(this->mtxModel.originalList);
   LEModel * pCurrent = nullptr;
 
   if(this->pModelHead != nullptr)
@@ -1808,26 +1895,23 @@ void LEMoon::modelPrintList()
 
     if(pCurrent != nullptr)
     {
-      printf("ORIGINAL: Head: %d", this->pModelHead->id);
+      printf("ORIGINAL: Head (Model): %u", this->pModelHead->id);
 
       while(pCurrent != this->pModelHead)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pModelHead->id);
+      printf(" <-> Head (Model): %u\n\n", this->pModelHead->id);
     }
   }
-
-  this->mtxModel.originalList.unlock();
-  this->mtxModel.modelPrintList.unlock();
 }
 
 void LEMoon::modelPrintBufferList()
 {
-  this->mtxModel.modelPrintBufferList.lock();
-  this->mtxModel.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxModel.modelPrintBufferList);
+  lock_guard<mutex> lockB(this->mtxModel.bufferList);
   LEModel * pCurrent = nullptr;
 
   if(this->pModelHeadBuffer != nullptr)
@@ -1836,18 +1920,15 @@ void LEMoon::modelPrintBufferList()
 
     if(pCurrent != nullptr)
     {
-      printf("BUFFER: Head: %d", this->pModelHeadBuffer->id);
+      printf("BUFFER (Model): Head: %u", this->pModelHeadBuffer->id);
 
       while(pCurrent != this->pModelHeadBuffer)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pModelHeadBuffer->id);
+      printf(" <-> Head (Model): %u\n\n", this->pModelHeadBuffer->id);
     }
   }
-
-  this->mtxModel.bufferList.unlock();
-  this->mtxModel.modelPrintBufferList.unlock();
 }

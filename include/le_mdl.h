@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04, g++ Compiler
   date:               29.05.2017
-  updated:            26.04.2018
+  updated:            17.05.2018
 */
 
 #ifndef H_LE_MODEL
@@ -82,6 +82,7 @@ class LEMdl
     void memoryClearCollisionRects();                                               // diese Funktion loescht alle Kollisionsbereiche
     void memoryClearDirections();                                                   // diese Funktion loescht alle Bewegungsrichtungen im Destruktor der Klasse
     void memoryClearTextures();                                                     // diese Funktion loescht alle Texturen im Destruktor der Klasse
+    void printDirectionList();                                                      // diese Funktion gibt alle Richtungen auf der Konsole aus
     LECollBox_d rotateCollisionBox(LECollBox_d);                                    // diese Funktion rotiert eine Kollisionsbox
     SourceRect * sourceRectGet(Texture*, uint32_t);                                 // diese Funktion gibt eine Referenz auf ein Source Rect zurueck
     Texture * textureGet(uint32_t);                                                 // diese Funktion gibt eine Referenz auf eine Textur zurueck

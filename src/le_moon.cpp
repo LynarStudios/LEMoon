@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               18.05.2017
-  updated:            12.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -624,7 +624,7 @@ int LEMoon::drawWithZindex()
 
 void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
 {
-  this->mtxGeneral.printErrorDialog.lock();
+  lock_guard<mutex> lockA(this->mtxGeneral.printErrorDialog);
   size_t lengthErrorInfo = 0;
 
   if(pErrorInfo != nullptr)
@@ -664,6 +664,11 @@ void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
     case LE_SDL_CLEAR_RENDERER:
     {
       sprintf(pErrorString, "%sSDL_RenderClear() failed!\n%s", pErrorInfo, SDL_GetError());
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
+    } break;
+    case LE_SDL_RENDERER_NULLPTR:
+    {
+      sprintf(pErrorString, "%sthis->pRenderer is nullptr!\n%s", pErrorInfo, SDL_GetError());
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LE Moon", pErrorString, nullptr);
     } break;
     case LE_SDL_SHOW_CURSOR:
@@ -923,8 +928,6 @@ void LEMoon::printErrorDialog(int error, const char * pErrorInfo)
     delete [] pErrorString;
     pErrorString = nullptr;
   }
-
-  this->mtxGeneral.printErrorDialog.unlock();
 }
 
 void LEMoon::clearKeyboard()
@@ -3422,8 +3425,8 @@ int LEMoon::init(const char * pAppName)
     printf("Lynar Moon Engine    :       :::\n");
     printf("                     `.     .::'\n");
     printf("                       `-..:''\n\n\n");
-    printf("version:\t\t1.4.1\n");
-    printf("release-date:\t\t12.05.2018\n");
+    printf("version:\t\t1.4.2\n");
+    printf("release-date:\t\t21.05.2018\n");
     printf("website:\t\twww.lynarstudios.de\n");
     printf("\n");
     printf("author:\t\t\tPatrick-Christopher Mattulat\n");
@@ -5407,11 +5410,22 @@ int LEMoon::drawFrame()
   {
     if(SDL_RenderClear(this->pRenderer))
     {
-      #ifdef LE_DEBUG
-        this->printErrorDialog(LE_SDL_CLEAR_RENDERER, "LEMoon::drawFrame()\n\n");
-      #endif
+      if(this->pRenderer == nullptr)
+      {
+        #ifdef LE_DEBUG
+          this->printErrorDialog(LE_SDL_RENDERER_NULLPTR, "LEMoon::drawFrame()\n\n");
+        #endif
 
-      result = LE_SDL_CLEAR_RENDERER;
+        result = LE_SDL_RENDERER_NULLPTR;
+      }
+      else
+      {
+        #ifdef LE_DEBUG
+          this->printErrorDialog(LE_SDL_CLEAR_RENDERER, "LEMoon::drawFrame()\n\n");
+        #endif
+
+        result = LE_SDL_CLEAR_RENDERER;
+      }
     }
   }
 

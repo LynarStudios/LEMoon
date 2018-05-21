@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04, g++ Compiler
   date:               09.06.2017
-  updated:            11.04.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_math.h"

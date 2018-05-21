@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Visual Studio 2015 Community, g++ Compiler
   date:               11.04.2018
-  updated:            03.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_moon.h"
@@ -16,7 +16,7 @@
 
 LEFont * LEMoon::fontGet(uint32_t id)
 {
-  this->mtxFont.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxFont.originalList);
   LEFont * pRet = nullptr;
   LEFont * pCurrent = nullptr;
 
@@ -44,13 +44,12 @@ LEFont * LEMoon::fontGet(uint32_t id)
     }
   }
 
-  this->mtxFont.originalList.unlock();
   return pRet;
 }
 
 LEFont * LEMoon::fontGetFromBuffer(uint32_t id)
 {
-  this->mtxFont.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxFont.bufferList);
   LEFont * pRet = nullptr;
   LEFont * pCurrent = nullptr;
 
@@ -78,7 +77,6 @@ LEFont * LEMoon::fontGetFromBuffer(uint32_t id)
     }
   }
 
-  this->mtxFont.bufferList.unlock();
   return pRet;
 }
 
@@ -142,10 +140,13 @@ void LEMoon::fontCleanBufferList()
 
 void LEMoon::fontDeleteBufferList()
 {
-  if(this->pFontHeadBuffer->pLeft == this->pFontHeadBuffer && this->pFontHeadBuffer->pRight == this->pFontHeadBuffer)
+  if(this->pFontHeadBuffer != nullptr)
   {
-    delete this->pFontHeadBuffer;
-    this->pFontHeadBuffer = nullptr;
+    if(this->pFontHeadBuffer->pLeft == this->pFontHeadBuffer && this->pFontHeadBuffer->pRight == this->pFontHeadBuffer)
+    {
+      delete this->pFontHeadBuffer;
+      this->pFontHeadBuffer = nullptr;
+    }
   }
 }
 
@@ -229,11 +230,107 @@ void LEMoon::fontMergeLists()
 
 void LEMoon::fontDeleteOriginalList()
 {
-  if(this->pFontHead->pLeft == this->pFontHead && this->pFontHead->pRight == this->pFontHead)
+  if(this->pFontHead != nullptr)
   {
-    delete this->pFontHead;
-    this->pFontHead = nullptr;
+    if(this->pFontHead->pLeft == this->pFontHead && this->pFontHead->pRight == this->pFontHead)
+    {
+      delete this->pFontHead;
+      this->pFontHead = nullptr;
+    }
   }
+}
+
+uint32_t LEMoon::fontGenerateIDFromOriginalList()
+{
+  lock_guard<mutex> lockA(this->mtxFont.originalList);
+  uint32_t id = 0;
+  LEFont * pStart = nullptr;
+  LEFont * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pFontHead != nullptr)
+  {
+    pStart = this->pFontHead->pRight;
+
+    while(pStart != this->pFontHead)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pFontHead->pRight;
+
+      while(pCurrent != this->pFontHead)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::fontGenerateIDFromBufferList()
+{
+  lock_guard<mutex> lockA(this->mtxFont.bufferList);
+  uint32_t id = 0;
+  LEFont * pStart = nullptr;
+  LEFont * pCurrent = nullptr;
+  bool idNotFound = LE_FALSE;
+
+  if(this->pFontHeadBuffer != nullptr)
+  {
+    pStart = this->pFontHeadBuffer->pRight;
+
+    while(pStart != this->pFontHeadBuffer)
+    {
+      id = pStart->id + 1;
+      pCurrent = this->pFontHeadBuffer->pRight;
+
+      while(pCurrent != this->pFontHeadBuffer)
+      {
+        if(id == pCurrent->id)
+        {
+          idNotFound = LE_TRUE;
+          break;
+        }
+
+        pCurrent = pCurrent->pRight;
+      }
+
+      if(!idNotFound)
+        {break;}
+      else
+        {idNotFound = LE_FALSE;}
+
+      pStart = pStart->pRight;
+    }
+  }
+
+  return id;
+}
+
+uint32_t LEMoon::fontGenerateID()
+{
+  uint32_t id;
+  id = this->fontGenerateIDFromOriginalList();
+
+  if(id == 0)
+    {id = this->fontGenerateIDFromBufferList();}
+  if(id == 0)
+    {id = 1;}
+
+  return id;
 }
 
 //////////////////////////////////////////////////////////
@@ -244,7 +341,7 @@ void LEMoon::fontDeleteOriginalList()
 
 int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
 {
-  this->mtxFont.fontCreateTTF.lock();
+  lock_guard<mutex> lockA(this->mtxFont.fontCreateTTF);
   int result = LE_NO_ERROR;
   LEFont * pNew = this->fontGet(id);
 
@@ -253,7 +350,7 @@ int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
 
   if(pNew == nullptr)
   {
-    this->mtxFont.originalList.lock();
+    lock_guard<mutex> lockB(this->mtxFont.originalList);
 
     if(this->pFontHead == nullptr)
     {
@@ -263,8 +360,7 @@ int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
       this->pFontHead->id = 1989;
     }
 
-    this->mtxFont.originalList.unlock();
-    this->mtxFont.bufferList.lock();
+    lock_guard<mutex> lockC(this->mtxFont.bufferList);
 
     if(this->pFontHeadBuffer == nullptr)
     {
@@ -294,8 +390,6 @@ int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
 
       result = LE_OPEN_FONT;
     }
-
-    this->mtxFont.bufferList.unlock();
   }
   else
   {
@@ -312,13 +406,60 @@ int LEMoon::fontCreateTTF(uint32_t id, const char * pFile, int fontSize)
   if(!result)
     {this->notifyFont.notifyByEngine = LE_TRUE;}
 
-  this->mtxFont.fontCreateTTF.unlock();
   return result;
+}
+
+uint32_t LEMoon::fontCreateTTF(const char * pFile, int fontSize)
+{
+  lock_guard<mutex> lockA(this->mtxFont.fontCreateTTF);
+  uint32_t generatedID = this->fontGenerateID();
+  LEFont * pNew = nullptr;
+
+  lock_guard<mutex> lockB(this->mtxFont.originalList);
+
+  if(this->pFontHead == nullptr)
+  {
+    this->pFontHead = new LEFont;
+    this->pFontHead->pLeft = this->pFontHead;
+    this->pFontHead->pRight = this->pFontHead;
+    this->pFontHead->id = 1989;
+  }
+
+  lock_guard<mutex> lockC(this->mtxFont.bufferList);
+
+  if(this->pFontHeadBuffer == nullptr)
+  {
+    this->pFontHeadBuffer = new LEFont;
+    this->pFontHeadBuffer->pLeft = this->pFontHeadBuffer;
+    this->pFontHeadBuffer->pRight = this->pFontHeadBuffer;
+    this->pFontHeadBuffer->id = 28092017;
+  }
+
+  pNew = new LEFont;
+  pNew->pLeft = this->pFontHeadBuffer->pLeft;
+  pNew->pRight = this->pFontHeadBuffer;
+  this->pFontHeadBuffer->pLeft->pRight = pNew;
+  this->pFontHeadBuffer->pLeft = pNew;
+  pNew->id = generatedID;
+  pNew->markedAsDelete = LE_FALSE;
+  pNew->pFont = TTF_OpenFont(pFile, fontSize);
+
+  if(pNew->pFont == nullptr)
+  {
+    #ifdef LE_DEBUG
+      char * pErrorString = new char[256 + 1];
+      sprintf(pErrorString, "LEMoon::fontCreateTTF(%s, %d)\n\n", pFile, fontSize);
+      this->printErrorDialog(LE_OPEN_FONT, pErrorString);
+      delete [] pErrorString;
+    #endif
+  }
+
+  return generatedID;
 }
 
 int LEMoon::fontDelete(uint32_t id)
 {
-  this->mtxFont.fontDelete.lock();
+  lock_guard<mutex> lockA(this->mtxFont.fontDelete);
   int result = LE_NO_ERROR;
   LEFont * pFont = this->fontGet(id);
 
@@ -326,7 +467,10 @@ int LEMoon::fontDelete(uint32_t id)
     {pFont = this->fontGetFromBuffer(id);}
 
   if(pFont != nullptr)
-    {pFont->markedAsDelete = LE_TRUE;}
+  {
+    pFont->markedAsDelete = LE_TRUE;
+    this->notifyFont.notifyByEngine = LE_TRUE;
+  }
   else
   {
     #ifdef LE_DEBUG
@@ -342,14 +486,13 @@ int LEMoon::fontDelete(uint32_t id)
   if(!result)
     {this->notifyFont.notifyByEngine = LE_TRUE;}
 
-  this->mtxFont.fontDelete.unlock();
   return result;
 }
 
 void LEMoon::fontPrintList()
 {
-  this->mtxFont.fontPrintList.lock();
-  this->mtxFont.originalList.lock();
+  lock_guard<mutex> lockA(this->mtxFont.fontPrintList);
+  lock_guard<mutex> lockB(this->mtxFont.originalList);
   LEFont * pCurrent = nullptr;
 
   if(this->pFontHead != nullptr)
@@ -358,26 +501,23 @@ void LEMoon::fontPrintList()
 
     if(pCurrent != nullptr)
     {
-      printf("ORIGINAL: Head: %d", this->pFontHead->id);
+      printf("ORIGINAL: Head (Font): %u", this->pFontHead->id);
 
       while(pCurrent != this->pFontHead)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pFontHead->id);
+      printf(" <-> Head (Font): %u\n\n", this->pFontHead->id);
     }
   }
-
-  this->mtxFont.originalList.unlock();
-  this->mtxFont.fontPrintList.unlock();
 }
 
 void LEMoon::fontPrintBufferList()
 {
-  this->mtxFont.fontPrintBufferList.lock();
-  this->mtxFont.bufferList.lock();
+  lock_guard<mutex> lockA(this->mtxFont.fontPrintBufferList);
+  lock_guard<mutex> lockB(this->mtxFont.bufferList);
   LEFont * pCurrent = nullptr;
 
   if(this->pFontHeadBuffer != nullptr)
@@ -386,25 +526,22 @@ void LEMoon::fontPrintBufferList()
 
     if(pCurrent != nullptr)
     {
-      printf("BUFFER: Head: %d", this->pFontHeadBuffer->id);
+      printf("BUFFER: Head (Font): %u", this->pFontHeadBuffer->id);
 
       while(pCurrent != this->pFontHeadBuffer)
       {
-        printf(" <-> %d", pCurrent->id);
+        printf(" <-> %u", pCurrent->id);
         pCurrent = pCurrent->pRight;
       }
 
-      printf(" <-> Head: %d\n", this->pFontHeadBuffer->id);
+      printf(" <-> Head (Font): %u\n\n", this->pFontHeadBuffer->id);
     }
   }
-
-  this->mtxFont.bufferList.unlock();
-  this->mtxFont.fontPrintBufferList.unlock();
 }
 
 int LEMoon::fontSetStyle(uint32_t id, int style)
 {
-  this->mtxFont.fontSetStyle.lock();
+  lock_guard<mutex> lockA(this->mtxFont.fontSetStyle);
   int result = LE_NO_ERROR;
   LEFont * pFont = this->fontGet(id);
 
@@ -428,13 +565,11 @@ int LEMoon::fontSetStyle(uint32_t id, int style)
     result = LE_FONT_NOEXIST;
   }
 
-  this->mtxFont.fontSetStyle.unlock();
   return result;
 }
 
 void LEMoon::fontUsingThread(bool flag)
 {
-  this->mtxFont.fontUsingThread.lock();
+  lock_guard<mutex> lockA(this->mtxFont.fontUsingThread);
   this->notifyFont.notifyByUser = flag;
-  this->mtxFont.fontUsingThread.unlock();
 }

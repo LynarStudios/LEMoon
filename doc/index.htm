@@ -6,14 +6,14 @@
   <meta name="author" content="Patrick-Christopher Mattulat">
   <meta name="description" content="Lynar Moon Engine is a 2D game engine based on SDL2 and its companion libraries.">
   <meta name="keywords" content="2d, game engine, engine, game, games, lynar, moon, lynar moon, le, lynar moon engine, sdl2, sdl, simple directmedia layer">
-  <meta name="date" content="2018-05-12T11:14:00+02:00">
+  <meta name="date" content="2018-05-21T18:14:00+02:00">
   <!-- Robots -->
   <meta name="robots" content="index, follow">
   <!-- Settings -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- layout -->
-  <link rel="stylesheet" type="text/css" href="css/layoutv100.css">
+  <link rel="stylesheet" type="text/css" href="css/layoutv101.css">
   <!-- JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="js/contentOrganizerv100.js"></script>
@@ -115,6 +115,10 @@
     <h1>Welcome</h1>
     Welcome to the <b class="identifier">Lynar Moon Engine</b> website. It's an open source game engine for 2D game development based on <b class="identifier">SDL2</b>. You can find a detailed documentation below. If you spotted any errors you can either contribute on <b class="identifier">gitHub</b> or send a message to the webmaster of this page.
     <h2 style=" font-size: 1.5em;">News</h2>
+    <u>21.05.2018:</u>
+    <ul>
+      <li>Lynar Moon Engine 1.4.2 is out now! Original and buffer list elements are being deleted now after you've called a delete function. textPrintBufferList() is printing the correct list now. Threading processes will use lock guards now. Lynar Moon Engine is now additionally able to generate unique ID's for all classes (except video class!).</li>
+    </ul>
     <u>12.05.2018:</u>
     <ul>
       <li>Lynar Moon Engine 1.4.1 is out now! Some bugs have been fixed! Z-index is working correctly now and some model calculation / type casting problems have been fixed as well!</li>
@@ -193,6 +197,19 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <hr class="content_line">
+    <h1><b class="datatype">uint32_t</b> fontCreateTTF(<b class="datatype">const char *</b> pFile, <b class="datatype">int</b> fontSize)</h1>
+    <h2>Description</h2>
+    <p>This function loads a TrueTypeFont(TTF) for your application, which can be used for text displaying, and generates an unique ID for it.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">pFile</b>: This is the exact path of your <b class="file">.TTF</b> file.</li>
+      <li><b class="identifier">fontSize</b>: This is the font size of your font you'd like to load into your application in pixels.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return a generated ID for this font after it has been created, which can be used to identify it in future code.</p>
     <h2>thread safe</h2>
     yes
     <br>
@@ -774,6 +791,14 @@
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
     <h2>thread safe</h2>
     yes
+    <hr class="content_line">
+    <h1><b class="datatype">uint32_t</b> lineCreate()</h1>
+    <h2>Description</h2>
+    <p>This function will create a line and generates an unique ID for it.</p>
+    <h2>return value</h2>
+    <p>This function will return a generated ID for this line after it has been created, which can be used to identify it in future code.</p>
+    <h2>thread safe</h2>
+    yes
     <br>
     <br>
     &laquo; <a href="#line" class="normalNav">Line</a>
@@ -1132,6 +1157,14 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <hr class="content_line">
+    <h1><b class="datatype">uint32_t</b> modelCreate()</h1>
+    <h2>Description</h2>
+    <p>This function will create a model for your application and generates an unique ID for it.</p>
+    <h2>return value</h2>
+    <p>This function will return a generated ID for this model after it has been created, which can be used to identify it in future code.</p>
     <h2>thread safe</h2>
     yes
     <br>
@@ -1750,7 +1783,7 @@
     yes
     <br>
     <br>
-    <hr style="color: white;">
+    <hr class="content_line">
     <h2 style="font-size: 1.5em;"><b class="datatype">double</b> modelSetSize(<b class="datatype">uint32_t</b> id, <b class="datatype">double</b> percent)</h1>
     <h2>Description</h2>
     <p>This function will set the size of a model you created before by giving a percentage of the original model size.</p>
@@ -1944,6 +1977,14 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <hr class="content_line">
+    <h1><b class="datatype">uint32_t</b> pointCreate()</h1>
+    <h2>Description</h2>
+    <p>This function will create a point and generates an unique ID for it.</p>
+    <h2>return value</h2>
+    <p>This function will return a generated ID for this point after it has been created, which can be used to identify it in future code.</p>
     <h2>thread safe</h2>
     yes
     <br>
@@ -2221,6 +2262,14 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <hr class="content_line">
+    <h1><b class="datatype">uint32_t</b> soundCreate()</h1>
+    <h2>Description</h2>
+    <p>This function will create a sound, which can be played in your application then, and generates an unique ID for it.</p>
+    <h2>return value</h2>
+    <p>This function will return a generated ID for this sound after it has been created, which can be used to identify it in future code.</p>
     <h2>thread safe</h2>
     yes
     <br>
@@ -2531,6 +2580,14 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <hr class="content_line">
+    <h1><b class="datatype">uint32_t</b> textCreate()</h1>
+    <h2>Description</h2>
+    <p>This function will create a text, which can be displayed in your application then, and generates an unique ID for it.</p>
+    <h2>return value</h2>
+    <p>This function will return a generated ID for this text after it has been created, which can be used to identify it in future code.</p>
     <h2>thread safe</h2>
     yes
     <br>
@@ -2897,6 +2954,18 @@
     </ul>
     <h2>return value</h2>
     <p>This function returns a LE error code. Enable <b class="constant">LE_DEBUG</b> in <b class="file">le_glb.h</b> for more information.</p>
+    <h2>thread safe</h2>
+    yes
+    <hr class="content_line">
+    <h1><b class="datatype">uint32_t</b> timeEventCreate(<b class="datatype">uint32_t</b> ntimestamp)</h1>
+    <h2>Description</h2>
+    <p>This function will create a time event and generates an unique ID for it. Time events can be used to execute code at specific time.</p>
+    <h2>Parameters</h2>
+    <ul>
+      <li><b class="identifier">ntimestamp</b>: This is the actual timestamp where the time event will take place. Use <b class="identifier">getTimestamp()</b> function to get the current timestamp. Then add the amount of milliseconds which would result in a specific future time.</li>
+    </ul>
+    <h2>return value</h2>
+    <p>This function will return a generated ID for this time event after it has been created, which can be used to identify it in future code.</p>
     <h2>thread safe</h2>
     yes
     <br>

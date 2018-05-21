@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04, g++ Compiler
   date:               29.05.2017
-  updated:            12.05.2018
+  updated:            21.05.2018
 */
 
 #include "../include/le_mdl.h"
@@ -16,7 +16,7 @@
 
 CollisionRect * LEMdl::collisionRectGet(uint32_t idCollRect)
 {
-  this->mtxCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxCollisionRect);
   CollisionRect * pRet = nullptr;
   CollisionRect * pCurrent = nullptr;
 
@@ -36,13 +36,12 @@ CollisionRect * LEMdl::collisionRectGet(uint32_t idCollRect)
     }
   }
 
-  this->mtxCollisionRect.unlock();
   return pRet;
 }
 
 Clone * LEMdl::cloneGet(uint32_t idClone)
 {
-  this->mtxClone.lock();
+  lock_guard<mutex> lockA(this->mtxClone);
   Clone * pRet = nullptr;
   Clone * pCurrent = nullptr;
 
@@ -62,13 +61,12 @@ Clone * LEMdl::cloneGet(uint32_t idClone)
     }
   }
 
-  this->mtxClone.unlock();
   return pRet;
 }
 
 Texture * LEMdl::textureGet(uint32_t idTexture)
 {
-  this->mtxTexture.lock();
+  lock_guard<mutex> lockA(this->mtxTexture);
   Texture * pRet = nullptr;
   Texture * pCurrent = nullptr;
 
@@ -88,13 +86,12 @@ Texture * LEMdl::textureGet(uint32_t idTexture)
     }
   }
 
-  this->mtxTexture.unlock();
   return pRet;
 }
 
 SourceRect * LEMdl::sourceRectGet(Texture * pTexture, uint32_t idSrcRect)
 {
-  this->mtxSourceRectList.lock();
+  lock_guard<mutex> lockA(this->mtxSourceRectList);
   SourceRect * pRet = nullptr;
   SourceRect * pCurrent = nullptr;
 
@@ -114,12 +111,12 @@ SourceRect * LEMdl::sourceRectGet(Texture * pTexture, uint32_t idSrcRect)
     }
   }
 
-  this->mtxSourceRectList.unlock();
   return pRet;
 }
 
 uint32_t LEMdl::amountSourceRect(Texture * pTexture)
 {
+  lock_guard<mutex> lockA(this->mtxSourceRectList);
   uint32_t amount = 0;
   SourceRect * pCurrent = nullptr;
 
@@ -139,7 +136,7 @@ uint32_t LEMdl::amountSourceRect(Texture * pTexture)
 
 LinkedVec2 * LEMdl::directionGet(uint32_t idDirection)
 {
-  this->mtxDirection.lock();
+  lock_guard<mutex> lockA(this->mtxDirection);
   LinkedVec2 * pRet = nullptr;
   LinkedVec2 * pCurrent = nullptr;
 
@@ -159,13 +156,12 @@ LinkedVec2 * LEMdl::directionGet(uint32_t idDirection)
     }
   }
 
-  this->mtxDirection.unlock();
   return pRet;
 }
 
 void LEMdl::memoryClearDirections()
 {
-  this->mtxDirection.lock();
+  lock_guard<mutex> lockA(this->mtxDirection);
   LinkedVec2 * pCurrent = nullptr;
   LinkedVec2 * pNext = nullptr;
 
@@ -183,13 +179,11 @@ void LEMdl::memoryClearDirections()
     delete this->pDirectionHead;
     this->pDirectionHead = nullptr;
   }
-
-  this->mtxDirection.unlock();
 }
 
 void LEMdl::memoryClearTextures()
 {
-  this->mtxTexture.lock();
+  lock_guard<mutex> lockA(this->mtxTexture);
   Texture * pCurrent = nullptr;
   Texture * pNext = nullptr;
   SourceRect * pCurrentSrcRect = nullptr;
@@ -237,13 +231,11 @@ void LEMdl::memoryClearTextures()
     delete this->pTextureHead;
     this->pTextureHead = nullptr;
   }
-
-  this->mtxTexture.unlock();
 }
 
 void LEMdl::memoryClearClones()
 {
-  this->mtxClone.lock();
+  lock_guard<mutex> lockA(this->mtxClone);
   Clone * pCurrent = nullptr;
   Clone * pNext = nullptr;
 
@@ -261,13 +253,11 @@ void LEMdl::memoryClearClones()
     delete this->pCloneHead;
     this->pCloneHead = nullptr;
   }
-
-  this->mtxClone.unlock();
 }
 
 void LEMdl::memoryClearCollisionRects()
 {
-  this->mtxCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxCollisionRect);
   CollisionRect * pCurrent = nullptr;
   CollisionRect * pNext = nullptr;
 
@@ -285,8 +275,6 @@ void LEMdl::memoryClearCollisionRects()
     delete this->pCollisionRectHead;
     this->pCollisionRectHead = nullptr;
   }
-
-  this->mtxCollisionRect.unlock();
 }
 
 void LEMdl::updateFrameBox()
@@ -367,6 +355,26 @@ LECollBox_d LEMdl::rotateCollisionBox(LECollBox_d collBox)
   return retCollBox;
 }
 
+void LEMdl::printDirectionList()
+{
+  lock_guard<mutex> lockA(this->mtxDirection);
+  LinkedVec2 * pCurrent = nullptr;
+
+  if(this->pDirectionHead != nullptr)
+  {
+    pCurrent = this->pDirectionHead->pRight;
+    printf("HEAD (Direction) %u:", this->pDirectionHead->id);
+
+    while(pCurrent != this->pDirectionHead)
+    {
+      printf(" <-> %u", pCurrent->id);
+      pCurrent = pCurrent->pRight;
+    }
+
+    printf(" <-> HEAD (Direction) %u\n\n", this->pDirectionHead->id);
+  }
+}
+
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 // public
@@ -418,7 +426,7 @@ int LEMdl::mdlCreateTexture(uint32_t idTexture, const char * pFile, SDL_Renderer
 
   if(pNew == nullptr)
   {
-    this->mtxTexture.lock();
+    lock_guard<mutex> lockA(this->mtxTexture);
 
     if(this->pTextureHead == nullptr)
     {
@@ -473,8 +481,6 @@ int LEMdl::mdlCreateTexture(uint32_t idTexture, const char * pFile, SDL_Renderer
     }
     else
       {result = LE_IMG_LOAD;}
-
-    this->mtxTexture.unlock();
   }
   else
     {result = LE_TEXTURE_EXIST;}
@@ -494,8 +500,7 @@ int LEMdl::mdlDrawActiveTexture(SDL_Renderer * pRenderer)
   posSizeBuffer.y = this->rectPosSize.y;
   Clone * pClone = nullptr;
 
-  this->mtxTexture.lock();
-  this->mtxClone.lock();
+  lock_guard<mutex> lockA(this->mtxTexture);
 
   if(this->pTextureHead != nullptr)
   {
@@ -521,7 +526,9 @@ int LEMdl::mdlDrawActiveTexture(SDL_Renderer * pRenderer)
     }
     
     // draw clones
-    
+
+    lock_guard<mutex> lockB(this->mtxClone);
+
     if(this->pCloneHead != nullptr)
     {
       pElem = this->pTextureHead->pRight;
@@ -561,9 +568,6 @@ int LEMdl::mdlDrawActiveTexture(SDL_Renderer * pRenderer)
     }
   }
 
-  this->mtxClone.unlock();
-  this->mtxTexture.unlock();
-
   return result;
 }
 
@@ -573,7 +577,7 @@ int LEMdl::mdlAddTextureSourceRect(uint32_t idTexture, uint32_t idSrcRect, int x
   Texture * pTexture = this->textureGet(idTexture);
   SourceRect * pNew = nullptr;
 
-  this->mtxTexture.lock();
+  lock_guard<mutex> lockA(this->mtxTexture);
 
   if(pTexture != nullptr)
   {
@@ -581,7 +585,7 @@ int LEMdl::mdlAddTextureSourceRect(uint32_t idTexture, uint32_t idSrcRect, int x
 
     if(pNew == nullptr)
     {
-      this->mtxSourceRectList.lock();
+      lock_guard<mutex> lockB(this->mtxSourceRectList);
 
       if(pTexture->pSrcRectHead == nullptr)
       {
@@ -600,16 +604,12 @@ int LEMdl::mdlAddTextureSourceRect(uint32_t idTexture, uint32_t idSrcRect, int x
       pNew->srcRect.y = y;
       pNew->srcRect.w = w;
       pNew->srcRect.h = h;
-
-      this->mtxSourceRectList.unlock();
     }
     else
       {result = LE_SOURCE_RECT_EXIST;}
   }
   else
     {result = LE_TEXTURE_NOEXIST;}
-
-  this->mtxTexture.unlock();
 
   return result;
 }
@@ -645,7 +645,7 @@ void LEMdl::mdlSetSize(int w, int h)
     this->rectPosSize.h = h;
     this->updateFrameBox();
 
-    this->mtxCollisionRect.lock();
+    lock_guard<mutex> lockA(this->mtxCollisionRect);
 
     pCurrentCollRect = this->pCollisionRectHead->pRight;
 
@@ -654,8 +654,6 @@ void LEMdl::mdlSetSize(int w, int h)
       this->updateCollisionBox(pCurrentCollRect);
       pCurrentCollRect = pCurrentCollRect->pRight;
     }
-
-    this->mtxCollisionRect.unlock();
   }
 }
 
@@ -668,7 +666,7 @@ double LEMdl::mdlSetSize(double percent, int screenWidth)
   this->rectPosSize.h = (int)(this->rectPosSize.h * factor);
   this->updateFrameBox();
 
-  this->mtxCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxCollisionRect);
 
   pCurrentCollRect = this->pCollisionRectHead->pRight;
 
@@ -677,8 +675,6 @@ double LEMdl::mdlSetSize(double percent, int screenWidth)
     this->updateCollisionBox(pCurrentCollRect);
     pCurrentCollRect = pCurrentCollRect->pRight;
   }
-
-  this->mtxCollisionRect.unlock();
 
   return factor;
 }
@@ -691,7 +687,7 @@ int LEMdl::mdlSetTextureZindex(uint32_t idTexture, uint32_t zindex)
 
   if(pElem != nullptr)
   {
-    this->mtxTexture.lock();
+    lock_guard<mutex> lockA(this->mtxTexture);
 
     // exclude texture from list
 
@@ -712,8 +708,6 @@ int LEMdl::mdlSetTextureZindex(uint32_t idTexture, uint32_t zindex)
     pElem->pRight = pCurrent;
     pCurrent->pLeft->pRight = pElem;
     pCurrent->pLeft = pElem;
-
-    this->mtxTexture.unlock();
   }
   else
     {result = LE_TEXTURE_NOEXIST;}
@@ -743,7 +737,7 @@ void LEMdl::mdlSetPosition(double x, double y)
   this->rectPosSize.y = (int)y;
   this->updateFrameBox();
 
-  this->mtxCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxCollisionRect);
 
   pCurrentCollRect = this->pCollisionRectHead->pRight;
 
@@ -752,8 +746,6 @@ void LEMdl::mdlSetPosition(double x, double y)
     this->updateCollisionBox(pCurrentCollRect);
     pCurrentCollRect = pCurrentCollRect->pRight;
   }
-
-  this->mtxCollisionRect.unlock();
 }
 
 int LEMdl::mdlAddDirection(uint32_t idDirection, glm::vec2 direction)
@@ -763,7 +755,7 @@ int LEMdl::mdlAddDirection(uint32_t idDirection, glm::vec2 direction)
 
   if(pNew == nullptr)
   {
-    this->mtxDirection.lock();
+    lock_guard<mutex> lockA(this->mtxDirection);
 
     if(this->pDirectionHead == nullptr)
     {
@@ -780,8 +772,6 @@ int LEMdl::mdlAddDirection(uint32_t idDirection, glm::vec2 direction)
     pNew->id = idDirection;
     pNew->data = direction;
     pNew->currentDegree = 0.0f;
-
-    this->mtxDirection.unlock();
   }
   else
     {result = LE_DIRECTION_EXIST;}
@@ -803,7 +793,7 @@ int LEMdl::mdlMoveDirection(uint32_t idDirection, double timestep)
     this->rectPosSize.y = (int)this->position.y;
     this->updateFrameBox();
 
-    this->mtxCollisionRect.lock();
+    lock_guard<mutex> lockA(this->mtxCollisionRect);
 
     pCurrentCollRect = this->pCollisionRectHead->pRight;
 
@@ -812,8 +802,6 @@ int LEMdl::mdlMoveDirection(uint32_t idDirection, double timestep)
       this->updateCollisionBox(pCurrentCollRect);
       pCurrentCollRect = pCurrentCollRect->pRight;
     }
-
-    this->mtxCollisionRect.unlock();
   }
   else
     {result = LE_DIRECTION_NOEXIST;}
@@ -827,7 +815,7 @@ void LEMdl::mdlRotate(double ndegree, double timestep)
   this->currentDegree = mathMod((this->currentDegree + ndegree * timestep), 360.0f);
   this->updateFrameBox();
 
-  this->mtxCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxCollisionRect);
 
   pCurrentCollRect = this->pCollisionRectHead->pRight;
 
@@ -836,8 +824,6 @@ void LEMdl::mdlRotate(double ndegree, double timestep)
     this->updateCollisionBox(pCurrentCollRect);
     pCurrentCollRect = pCurrentCollRect->pRight;
   }
-
-  this->mtxCollisionRect.unlock();
 }
 
 void LEMdl::mdlRotateOnce(double ndegree)
@@ -846,7 +832,7 @@ void LEMdl::mdlRotateOnce(double ndegree)
   this->currentDegree += ndegree;
   this->updateFrameBox();
 
-  this->mtxCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxCollisionRect);
 
   pCurrentCollRect = this->pCollisionRectHead->pRight;
 
@@ -855,8 +841,6 @@ void LEMdl::mdlRotateOnce(double ndegree)
     this->updateCollisionBox(pCurrentCollRect);
     pCurrentCollRect = pCurrentCollRect->pRight;
   }
-
-  this->mtxCollisionRect.unlock();
 }
 
 int LEMdl::mdlSetTextureAlpha(uint32_t idTexture, uint8_t alpha)
@@ -965,7 +949,7 @@ void LEMdl::mdlSetSizeFactor(double nsizeFactor)
     this->sizeFactor = nsizeFactor;
     this->updateFrameBox();
 
-    this->mtxCollisionRect.lock();
+    lock_guard<mutex> lockA(this->mtxCollisionRect);
 
     pCurrentCollRect = this->pCollisionRectHead->pRight;
 
@@ -974,8 +958,6 @@ void LEMdl::mdlSetSizeFactor(double nsizeFactor)
       this->updateCollisionBox(pCurrentCollRect);
       pCurrentCollRect = pCurrentCollRect->pRight;
     }
-
-    this->mtxCollisionRect.unlock();
   }
 }
 
@@ -1084,7 +1066,7 @@ int LEMdl::mdlCreateClone(uint32_t idClone)
 
   if(pClone == nullptr)
   {
-    this->mtxClone.lock();
+    lock_guard<mutex> lockA(this->mtxClone);
 
     if(this->pCloneHead == nullptr)
     {
@@ -1102,8 +1084,6 @@ int LEMdl::mdlCreateClone(uint32_t idClone)
     pClone->id = idClone;
     pClone->position = {0.0f, 0.0f};
     pClone->visible = LE_TRUE;
-
-    this->mtxClone.unlock();
   }
   else
     {result = LE_MDL_CLONE_EXIST;}
@@ -1149,7 +1129,7 @@ int LEMdl::mdlAddCollisionRect(uint32_t idCollRect, SDL_Rect collRect)
 
   if(pCollRect == nullptr)
   {
-    this->mtxCollisionRect.lock();
+    lock_guard<mutex> lockA(this->mtxCollisionRect);
 
     pCollRect = new CollisionRect;
     pCollRect->pRight = this->pCollisionRectHead;
@@ -1159,8 +1139,6 @@ int LEMdl::mdlAddCollisionRect(uint32_t idCollRect, SDL_Rect collRect)
     pCollRect->id = idCollRect;
     pCollRect->collRect = collRect;
     this->updateCollisionBox(pCollRect);
-
-    this->mtxCollisionRect.unlock();
   }
   else
     {result = LE_MDL_COLL_RECT_EXIST;}
@@ -1191,7 +1169,7 @@ LECollBox_d LEMdl::mdlGetCollisionBox(uint32_t idCollRect)
 
 uint32_t LEMdl::mdlGetAmountOfCollisionBoxes()
 {
-  this->mtxCollisionRect.lock();
+  lock_guard<mutex> lockA(this->mtxCollisionRect);
   uint32_t amount = 0;
   CollisionRect * pCurrent = this->pCollisionRectHead->pRight;
 
@@ -1201,7 +1179,6 @@ uint32_t LEMdl::mdlGetAmountOfCollisionBoxes()
     pCurrent = pCurrent->pRight;
   }
 
-  this->mtxCollisionRect.unlock();
   return amount;
 }
 
@@ -1213,7 +1190,7 @@ uint32_t LEMdl::mdlGetAmountOfTextureSourceRectangles(uint32_t idTexture)
 
   if(pTexture != nullptr)
   {
-    this->mtxSourceRectList.lock();
+    lock_guard<mutex> lockA(this->mtxSourceRectList);
 
     pCurrent = pTexture->pSrcRectHead->pRight;
 
@@ -1222,8 +1199,6 @@ uint32_t LEMdl::mdlGetAmountOfTextureSourceRectangles(uint32_t idTexture)
       amount++;
       pCurrent = pCurrent->pRight;
     }
-
-    this->mtxSourceRectList.unlock();
   }
 
   return amount;

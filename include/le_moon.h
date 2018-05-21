@@ -3,7 +3,7 @@
   e-mail:             pmattulat@outlook.de
   Dev-Tool:           Ubuntu 16.04 LTS, g++ Compiler
   date:               18.05.2017
-  updated:            03.05.2018
+  updated:            21.05.2018
 
   NOTES:              (TS) = thread safe
 */
@@ -211,6 +211,9 @@ typedef class LEMoon
     void fontConstructor();                                                                   // diese Funktion wird im LEMoon constructor aufgerufen
     void fontDeleteBufferList();                                                              // diese Funktion loescht die Bufferliste 
     void fontDeleteOriginalList();                                                            // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
+    uint32_t fontGenerateID();                                                                // diese Funktion generiert eine freie ID
+    uint32_t fontGenerateIDFromBufferList();                                                  // (TS) diese Funktion versucht in der Buffer Liste eine frei ID zu generieren
+    uint32_t fontGenerateIDFromOriginalList();                                                // (TS) diese Funktion versucht in der original Liste eine frei ID zu generieren
     LEFont * fontGet(uint32_t);																																                               // (TS) diese Funktion gibt eine Referenz auf einen Font aus der Original Liste zurueck
     LEFont * fontGetFromBuffer(uint32_t);                                                     // (TS) diese Funktion gibt eine Referenz auf einen Font aus der Buffer Liste zurueck
     int fontMerge();                                                                          // diese Funktion fuegt alle Fonts zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn font Funktionen noch in Threads laufen!!!
@@ -258,6 +261,9 @@ typedef class LEMoon
     void lineDeleteBufferList();                                                              // diese Funktion loescht die Bufferliste 
     void lineDeleteOriginalList();                                                            // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int lineDraw(LELine*);                                                                    // diese Funktion malt eine Linie
+    uint32_t lineGenerateID();                                                                // diese Funktion generiert eine freie ID
+    uint32_t lineGenerateIDFromBufferList();                                                  // (TS) diese Funktion versucht in der Buffer Liste eine frei ID zu generieren
+    uint32_t lineGenerateIDFromOriginalList();                                                // (TS) diese Funktion versucht in der original Liste eine frei ID zu generieren
     LELine * lineGet(uint32_t);                                                               // (TS) diese Funktion gibt eine Referenz auf eine Linie zurueck
     LELine * lineGetFromBuffer(uint32_t);                                                     // (TS) diese Funktion gibt eine Referenz auf eine Linie aus der Buffer Liste zurueck
     int lineMerge();                                                                          // diese Funktion fuegt alle Linien zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Linien Funktionen noch in Threads laufen!!!
@@ -279,6 +285,9 @@ typedef class LEMoon
     void modelDeleteBufferList();                                                             // diese Funktion loescht die Bufferliste 
     void modelDeleteOriginalList();                                                           // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int modelDraw(LEModel*);                                                                  // diese Funktion zeichnet ein Model
+    uint32_t modelGenerateID();                                                               // diese Funktion generiert eine freie ID
+    uint32_t modelGenerateIDFromBufferList();                                                 // (TS) diese Funktion versucht in der Buffer Liste eine frei ID zu generieren
+    uint32_t modelGenerateIDFromOriginalList();                                               // (TS) diese Funktion versucht in der original Liste eine frei ID zu generieren
     LEModel * modelGet(uint32_t);                                                             // (TS) diese Funktion gibt eine Modelreferenz anhand einer eindeutigen ID zurueck
     uint32_t modelGetAmount();                                                                // diese Funktion gibt die Anzahl aller Modelle zurueck
     LEModel * modelGetFromBuffer(uint32_t);                                                   // (TS) diese Funktion gibt eine Referenz auf ein Model aus der Buffer Liste zurueck
@@ -300,6 +309,9 @@ typedef class LEMoon
     void pointDeleteOriginalList();                                                           // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int pointDraw(LEPoint*);                                                                  // diese Funktion malt einen Punkt
     bool pointFinishedAllMutexes(LEPoint*);                                                   // diese Funktion prueft, ob alle Mutexes momentan verfuegbar sind
+    uint32_t pointGenerateID();                                                               // diese Funktion generiert eine freie ID
+    uint32_t pointGenerateIDFromBufferList();                                                 // (TS) diese Funktion versucht in der Buffer Liste eine frei ID zu generieren
+    uint32_t pointGenerateIDFromOriginalList();                                               // (TS) diese Funktion versucht in der original Liste eine frei ID zu generieren
     LEPoint * pointGet(uint32_t);                                                             // (TS) diese Funktion gibt eine Referenz auf einen Punkt zurueck
     LinkedVec2 * pointGetDirection(LEPoint*, uint32_t);                                       // diese Funktion gibt eine Referenz auf eine Bewegungsrichtung zurueck
     LEPoint * pointGetFromBuffer(uint32_t);                                                   // (TS) diese Funktion gibt eine Referenz auf einen Punkt aus der Buffer Liste zurueck
@@ -319,6 +331,9 @@ typedef class LEMoon
     void soundConstructor();                                                                  // diese Funktion wird im LEMoon constructor aufgerufen
     void soundDeleteBufferList();                                                             // diese Funktion loescht die Bufferliste 
     void soundDeleteOriginalList();                                                           // diese Funktion loescht die Originalliste, wenn keine Elemente mehr vorhanden sind
+    uint32_t soundGenerateID();                                                               // diese Funktion generiert eine freie ID
+    uint32_t soundGenerateIDFromBufferList();                                                 // (TS) diese Funktion versucht in der Buffer Liste eine frei ID zu generieren
+    uint32_t soundGenerateIDFromOriginalList();                                               // (TS) diese Funktion versucht in der original Liste eine frei ID zu generieren
     LESound * soundGet(uint32_t);                                                             // (TS) diese Funktion gibt eine Referenz auf einen Sound zurueck
     LESound * soundGetFromBuffer(uint32_t);                                                   // (TS) diese Funktion gibt eine Referenz auf einen Sound aus der Buffer Liste zurueck
     int soundMerge();                                                                         // diese Funktion fuegt alle Sounds zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Sound Funktionen noch in Threads laufen!!!
@@ -338,6 +353,9 @@ typedef class LEMoon
     void textDeleteOriginalList();                                                            // diese Funktion loescht die Originalliste, wenn keine Elemente mehr drin sind
     int textDraw(LEText*);                                                                    // diese Funktion zeichnet einen Text
     bool textFinishedAllMutexes(LEText*);                                                     // diese Funktion prueft, ob alle Mutexes momentan verfuegbar sind
+    uint32_t textGenerateID();                                                                // diese Funktion generiert eine freie ID
+    uint32_t textGenerateIDFromBufferList();                                                  // (TS) diese Funktion versucht in der Buffer Liste eine frei ID zu generieren
+    uint32_t textGenerateIDFromOriginalList();                                                // (TS) diese Funktion versucht in der original Liste eine frei ID zu generieren
     LEText * textGet(uint32_t);                                                               // (TS) diese Funktion gibt eine Referenz auf einen Text zurueck
     uint32_t textGetAmount();                                                                 // diese Funktion gibt die Anzahl aller Texte zurueck
     LinkedVec2 * textGetDirection(LEText*, uint32_t);                                         // diese Funktion gibt die Referenz auf eine Bewegungsrichtung zurueck
@@ -358,6 +376,9 @@ typedef class LEMoon
     void timeEventConstructor();                                                              // diese Funktion wird im LEMoon constructor aufgerufen
     void timeEventDeleteBufferList();                                                         // diese Funktion loescht die Bufferliste 
     void timeEventDeleteOriginalList();                                                       // diese Funktion loescht die Originalliste, wenn keine Elemente mehr vorhanden sind
+    uint32_t timeEventGenerateID();                                                           // diese Funktion generiert eine freie ID
+    uint32_t timeEventGenerateIDFromBufferList();                                             // (TS) diese Funktion versucht in der Buffer Liste eine frei ID zu generieren
+    uint32_t timeEventGenerateIDFromOriginalList();                                           // (TS) diese Funktion versucht in der original Liste eine frei ID zu generieren
     LETimeEvent * timeEventGet(uint32_t);                                                     // (TS) diese Funktion gibt eine Referenz auf ein Zeitereignis zurueck
     LETimeEvent * timeEventGetFromBuffer(uint32_t);                                           // (TS) diese Funktion gibt eine Referenz auf ein Zeitereignis aus der Buffer Liste zurueck
     int timeEventMerge();                                                                     // diese Funktion fuegt alle Zeitereignisse zusammen aus beiden Listen und loescht die Buffer Liste, ACHTUNG: diese Funktion wird nie aufgerufen, wenn Zeitereignis Funktionen noch in Threads laufen!!!
@@ -389,6 +410,7 @@ typedef class LEMoon
     //////////////////////////////
 
     int fontCreateTTF(uint32_t, const char*, int);                                            // (TS) diese Funktion fuegt einen Font hinzu
+    uint32_t fontCreateTTF(const char*, int);                                                 // (TS) diese Funktion erzeugt einen Font mit einer selbst generierten ID, diese wird auch zurueck gegeben!
     int fontDelete(uint32_t);                                                                 // (TS) diese Funktion loescht einen Font
     void fontPrintBufferList();                                                               // (TS) diese Funktion gibt die komplette Font Buffer Liste aus
     void fontPrintList();                                                                     // (TS) diese Funktion gibt die komplette Original Font Liste aus
@@ -439,6 +461,7 @@ typedef class LEMoon
     //////////////////////////////
 
     int lineCreate(uint32_t);                                                                 // (TS) diese Funktion erstellt eine Linie
+    uint32_t lineCreate();                                                                    // (TS) diese Funktion erzeugt eine Linie mit einer selbst generierten ID, diese wird auch zurueck gegeben!
     int lineDelete(uint32_t);                                                                 // (TS) diese Funktion loescht eine Linie
     void linePrintBufferList();                                                               // (TS) diese Funktion gibt die komplette Buffer Linien liste aus
     void linePrintList();                                                                     // (TS) diese Funktion gibt die komplette original Linien liste aus
@@ -460,6 +483,7 @@ typedef class LEMoon
     bool modelCheckFrameBoxCollision(uint32_t, uint32_t);                                     // (TS) diese Funktion prueft, ob die groben Kollisionsbereiche von zwei Models miteinander kollidieren
     int modelClearClones(uint32_t);                                                           // (TS) diese Funktion loescht alle Clones des Models
     int modelCreate(uint32_t);                                                                // (TS) diese Funktion erzeugt ein Model mit Hilfe einer eindeutigen ID
+    uint32_t modelCreate();                                                                   // (TS) diese Funktion erzeugt ein Model mit einer selbst generierten ID, diese wird auch zurueck gegeben!
     int modelCreateClone(uint32_t, uint32_t);                                                 // (TS) diese Funktion erstellt einen Clone fuer ein Model
     int modelCreateSurface(uint32_t, uint32_t, const char*);                                  // (TS) diese Funktion erstellt ein Surface aus einem Bild, um mit den Pixeldaten direkt arbeiten zu koennen
     int modelCreateTexture(uint32_t, uint32_t, const char*);                                  // (TS) diese Funktion erzeugt eine Textur, alle Texturen sollten die selbe Groesse haben, wegen des groben Kollisionsbereiches!
@@ -507,6 +531,7 @@ typedef class LEMoon
 
     int pointAddDirection(uint32_t, uint32_t, glm::vec2);                                     // (TS) diese Funktion fuegt eine Bewegungsrichtung hinzu
     int pointCreate(uint32_t);                                                                // (TS) diese Funktion fuegt einen Punkt hinzu
+    uint32_t pointCreate();                                                                   // (TS) diese Funktion erzeugt einen Punkt mit einer selbst generierten ID, diese wird auch zurueck gegeben!
     int pointDelete(uint32_t);                                                                // (TS) diese Funktion loescht einen Punkt
     int pointFade(uint32_t, double);                                                          // (TS) diese Funktion blendet einen Punkt ein oder aus
     Color pointGetColor(uint32_t);                                                            // (TS) diese Funktion gibt die Farbe eines Punktes zurueck
@@ -526,6 +551,7 @@ typedef class LEMoon
     //////////////////////////////
 
     int soundCreate(uint32_t);                                                                // (TS) diese Funktion fuegt einen Sound hinzu
+    uint32_t soundCreate();                                                                   // (TS) diese Funktion erzeugt einen Sound mit einer selbst generierten ID, diese wird auch zurueck gegeben!
     int soundDelete(uint32_t);                                                                // (TS) diese Funktion loescht einen Sound
     int soundFadeIn(uint32_t, int);                                                           // (TS) diese Funktion blendet einen Kanal oder alle Kanaele ein
     void soundFadeOut(int);                                                                   // (TS) diese Funktion blendet einen Kanal oder alle Kanaele aus
@@ -547,6 +573,7 @@ typedef class LEMoon
     int textAddString(uint32_t, const char*);                                                 // (TS) diese Funktion fuegt einen kompletten String dem Text hinzu
     int textClear(uint32_t);                                                                  // (TS) diese Funktion loescht den kompletten Text
     int textCreate(uint32_t);                                                                 // (TS) diese Funktion fuegt einen UTF8 Text hinzu
+    uint32_t textCreate();                                                                    // (TS) diese Funktion erzeugt einen Text mit einer selbst generierten ID, diese wird auch zurueck gegeben!
     int textDelete(uint32_t);                                                                 // (TS) diese Funktion loescht einen Text
     int textFade(uint32_t, double);                                                           // (TS) diese Funktion blendet einen Text ein oder aus
     double textGetAlpha(uint32_t);                                                            // (TS) diese Funktion gibt den Alpha Wert eines Textes zurueck
@@ -571,6 +598,7 @@ typedef class LEMoon
     //////////////////////////////
 
     int timeEventCreate(uint32_t, uint32_t);                                                  // (TS) diese Funktion erstellt ein Zeitereignis
+    uint32_t timeEventCreate(uint32_t);                                                       // (TS) diese Funktion erzeugt ein Zeitereignis mit einer selbst generierten ID, diese wird auch zurueck gegeben!
     int timeEventDelete(uint32_t);                                                            // (TS) diese Funktion loescht ein Zeitereignis
     uint32_t timeEventGetStamp(uint32_t);                                                     // (TS) diese Funktion gibt den Zeitstempel fuer das Zeitereignis zurueck
     void timeEventPrintBufferList();                                                          // (TS) diese Funktion gibt die komplette Buffer time event liste aus 
